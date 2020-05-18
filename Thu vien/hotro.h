@@ -247,52 +247,48 @@ string tao_masach(LIST_DMS& l,string ma_dau_sach)
 }
 
  // =============================== giải phóng==================
-void giai_phong_muontra(LIST_MT& l)
+void giaiphong_cay(TREE& t)
 {
-	for (NODE_MT* p = l.pHead; p != NULL; p = p->pNext)
+	if (t != NULL)
 	{
-		l.pHead = p->pNext;
-		p->pPrev = NULL;
-		delete p;
-	}
-	l.pTail = NULL;
-}
-void huy_cay(TREE& t)
-{
-	TREE Stack[STACKSIZE];
-	int top = -1;
-	do
-	{
-		while (t != NULL)
-		{
-			Stack[++top] = t;
-			t = t->pLeft;
-		}
-		if (top != -1)
-		{
-			t = Stack[top--];
-			giai_phong_muontra(t->data.mt);
-			t = t->pRight;
-		}
 		
-	} while (t==NULL);
-}
-void giai_phong_sach(LIST_DMS& l)
-{
-
-	NODE_DMS* p;
-	while (l.pHead != NULL) {
-		p = l.pHead;
-		l.pHead = p->pNext;
-		delete p;
+		NODE_MT* p = t->data.mt.pHead;
+		NODE_MT* q = NULL;
+		while (p != NULL)
+		{
+			t->data.mt.pHead = p->pNext;
+			if (p != t->data.mt.pTail)
+			{
+				p = p->pNext;
+				q = p->pPrev;
+				delete q;
+			}
+			else // p là node cuối
+			{
+				delete p;
+				break;
+			}
+		}
+		t->data.mt.pTail = NULL;
+		giaiphong_cay(t->pRight);
+		giaiphong_cay(t->pLeft);
+		delete t;
+		t = NULL;
 	}
-	l.pTail = NULL;
 }
 void giai_phong_vung_nho_dau_sach(LIST_DS& l)
 {
 	for (int i = 0; i < l.sl; i++)
 	{
-		giai_phong_sach(l.ds_dausach[i]->dms);
+		NODE_DMS* p;
+		while (l.ds_dausach[i]->dms.pHead != NULL)
+		{
+			p = l.ds_dausach[i]->dms.pHead;
+			l.ds_dausach[i]->dms.pHead = p->pNext;
+			l.ds_dausach[i]->dms.pHead = l.ds_dausach[i]->dms.pHead->pNext;
+			delete p;
+		}
+		l.ds_dausach[i]->dms.pTail = NULL;
 		delete l.ds_dausach[l.sl - 1];
 		l.sl--;
 	}

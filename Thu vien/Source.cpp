@@ -646,7 +646,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			GhiFileDG(t);
 			GhiFileDS(l);
 			Ghi_file_quahan(t, l1);
-			huy_cay(t);
+			giaiphong_cay(t);
 			giai_phong_vung_nho_dau_sach(l);
 			return;
 		}
