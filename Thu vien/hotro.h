@@ -247,15 +247,35 @@ string tao_masach(LIST_DMS& l,string ma_dau_sach)
 }
 
  // =============================== giải phóng==================
+void giai_phong_muontra(LIST_MT& l)
+{
+	for (NODE_MT* p = l.pHead; p != NULL; p = p->pNext)
+	{
+		l.pHead = p->pNext;
+		p->pPrev = NULL;
+		delete p;
+	}
+	l.pTail = NULL;
+}
 void huy_cay(TREE& t)
 {
-	if (t != NULL)
+	TREE Stack[STACKSIZE];
+	int top = -1;
+	do
 	{
-		huy_cay(t->pLeft);
-		huy_cay(t->pRight);
-		delete t;
-		t = NULL;
-	}
+		while (t != NULL)
+		{
+			Stack[++top] = t;
+			t = t->pLeft;
+		}
+		if (top != -1)
+		{
+			t = Stack[top--];
+			giai_phong_muontra(t->data.mt);
+			t = t->pRight;
+		}
+		
+	} while (t==NULL);
 }
 void giai_phong_sach(LIST_DMS& l)
 {
@@ -533,13 +553,13 @@ void xoa_hien_thi_sach(LIST_DS l)
 		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
 		{
 			gotoXY(45, tungdo);
-			cout << "                ";
+			cout << "                                  ";
 			gotoXY(65, tungdo);
-			cout << "                ";
-			gotoXY(95, tungdo);
-			cout << "                ";
-			gotoXY(110, tungdo);
-			cout << "                ";
+			cout << "                                   ";
+			gotoXY(95, tungdo); 
+			cout << "                                   ";
+			gotoXY(110, tungdo); 
+			cout << "                                    ";
 			tungdo++;
 		}
 	}

@@ -116,11 +116,14 @@ void GhiFileDS(LIST_DS l)
 		f << l.ds_dausach[i]->theloai << ',';
 		f << l.ds_dausach[i]->soluongmuon << endl;
 		f << l.ds_dausach[i]->soluongsach << endl;
-		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
+		if (l.ds_dausach[i]->soluongsach > 0)
 		{
-			f << p->data.masach << ',';
-			f << p->data.trangthai << ',';
-			f << p->data.vitri << endl;
+			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
+			{
+				f << p->data.masach << ',';
+				f << p->data.trangthai << ',';
+				f << p->data.vitri << endl;
+			}
 		}
 	}
 	f.close();
@@ -169,6 +172,7 @@ void Ghi_file_quahan(TREE t,List_quahan l)
 	TREE Stack[STACKSIZE];
 	int top = -1;
 	Date n1;
+	thoi_gian_thuc(n1);
 	do
 	{
 		while (t != NULL)
@@ -183,13 +187,14 @@ void Ghi_file_quahan(TREE t,List_quahan l)
 			{
 				n++;
 				l.ds_quahan[n - 1].ma_doc_gia = t->data.mathe;
-				thoi_gian_thuc(n1);
-				if (p->data.trangthai == 0)
+				if (t->data.tongsosach> 0 && p->data.trangthai == 0)
 				{
 					l.ds_quahan[n - 1].so_ngay_quahan = so_ngay_quahan(p->data.ngaymuon, n1);
 				}
 				else
-				l.ds_quahan[n - 1].so_ngay_quahan = 0;
+				{
+					l.ds_quahan[n - 1].so_ngay_quahan = 0;
+				}
 				l.ds_quahan[n - 1].ma_sach = p->data.masach;
 				l.ds_quahan[n - 1].ho = t->data.ho;
 				l.ds_quahan[n - 1].ten = t->data.ten;

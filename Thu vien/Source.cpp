@@ -141,6 +141,7 @@ void menu_xuli()
 	while (1)
 	{
 		clrscr();
+		int tungdo = 0;
 menu_chinh:	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chính
 		switch (tt)
 		{
@@ -180,7 +181,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 						goto menu_xuat;
 					}
 					TextColor(15);
-					xuat_ds_thong_tin_doc_gia(t,0);
+					xuat_ds_thong_tin_doc_gia(t,tungdo);
+					tungdo = 0;
 					TextColor(7);
 					_getch();
 					goto menu_xuat;
@@ -190,7 +192,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					int n; // khai báo biến đếm số lượng độc giả trong cây
 					n = SoluongDG(t);
 					docgia* arr = new docgia[n];
-					chuyen_cay_sang_mang(t, arr, 0);
+					chuyen_cay_sang_mang(t, arr,tungdo);
+					tungdo = 0;
 					sap_xep_doc_gia_theo_ten(arr, n);
 					for (int i = 0; i < n;i++)
 					{
@@ -198,6 +201,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 						Xuat_Thong_Tin_Doc_Gia(arr[i],i+1);
 						TextColor(7);
 					}
+					tungdo = 0;
 					delete[] arr;
 					_getch();
 					goto menu_xuat;
@@ -212,7 +216,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 			{
 				// in danh sách độc giả
 				if (t != NULL)
-					xuat_ds_thong_tin_doc_gia(t,0);
+					xuat_ds_thong_tin_doc_gia(t,tungdo);
+				tungdo = 0;
 				do
 				{
 					string temp;
@@ -225,7 +230,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					// nếu temp là kí tự
 					if (i == -1)
 					{
-						//xoa_hien_thi_doc_gia(t);
 						tim_kiem_ds_doc_gia_ten(t, temp,1);
 						_getch();
 						break;
@@ -244,7 +248,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 							TextColor(14);
 							// xóa hiển thị màn hình độc giả cũ
 							xoa_hien_thi_doc_gia(t);
-							Xuat_Thong_Tin_Doc_Gia(p->data, 1);
+							Xuat_Thong_Tin_Doc_Gia(p->data, ++tungdo);
+							tungdo = 0;
 							TextColor(7);
 							_getch();
 							break;
@@ -258,7 +263,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 			{
 				// in danh sách độc giả
 				if (t != NULL)
-					xuat_ds_thong_tin_doc_gia(t,0);
+					xuat_ds_thong_tin_doc_gia(t,tungdo);
+				tungdo = 0;
 				do
 				{
 					int key;
@@ -285,7 +291,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 			{
 				// in danh sách độc giả
 				if (t != NULL)
-					xuat_ds_thong_tin_doc_gia(t, 0);
+					xuat_ds_thong_tin_doc_gia(t, tungdo);
+				tungdo = 0;
 				int ma;
 				do {
 					cout << "\nNhap ma doc gia: ";
@@ -306,6 +313,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 			// thoát || ESC
 			if (chon == 6 || chon == 27)
 				goto menu_chinh;
+			break;
 		}
 		// menu đầu sách
 		case 2:
@@ -462,9 +470,9 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			if (chon == 3|| chon == 62)
 			{
 				string ten_sach;
+				xuat_ds_sach1(l);
 				do
 				{
-					xuat_ds_sach1(l);
 					cout << "\nNhap Ten Sach Can Tim: ";
 					ten_sach = nhap_ki_tu();
 					if (ten_sach == "-1") // ESC
@@ -539,6 +547,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			}
 			if (chon == 6)
 				goto menu_chinh;
+			break;
 		}
 		// Mượn sách
 		case 4:
@@ -587,7 +596,8 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 		case 6:
 		{
 			int ma_doc_gia;
-			xuat_ds_thong_tin_doc_gia(t, 0);
+			xuat_ds_thong_tin_doc_gia(t, tungdo);
+			tungdo = 0;
 			do {
 				cout << "\nNhap Ma Doc Gia: ";
 				ma_doc_gia = nhap_so_nguyen();
@@ -645,7 +655,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 }
 int main()
 {
-	resizeConsole(1100, 550);
+	resizeConsole(1150, 550);
 	srand(time(NULL));
 	menu_xuli();
 	return 0;

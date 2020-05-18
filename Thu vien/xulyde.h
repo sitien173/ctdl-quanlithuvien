@@ -24,10 +24,10 @@ void khoi_tao_sach(LIST_DMS& l)
 
 int nhap_doc_gia(docgia& x);// nhập thành công rt 1 <> esc rt -2
 int them_doc_gia_vao_ds(TREE& t); // Thêm độc giả vào danh sách thêm thành công rt 1 < > return -2
-void them_node_vao_cay(TREE& t, docgia x);// them 1 node vao cay theo ma doc gia
+void them_node_vao_cay(TREE& t, docgia x);
 void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo);// Xuất thông tin của 1 độc giả
-void xuat_ds_thong_tin_doc_gia(TREE t, int i);//duyet theo LNR in ra ma the tang dan
-void chuyen_cay_sang_mang(TREE t, docgia * arr, int i);// duyệt cây copy dữ liệu vào mảng
+void xuat_ds_thong_tin_doc_gia(TREE t, int& i);//duyet theo LNR in ra ma the tang dan
+void chuyen_cay_sang_mang(TREE t, docgia * arr, int& i);// duyệt cây copy dữ liệu vào mảng
 void sap_xep_doc_gia_theo_ten(docgia* arr, int n);// sắp xếp độc giả theo tên + họ tăng dần
 void tim_kiem_pt_the_mang(TREE& p, TREE& q);//Phần tử p đang được thế mạng cho phần tử q
 void xoa_theo_ma_doc_gia(TREE& t, int x);// hàm có chức năng xóa 1 độc giả bất kì theo mã độc giả
@@ -75,7 +75,7 @@ int trasach(TREE& t, LIST_DS& l);// trả sách thành công tr 1 <> -1 ; ESC rt
 // =========================================== Qua Han ================================
 int so_ngay_quahan(Date n1, Date n2);// hàm trả về số ngày quá hạn. Tính số ngày chênh lệch giữa 2 mốc thời gian
 void ds_quahan(TREE t, LIST_QUAHAN& l);// in ra danh sách các độc giả quá hạn
-\
+
 // =================== 10 sách có lượt mượn nhiều nhất ====================
 void top10sach(LIST_DS l);
 
@@ -101,43 +101,39 @@ int nhap_doc_gia(docgia& x)
 	x.tongsosach = 0;
 	return 1;
 }
-
-// Thêm độc giả vào danh sách thêm thành công rt 1 <> return -2
+// Thêm độc giả vào danh sách thêm thành công rt 1 <> -1 ESC rt -2
 int them_doc_gia_vao_ds(TREE& t)
 {
-	while (1)
-	{
-		docgia x;
-		x.mathe = tao_ma_doc_gia(t);
-		if (nhap_doc_gia(x) == -2) // ESC
-		{
+	docgia x;
+	x.mathe = tao_ma_doc_gia(t);
+	int i = nhap_doc_gia(x);
+	if ( i== -2) // ESC
 			return -2;
-		}
+	else
+	{
 		them_node_vao_cay(t, x);
+		BaoLoi("Them Thanh Cong");
 	}
 	return 1;
 }
 
-// them 1 node vao cay theo ma doc gia
-void them_node_vao_cay(TREE& t, docgia x)
+// them 1 node vao cay theo ma doc gia 
+void them_node_vao_cay(TREE& t,docgia x)
 {
 	if (t == NULL)
 	{
 		NODE_DG* p = new NODE_DG;
+		if (p == NULL) return;
 		p->data = x;
 		p->pLeft = p->pRight = NULL;
 		t = p;
 	}
 	else
 	{
-		if (x.mathe > t->data.mathe)
-		{
-			them_node_vao_cay(t->pRight, x);
-		}
-		else if (x.mathe < t->data.mathe)
-		{
+		if (x.mathe < t->data.mathe)
 			them_node_vao_cay(t->pLeft, x);
-		}
+		else if (x.mathe > t->data.mathe)
+			them_node_vao_cay(t->pRight, x);
 	}
 }
 
@@ -167,25 +163,26 @@ void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo)
 }
 
 //duyet theo LNR in ra ma the tang dan
-void xuat_ds_thong_tin_doc_gia(TREE t, int i)
+void xuat_ds_thong_tin_doc_gia(TREE t, int& i)
 {
 	if (t != NULL)
 	{
-		xuat_ds_thong_tin_doc_gia(t->pLeft, i++);
-		Xuat_Thong_Tin_Doc_Gia(t->data, i);
-		xuat_ds_thong_tin_doc_gia(t->pRight, i++);
+		
+		xuat_ds_thong_tin_doc_gia(t->pLeft, i);
+		Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
+		xuat_ds_thong_tin_doc_gia(t->pRight, i);
 	}
 
 }
 
 // duyệt cây copy dữ liệu vào mảng
-void chuyen_cay_sang_mang(TREE t, docgia* arr, int i)
+void chuyen_cay_sang_mang(TREE t, docgia* arr, int& i)
 {
 	if (t != NULL)
 	{
-		arr[i] = t->data;
-		chuyen_cay_sang_mang(t->pLeft, arr, i++);
-		chuyen_cay_sang_mang(t->pRight, arr, i++);
+		arr[i++] = t->data;
+		chuyen_cay_sang_mang(t->pLeft, arr, i);
+		chuyen_cay_sang_mang(t->pRight, arr, i);
 	}// nếu cây rỗng thoát hàm
 	else
 		return;
@@ -205,7 +202,7 @@ void sap_xep_doc_gia_theo_ten(docgia* arr, int n)
 			} // ngược lại
 			else if(arr[i].ten == arr[j].ten)
 			{ // kiểm tra họ 2 đg
-				if (arr[i].ho[0] > arr[j].ho[0])
+				if (arr[i].ho < arr[j].ho)
 				{ // hoán đổi vị trí
 					hoandoi(arr[i], arr[j]);
 				}
@@ -316,7 +313,8 @@ int sua_thong_tin_doc_gia(TREE& t, int ma_doc_gia)
 	}
 	else
 	{
-		Xuat_Thong_Tin_Doc_Gia(p->data,1);
+		int tungdo = 0;
+		Xuat_Thong_Tin_Doc_Gia(p->data,tungdo);
 		TextColor(15);
 		cout << "Ma the: " << p->data.mathe << endl;
 		cout << "Ho: ";
@@ -373,7 +371,7 @@ int nhap_DauSach(LIST_DS& l, dausach& data)
 	while (1)
 	{
 		cout << "Ma ISBN : ";
-		data.ISBN = so_sang_chuoi(nhap_so_nguyen());
+		data.ISBN = nhap_ki_tu1();
 		if (data.ISBN == "-1") // ESC
 			return -2;
 		if (tim_kiem_dau_sach_theo_ma(l, data.ISBN) != -1)
@@ -516,7 +514,7 @@ int sua_dau_sach(LIST_DS& l)
 	do
 	{
 		cout << "\nNhap Ma Dau Sach: ";
-		ma_dau_sach = so_sang_chuoi(nhap_so_nguyen());
+		ma_dau_sach = nhap_ki_tu1();
 		if (ma_dau_sach == "-1") // ESC
 		{
 			return -2;
@@ -602,7 +600,7 @@ int them_sach(LIST_DS& l)
 {
 	string ma_dau_sach;
 	cout << "\nNhap Ma Dau Sach: ";
-	ma_dau_sach = so_sang_chuoi(nhap_so_nguyen());
+	ma_dau_sach = nhap_ki_tu1();
 	if (ma_dau_sach == "-1") // ESC
 		return -2;
 	int i = tim_kiem_dau_sach_theo_ma(l, ma_dau_sach);
@@ -927,7 +925,9 @@ int dem_sach_docgia_muon(TREE t)
 // mượn thành công tr 1 <> -1 ; esc rt -2
 int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 {
-	xuat_ds_thong_tin_doc_gia(t, 0);
+	int tungdo=0;
+	xuat_ds_thong_tin_doc_gia(t, tungdo);
+	tungdo = 0;
 	int ma_doc_gia;
 	cout << "Nhap ma doc gia: ";
 	ma_doc_gia = nhap_so_nguyen();
@@ -1055,7 +1055,9 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 // trả sách thành công tr 1 <> -1 ; ESC rt -2
 int trasach(TREE& t, LIST_DS& l)
 {
-	xuat_ds_thong_tin_doc_gia(t, 0);
+	int tungdo = 0;
+	xuat_ds_thong_tin_doc_gia(t, tungdo);
+	tungdo = 0;
 	int ma;
 	cout << "\nNhap ma doc gia: ";
 	ma = nhap_so_nguyen();
