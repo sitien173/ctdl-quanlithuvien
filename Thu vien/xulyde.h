@@ -80,6 +80,7 @@ void ds_quahan(TREE t, LIST_QUAHAN& l);// in ra danh sách các độc giả qu�
 void top10sach(LIST_DS l);
 
 // ========================================== Độc Giả==========================================
+
 // nhập thành công rt 1 <> esc rt -2
 int nhap_doc_gia(docgia& x)
 {
@@ -380,7 +381,7 @@ int nhap_DauSach(LIST_DS& l, dausach& data)
 			continue;
 		}
 		cout << "Ten Sach: ";
-		data.tensach = nhap_ki_tu();
+		data.tensach = nhap_ki_tu1();
 		if (data.tensach == "-1") // ESC
 			return -2;
 		cout << "So Trang: ";
@@ -410,25 +411,25 @@ void xuat_dau_sach(dausach& a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(45, 0);
+	gotoXY(30, 0);
 	cout << "Ma Dau Sach";
-	gotoXY(65, 0);
+	gotoXY(45, 0);
 	cout << "Ten sach";
-	gotoXY(85, 0);
+	gotoXY(75, 0);
 	cout << "So trang";
-	gotoXY(95, 0);
+	gotoXY(85, 0);
 	cout << "Tac gia";
 	gotoXY(115, 0);
 	cout << "Nam XB";
 	gotoXY(125, 0);
 	cout << "The Loai";
-	gotoXY(45, tungdo);
+	gotoXY(30, tungdo);
 	cout << a.ISBN;
-	gotoXY(65, tungdo);
+	gotoXY(45, tungdo);
 	cout << a.tensach;
-	gotoXY(85, tungdo);
+	gotoXY(75, tungdo);
 	cout << a.sotrang;
-	gotoXY(95, tungdo);
+	gotoXY(85, tungdo);
 	cout << a.tacgia;
 	gotoXY(115, tungdo);
 	cout << a.namxuatban;
@@ -527,7 +528,7 @@ int sua_dau_sach(LIST_DS& l)
 			return -1;
 		}
 		cout << "Ten sach: ";
-		l.ds_dausach[i]->tensach = nhap_ki_tu();
+		l.ds_dausach[i]->tensach = nhap_ki_tu1();
 		if (l.ds_dausach[i]->tensach == "-1") // ESC
 		{
 			return -2;
@@ -628,8 +629,8 @@ int them_sach(LIST_DS& l)
 		p->data.trangthai = 0; // mặc định sách có thể mượn được
 		them_sach_vao_ds(l.ds_dausach[i]->dms, tao_node_sach(p->data));
 		l.ds_dausach[i]->soluongsach++;
-		delete p;
 	}
+	
 	return 1;
 }
 
@@ -883,7 +884,6 @@ int xuat_sach_dang_muon(TREE t, LIST_DS l)
 				if (p->data.masach == k->data.masach && p->data.trangthai == 0)
 				{
 					kt++;
-					//cout << "Ten sach: " << l.ds_dausach[i]->tensach << endl;
 					xuat_thong_tin_phieu_muontra(p->data, l.ds_dausach[i]->tensach, ++tungdo);
 				}
 			}

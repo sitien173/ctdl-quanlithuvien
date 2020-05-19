@@ -263,7 +263,7 @@ void giaiphong_cay(TREE& t)
 				q = p->pPrev;
 				delete q;
 			}
-			else // p là node cuối
+			else // p là node cuối mt
 			{
 				delete p;
 				break;
@@ -294,20 +294,6 @@ void giai_phong_vung_nho_dau_sach(LIST_DS& l)
 	}
 }
 
-// tách mã sách chỉ lấy mã đầu sách
-string tach_ma_sach(string a)
-{
-	string temp;
-	int n = a.length();
-	int dem = 0;
-	for (int i = 0; i < n ; i++)
-	{
-		if (a[i] == '-')
-			dem = i;
-	}
-	temp = a.substr(0, dem );
-	return temp;
-}
 
 // kiểm tra 1 chuỗi có kí tự nào là số không nếu có trả về true <> false
 bool Kiem_Tra_Ki_Tu_So(char c)

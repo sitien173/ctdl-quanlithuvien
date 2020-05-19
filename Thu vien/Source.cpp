@@ -1,6 +1,4 @@
 ﻿#include "xulyde.h"
-#define MAUNEN 14
-#define MAUCHU 7
 char thaotac[][50] =
 {					"DOC GIA						    ",
 				    "DAU SACH						    ",
@@ -46,8 +44,8 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 	int tt=0; // biến chỉ ra đang ở thao tác nào
 	int* mau = new int[n];
 	for (int i = 0; i < n; i++)
-		mau[i] = MAUCHU;
-	mau[0] = MAUNEN; // hiện đang ở trạng thái thứ nhất
+		mau[i] = 7;
+	mau[0] = 14; // hiện đang ở trạng thái thứ nhất
 	// lặp vô hạn cho đến khi trả về giá trị của hàm thì dừng
 	clrscr();
 	while (1) {
@@ -120,8 +118,8 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		}
 		// reset lại màu sau khi đã chọn thao tác để in ra
 		for (int i = 0; i < n; i++)
-			mau[i] = MAUCHU;
-		mau[tt] = MAUNEN;
+			mau[i] = 7;
+		mau[tt] = 14;
 		
 	}
 	
@@ -359,7 +357,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				do
 				{
 					cout << "\nNhap Ten Sach Can Tim: ";
-					ten_sach = nhap_ki_tu();
+					ten_sach = nhap_ki_tu1();
 					if (ten_sach == "-1") // ESC;
 						break;
 					int i = tim_kiem_dau_sach_theo_ten(l, ten_sach);
@@ -474,7 +472,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 				do
 				{
 					cout << "\nNhap Ten Sach Can Tim: ";
-					ten_sach = nhap_ki_tu();
+					ten_sach = nhap_ki_tu1();
 					if (ten_sach == "-1") // ESC
 						break;
 					if (tim_kiem_sach_ten(l, ten_sach) == -1)
