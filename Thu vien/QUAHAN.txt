@@ -1,4 +1,4 @@
 3
 34,Hoang Phuong,Tam,Nu,978123241-685,0
-34,Hoang Phuong,Tam,Nu,978123241-685,0
-34,Hoang Phuong,Tam,Nu,978123241-602,0
+34,Hoang Phuong,Tam,Nu,978123241-685,20
+34,Hoang Phuong,Tam,Nu,978123241-602,16

@@ -42,7 +42,7 @@ TRANGTHAI key(char c)
 int menu_dong(char thaotac[][50],int n) // n là số lượng item
 {
 	int tt=0; // biến chỉ ra đang ở thao tác nào
-	int* mau = new int[n];
+	int mau[10];
 	for (int i = 0; i < n; i++)
 		mau[i] = 7;
 	mau[0] = 14; // hiện đang ở trạng thái thứ nhất
@@ -111,7 +111,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		case ESC:
 		{
 			TextColor(7);
-			return 27;
+			return tt=27;
 		}
 		case ENTER:
 			return tt + 1;
@@ -120,7 +120,6 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		for (int i = 0; i < n; i++)
 			mau[i] = 7;
 		mau[tt] = 14;
-		
 	}
 	
 }
@@ -140,7 +139,7 @@ void menu_xuli()
 	{
 		clrscr();
 		int tungdo = 0;
-menu_chinh:	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chính
+	menu_chinh:	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chính
 		switch (tt)
 		{
 		// menu độc giả 

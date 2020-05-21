@@ -61,8 +61,8 @@ int xoa_sach(LIST_DS& l, string ma_sach);// xóa sách theo mã đầu sách. X�
 int hieu_chinh_sach(danhmucsach& a, string ma_sach);// hiệu chỉnh sách theo mã sách . hiệu chỉnh thành công rt 1 <> -1 ; ESC rt -2
 
 //==========================================Muon tra===================================================
-// tạo 1 node mượn trả 
-NODE_MT* tao_node_muontra(muontra x);
+
+NODE_MT* tao_node_muontra(muontra x);// tạo 1 node mượn trả 
 void them_phieu_muon(muontra& x);// lập phiếu mượn sách
 void xuat_thong_tin_phieu_muontra(muontra a, string ten_sach, int tungdo);// in thong tin của 1 phiếu mượn trả
 void them_vao_ds_muontra(LIST_MT& l, NODE_MT* p);// thêm phiếu vào danh sách để quản lí
