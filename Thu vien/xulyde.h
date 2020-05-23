@@ -143,24 +143,26 @@ void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(45, 0);
-	cout << "Ma Doc Gia";
-	gotoXY(65, 0);
-	cout << "Ho va Ten";
-	gotoXY(90, 0);
-	cout << "Phai";
-	gotoXY(100, 0);
-	cout << "Trang Thai The";
-	gotoXY(45, tungdo);
-	cout << a.mathe;
-	gotoXY(65, tungdo);
-	cout << a.ho << " " << a.ten;
-	gotoXY(90, tungdo);
-	cout << a.phai;
-	gotoXY(107, tungdo);
-	cout << a.trangthaithe;
+	if (tungdo <= 40)
+	{
+		gotoXY(45, 0);
+		cout << "Ma Doc Gia";
+		gotoXY(65, 0);
+		cout << "Ho va Ten";
+		gotoXY(90, 0);
+		cout << "Phai";
+		gotoXY(100, 0);
+		cout << "Trang Thai The";
+		gotoXY(45, tungdo);
+		cout << a.mathe;
+		gotoXY(65, tungdo);
+		cout << a.ho << " " << a.ten;
+		gotoXY(90, tungdo);
+		cout << a.phai;
+		gotoXY(107, tungdo);
+		cout << a.trangthaithe;
+	}
 	gotoXY(x, y);
-
 }
 
 //duyet theo LNR in ra ma the tang dan
@@ -168,12 +170,10 @@ void xuat_ds_thong_tin_doc_gia(TREE t, int& i)
 {
 	if (t != NULL)
 	{
-		
 		xuat_ds_thong_tin_doc_gia(t->pLeft, i);
 		Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
 		xuat_ds_thong_tin_doc_gia(t->pRight, i);
 	}
-
 }
 
 // duyệt cây copy dữ liệu vào mảng
@@ -411,29 +411,29 @@ void xuat_dau_sach(dausach& a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(30, 0);
+	gotoXY(40, 0);
 	cout << "Ma Dau Sach";
-	gotoXY(45, 0);
+	gotoXY(55, 0);
 	cout << "Ten sach";
-	gotoXY(75, 0);
+	gotoXY(95, 0);
 	cout << "So trang";
-	gotoXY(85, 0);
+	gotoXY(105, 0);
 	cout << "Tac gia";
-	gotoXY(115, 0);
+	gotoXY(145, 0);
 	cout << "Nam XB";
-	gotoXY(125, 0);
+	gotoXY(155, 0);
 	cout << "The Loai";
-	gotoXY(30, tungdo);
+	gotoXY(40, tungdo);
 	cout << a.ISBN;
-	gotoXY(45, tungdo);
+	gotoXY(55, tungdo);
 	cout << a.tensach;
-	gotoXY(75, tungdo);
+	gotoXY(95, tungdo);
 	cout << a.sotrang;
-	gotoXY(85, tungdo);
+	gotoXY(105, tungdo);
 	cout << a.tacgia;
-	gotoXY(115, tungdo);
+	gotoXY(145, tungdo);
 	cout << a.namxuatban;
-	gotoXY(125, tungdo);
+	gotoXY(155, tungdo);
 	cout << a.theloai;
 	gotoXY(x, y);
 }
@@ -486,6 +486,7 @@ int tim_kiem_dau_sach_theo_ten(LIST_DS l, string temp)
 		// nếu tìm thấy temp là chuỗi con của tên đầu sách
 		if (l.ds_dausach[i]->tensach.find(temp) != string::npos)
 		{
+			xoa_hien_thi_dausach(l);
 			TextColor(14);
 			xuat_dau_sach(*l.ds_dausach[i],i+1);
 			kt = 1;

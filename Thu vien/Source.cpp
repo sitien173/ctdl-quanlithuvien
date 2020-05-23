@@ -1,14 +1,14 @@
 ﻿#include "xulyde.h"
 char thaotac[][50] =
-{					"DOC GIA						    ",
-				    "DAU SACH						    ",
-				    "DANH SACH SACH						",
-				    "MUON SACH                          ",
-					"TRA SACH                           ",
-				    "DANH SACH SACH 1 DOC GIA DANG MUON ",
-				    "DANH SACH DOC GIA QUA HAN		    ",
-				    "TOP 10 SACH MUON NHIEU NHAT        ",
-					"THOAT CHUONG TRINH				    "};
+{					"DOC GIA                           ",
+				    "DAU SACH                          ",
+				    "DANH SACH SACH                    ",
+				    "MUON SACH                         ",
+					"TRA SACH                          ",
+				    "DANH SACH SACH 1 DOC GIA DANG MUON",
+				    "DANH SACH DOC GIA QUA HAN         ",
+				    "TOP 10 SACH MUON NHIEU NHAT       ",
+					"THOAT CHUONG TRINH                "};
 enum TRANGTHAI{UP,DOWN,LEFT,RIGHT,ENTER,ESC,F1,F2,F3,F4};
 // hàm có chức năng bắt phim vừa nhập để điều khiển menu
 TRANGTHAI key(char c)
@@ -49,16 +49,13 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 	// lặp vô hạn cho đến khi trả về giá trị của hàm thì dừng
 	clrscr();
 	while (1) {
-		ButtonSreach(14);
-		ButtonSua(14);
-		ButtonThem(14);
-		ButtonXoa(14);
-		gotoXY(0, 0);
+		// 41 là tung độ mặc định của các botton
+		Button(41);
 		// in ra menu
 		for (int i = 0; i < n; i++)
 		{
 			TextColor(mau[i]); // đổi màu chữ cho chữ chuẩn bị in ra
-			cout  << thaotac[i] << endl;
+			cout  << char(4) << " " << thaotac[i] << " " << char(4) <<  endl;
 		}
 		char z = _getch();
 		TRANGTHAI trangthai = key(z);
@@ -198,7 +195,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 						Xuat_Thong_Tin_Doc_Gia(arr[i],i+1);
 						TextColor(7);
 					}
-					tungdo = 0;
 					delete[] arr;
 					_getch();
 					goto menu_xuat;
@@ -642,7 +638,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 		{
 			GhiFileDG(t);
 			GhiFileDS(l);
-			Ghi_file_quahan(t, l1);
+			//Ghi_file_quahan(t, l1);
 			giaiphong_cay(t);
 			giai_phong_vung_nho_dau_sach(l);
 			return;
@@ -652,8 +648,9 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 }
 int main()
 {
-	resizeConsole(1150, 550);
+	resizeConsole(1390, 650);
 	srand(time(NULL));
 	menu_xuli();
+	_getch();
 	return 0;
 }

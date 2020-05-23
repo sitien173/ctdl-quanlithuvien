@@ -187,14 +187,7 @@ void Ghi_file_quahan(TREE t,List_quahan l)
 			{
 				n++;
 				l.ds_quahan[n - 1].ma_doc_gia = t->data.mathe;
-				if (t->data.tongsosach> 0 && p->data.trangthai == 0)
-				{
-					l.ds_quahan[n - 1].so_ngay_quahan = so_ngay_quahan(p->data.ngaymuon, n1);
-				}
-				else
-				{
-					l.ds_quahan[n - 1].so_ngay_quahan = 0;
-				}
+				l.ds_quahan[n - 1].so_ngay_quahan = so_ngay_quahan(p->data.ngaymuon, n1);
 				l.ds_quahan[n - 1].ma_sach = p->data.masach;
 				l.ds_quahan[n - 1].ho = t->data.ho;
 				l.ds_quahan[n - 1].ten = t->data.ten;
