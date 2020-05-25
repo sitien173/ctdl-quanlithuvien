@@ -89,7 +89,6 @@ struct docgia
 };
 struct node_docgia
 {
-	
 	docgia data;
 	node_docgia* pLeft;
 	node_docgia* pRight;

@@ -17,28 +17,27 @@ TRANGTHAI key(char c)
 	{
 		c = _getch();
 	}
-		if (c == 72)
-			return UP;
-		if (c == 80)
-			return DOWN;
-		if (c == 77)
-			return RIGHT;
-		if (c == 75)
-			return LEFT;
-		if (c == 27)
-			return ESC;
-		if (c == 59)
-			return F1;
-		if (c == 60)
-			return F2;
-		if (c == 61)
-			return F3;
-		if (c == 62)
-			return F4;
-		if (c == 13)
+	if (c == 72)
+		return UP;
+	if (c == 80)
+		return DOWN;
+	if (c == 77)
+		return RIGHT;
+	if (c == 75)
+		return LEFT;
+	if (c == 27)
+		return ESC;
+	if (c == 59)
+		return F1;
+	if (c == 60)
+		return F2;
+	if (c == 61)
+		return F3;
+	if (c == 62)
+		return F4;
+	if (c == 13)
 		return ENTER;
 }
-
 int menu_dong(char thaotac[][50],int n) // n là số lượng item
 {
 	int tt=0; // biến chỉ ra đang ở thao tác nào
@@ -192,9 +191,33 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					for (int i = 0; i < n;i++)
 					{
 						TextColor(15);
-						Xuat_Thong_Tin_Doc_Gia(arr[i],i+1);
+						if (i <= 40)
+						{
+							Xuat_Thong_Tin_Doc_Gia(arr[i], i + 1);
+							ButtonNext();
+						}
+						else
+						{
+							char c = _getch();
+							TRANGTHAI next = key(c);
+							if (next == RIGHT)
+							{
+								xoa_hien_thi_doc_gia();
+								for (int j = i; j < n; j++)
+								{
+									Xuat_Thong_Tin_Doc_Gia(arr[j], ++tungdo);
+								}
+								break;
+							}
+							else if (next == ESC)
+							{
+								xoa_hienthi_buttonNext();
+								break;
+							}
+						}
 						TextColor(7);
 					}
+					tungdo = 0;
 					delete[] arr;
 					_getch();
 					goto menu_xuat;
@@ -214,7 +237,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 				do
 				{
 					string temp;
-					cout << "\nNhap Doc Gia(Ten Hoac MA): ";
+					gotoXY(1, 10);
+					cout << "                                           ";
+					gotoXY(1, 10);
+					cout << "Nhap Doc Gia(Ten Hoac MA): ";
 					temp = nhap_ki_tu1();
 					if (temp == "-1") // ESC
 						break;
@@ -240,7 +266,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 						{
 							TextColor(14);
 							// xóa hiển thị màn hình độc giả cũ
-							xoa_hien_thi_doc_gia(t);
+							xoa_hien_thi_doc_gia();
 							Xuat_Thong_Tin_Doc_Gia(p->data, ++tungdo);
 							tungdo = 0;
 							TextColor(7);
@@ -261,7 +287,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 				do
 				{
 					int key;
-					cout << "\nNhap Ma Doc Gia: ";
+					gotoXY(1, 10);
+					cout << "                                           ";
+					gotoXY(1, 10);
+					cout << "Nhap Ma Doc Gia: ";
 					key = nhap_so_nguyen();
 					if (key == -1) // nhập ESC
 						break; 
@@ -288,7 +317,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 				tungdo = 0;
 				int ma;
 				do {
-					cout << "\nNhap ma doc gia: ";
+					gotoXY(1, 10);
+					cout << "                                           ";
+					gotoXY(1, 10);
+					cout << "Nhap ma doc gia: ";
 					ma = nhap_so_nguyen();
 					if (ma == -1) // ESC
 						break;
@@ -351,7 +383,10 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				string ten_sach;
 				do
 				{
-					cout << "\nNhap Ten Sach Can Tim: ";
+					gotoXY(1, 10);
+					cout << "                              ";
+					gotoXY(1, 10);
+					cout << "Nhap Ten Sach Can Tim: ";
 					ten_sach = nhap_ki_tu1();
 					if (ten_sach == "-1") // ESC;
 						break;
@@ -376,7 +411,10 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				{
 					xuat_ds_dausach(l);
 					string ma_dau_sach;
-					cout << "\nNhap Ma Dau Sach: ";
+					gotoXY(1, 10);
+					cout << "                                ";
+					gotoXY(1, 10);
+					cout << "Nhap Ma Dau Sach: ";
 					ma_dau_sach = so_sang_chuoi(nhap_so_nguyen());
 					if (ma_dau_sach == "-1") // ESC
 					{
@@ -604,7 +642,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 				}
 				else
 				{
-					xoa_hien_thi_doc_gia(t);
+					xoa_hien_thi_doc_gia();
 					if (xuat_sach_dang_muon(p, l) == 0) // độc giả không mượn sách
 					{
 						BaoLoi("Doc Gia Khong Co Sach Muon");
@@ -638,7 +676,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 		{
 			GhiFileDG(t);
 			GhiFileDS(l);
-			//Ghi_file_quahan(t, l1);
+			Ghi_file_quahan(t, l1);
 			giaiphong_cay(t);
 			giai_phong_vung_nho_dau_sach(l);
 			return;

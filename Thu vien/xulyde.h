@@ -143,8 +143,6 @@ void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
-	if (tungdo <= 40)
-	{
 		gotoXY(45, 0);
 		cout << "Ma Doc Gia";
 		gotoXY(65, 0);
@@ -161,7 +159,6 @@ void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo)
 		cout << a.phai;
 		gotoXY(107, tungdo);
 		cout << a.trangthaithe;
-	}
 	gotoXY(x, y);
 }
 
@@ -171,7 +168,29 @@ void xuat_ds_thong_tin_doc_gia(TREE t, int& i)
 	if (t != NULL)
 	{
 		xuat_ds_thong_tin_doc_gia(t->pLeft, i);
-		Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
+		if (i <= 40)
+		{
+			Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
+		}
+		else
+		{
+			ButtonNext();
+			char c = _getch();
+			while (c == -32)
+				c = _getch();
+
+			if (c == 77)
+			{
+				i = 0;
+				xoa_hien_thi_doc_gia();
+				Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
+			}
+			else 
+			{
+				xoa_hienthi_buttonNext();
+				return;
+			}
+		}
 		xuat_ds_thong_tin_doc_gia(t->pRight, i);
 	}
 }
@@ -287,16 +306,20 @@ TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia)
 // tìm kiếm tên độc giả
 void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int tungdo)
 {
+	
 	if (t != NULL)
 	{
+		
 		// ch1 là chuỗi con của tên độc giả
 		if (t->data.ten.find(ch1) != string::npos)
 		{
 			TextColor(14);
-			Xuat_Thong_Tin_Doc_Gia(t->data, tungdo);
+			if (tungdo == 1)
+				xoa_hien_thi_doc_gia();
+			Xuat_Thong_Tin_Doc_Gia(t->data, tungdo++);
 		}
-		tim_kiem_ds_doc_gia_ten(t->pLeft, ch1, tungdo++);
-		tim_kiem_ds_doc_gia_ten(t->pRight, ch1, tungdo++);
+		tim_kiem_ds_doc_gia_ten(t->pLeft, ch1, tungdo);
+		tim_kiem_ds_doc_gia_ten(t->pRight, ch1, tungdo);
 
 	}
 	TextColor(7);
@@ -473,7 +496,30 @@ void xuat_ds_dausach(LIST_DS& l)
 	TextColor(15);
 	sap_xep_theo_theloai_dausach(l);
 	for (int i = 0; i < l.sl; i++)
-		xuat_dau_sach(*l.ds_dausach[i], i + 1);
+	{
+		if (i < 40)
+			xuat_dau_sach(*l.ds_dausach[i], i+1);
+		else
+		{
+			ButtonNext();
+			char c = _getch();
+			while (c == -32)
+				c = _getch();
+			if (c == 77)
+			{
+				xoa_hien_thi_dausach();
+				for (int j = i,tungdo=1; tungdo < 40 && j < l.sl; j++,tungdo++)
+				{
+					xuat_dau_sach(*l.ds_dausach[j], tungdo);
+					i = j;
+				}
+			}
+			else
+			{
+				return;
+			}
+		}
+	}
 	TextColor(7);
 }
 
@@ -481,14 +527,15 @@ void xuat_ds_dausach(LIST_DS& l)
 int tim_kiem_dau_sach_theo_ten(LIST_DS l, string temp)
 {
 	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách hay ko
+	int tungdo = 0;
 	for (int i = 0; i < l.sl; i++)
 	{
 		// nếu tìm thấy temp là chuỗi con của tên đầu sách
 		if (l.ds_dausach[i]->tensach.find(temp) != string::npos)
 		{
-			xoa_hien_thi_dausach(l);
+			xoa_hien_thi_dausach();
 			TextColor(14);
-			xuat_dau_sach(*l.ds_dausach[i],i+1);
+			xuat_dau_sach(*l.ds_dausach[i],++tungdo);
 			kt = 1;
 			continue;
 		}
@@ -515,7 +562,10 @@ int sua_dau_sach(LIST_DS& l)
 	string ma_dau_sach;
 	do
 	{
-		cout << "\nNhap Ma Dau Sach: ";
+		gotoXY(1, 10);
+		cout << "                             ";
+		gotoXY(1, 10);
+		cout << "Nhap Ma Dau Sach: ";
 		ma_dau_sach = nhap_ki_tu1();
 		if (ma_dau_sach == "-1") // ESC
 		{
@@ -676,12 +726,39 @@ void xuat_sach1(string ten_sach, danhmucsach a, int tungdo)
 // xuất các sách có trong danh sách sách
 void xuat_ds_sach1(LIST_DS l)
 {
-	int j = 0;
 	for (int i = 0; i < l.sl; i++)
 	{
-		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
+		int j = 0; // tung độ xuất sách
+		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; )
 		{
-			xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
+			if (j < 40)
+			{
+				xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
+				p = p->pNext;
+			}
+			else
+			{
+				ButtonNext();
+				char c = _getch();
+				while (c == -32)
+					c = _getch();
+				if (c == 77)
+				{
+					xoa_hien_thi_sach();
+					for (j = 0; j < 40 ; )
+					{
+						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
+						if (p != l.ds_dausach[i]->dms.pTail)
+							p = p->pNext;
+						else // p là node cuối
+						{
+							break;
+						}
+					}
+					break;
+				}
+				else return;
+			}
 		}
 	}
 }
@@ -691,7 +768,7 @@ int tim_kiem_sach_ten(LIST_DS l, string ten_sach)
 {
 	int kt = 0; // biến dùng để kiểm tra có tìm thấy hay ko. Nếu thấy tăng kt lên <> =0
 	int tungdo = 0;
-	xoa_hien_thi_sach(l);
+	xoa_hien_thi_sach();
 	for (int i = 0; i < l.sl; i++)
 	{
 		if (l.ds_dausach[i]->tensach.find(ten_sach) != string::npos)
@@ -930,6 +1007,7 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 	xuat_ds_thong_tin_doc_gia(t, tungdo);
 	tungdo = 0;
 	int ma_doc_gia;
+	gotoXY(1, 10);
 	cout << "Nhap ma doc gia: ";
 	ma_doc_gia = nhap_so_nguyen();
 	if (ma_doc_gia == -1) // ESC
@@ -942,7 +1020,7 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 		BaoLoi("Ma doc gia khong ton tai.");
 		return -1;
 	}
-	xoa_hien_thi_doc_gia(t);
+	xoa_hien_thi_doc_gia();
 	// kiểm tra số lượng sách độc giả đã mượn nếu > 3 không mượn được
 	int dem = dem_sach_docgia_muon(p);
 	if (dem >= 3)
@@ -960,6 +1038,7 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 	xuat_ds_dausach(l);
 	muontra x;
 	string temp;
+	gotoXY(1, 10);
 	cout << "Nhap Ten Sach : ";
 	temp = nhap_ki_tu1();
 	if (temp == "-1") // ESC
@@ -968,7 +1047,7 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 	}
 	else
 	{
-		xoa_hien_thi_dausach(l);
+		xoa_hien_thi_dausach();
 		int j = tim_kiem_dau_sach_theo_ten(l, temp);
 		// Không tìm thấy tên sách
 		if (j == -1)
@@ -981,6 +1060,7 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 		bool kt = true; // biến tạm thời dùng để dừng vòng lặp
 		do
 		{
+			gotoXY(1, 10);
 			cout << "Nhap Ma Dau Sach Sach Can Muon: ";
 			ma = nhap_ki_tu1();
 			if (ma == "-1") // ESC
@@ -998,7 +1078,7 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 				kt = true;
 			}
 		} while (kt == false);
-		xoa_hien_thi_dausach(l);
+		xoa_hien_thi_dausach();
 		// in danh sách các sách còn mượn được
 		TextColor(15);
 		// biến tạm thời truyền vào hàm xuat_sach1 để in ra theo tung độ
@@ -1062,7 +1142,7 @@ int trasach(TREE& t, LIST_DS& l)
 	int ma;
 	cout << "\nNhap ma doc gia: ";
 	ma = nhap_so_nguyen();
-	xoa_hien_thi_doc_gia(t);
+	xoa_hien_thi_doc_gia();
 	if (ma == -1) // ESC
 		return -2;
 	TREE p = tim_kiem_docgia_ma(t, ma);

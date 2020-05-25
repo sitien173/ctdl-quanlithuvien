@@ -56,6 +56,11 @@ void Button(int tungdo)
 	gotoXY(0,0);
 	TextColor(7);
 }
+void ButtonNext()
+{
+	gotoXY(110, 42); TextColor(79); cout << "   ->   ";
+	TextColor(15);
+}
 
 // ham chuyen doi so sang chuoi 
 string so_sang_chuoi(int number)
@@ -250,7 +255,6 @@ void giaiphong_cay(TREE& t)
 {
 	if (t != NULL)
 	{
-
 		NODE_MT* p = t->data.mt.pHead;
 		NODE_MT* q = NULL;
 		while (p != NULL)
@@ -483,29 +487,18 @@ bool kt_namnhuan(int nam)
 	return false;
 }
 
-void xoa_hien_thi_doc_gia(TREE t)
+void xoa_hienthi_buttonNext()
 {
 	int x = whereX();
 	int y = whereY();
-	int n = SoluongDG(t);
-	for (int i = 0; i <= n; i++)
-	{
-		gotoXY(45, i);
-		cout << "                     ";
-		gotoXY(65, i);
-		cout << "                     ";
-		gotoXY(90, i);
-		cout << "                     ";
-		gotoXY(100, i);
-		cout << "                     ";
-	}
+	gotoXY(110, 41);  cout << "        ";
 	gotoXY(x, y);
 }
-void xoa_hien_thi_dausach(LIST_DS l)
+void xoa_hien_thi_dausach()
 {
 	int x = whereX();
 	int y = whereY();
-	for (int i = 0; i <= l.sl; i++)
+	for (int i = 0; i <= 40; i++)
 	{
 		int x = whereX();
 		int y = whereY();
@@ -524,25 +517,20 @@ void xoa_hien_thi_dausach(LIST_DS l)
 	}
 	gotoXY(x, y);
 }
-void xoa_hien_thi_sach(LIST_DS l)
+void xoa_hien_thi_sach()
 {
 	int x = whereX();
 	int y = whereY();
-	int tungdo = 1;
-	for (int i = 0; i < l.sl; i++)
+	for (int i = 0; i <= 40; i++)
 	{
-		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
-		{
-			gotoXY(45, tungdo);
+			gotoXY(45, i);
 			cout << "                                  ";
-			gotoXY(65, tungdo);
+			gotoXY(65, i);
 			cout << "                                   ";
-			gotoXY(95, tungdo);
+			gotoXY(95, i);
 			cout << "                                   ";
-			gotoXY(110, tungdo);
+			gotoXY(110, i);
 			cout << "                                    ";
-			tungdo++;
-		}
 	}
 	gotoXY(x, y);
 }
@@ -582,21 +570,20 @@ void xoa_hien_thi_botton(int tungdo)
 	gotoXY(x, y);
 	TextColor(7);
 }
-void ve_khung()
+void xoa_hien_thi_doc_gia()
 {
-	TextColor(7);
-	for (int i = 0; i < 168; i++)
+	int x = whereX();
+	int y = whereY();
+	for (int i = 0; i <= 41; i++)
 	{
-		if (i < 40)
-		{
-			gotoXY(40, i);
-			cout << char(176);
-			gotoXY(i, 10);
-			cout << char(205);
-			gotoXY(167, i);
-			cout << char(176);
-		}
-		gotoXY(i, 40);
-		cout << char(205);
+		gotoXY(45, i);
+		cout << "                     ";
+		gotoXY(65, i);
+		cout << "                     ";
+		gotoXY(90, i);
+		cout << "                     ";
+		gotoXY(100, i);
+		cout << "                     ";
 	}
+	gotoXY(x, y);
 }
