@@ -7,9 +7,8 @@
 #include <ctime>
 using namespace std;
 #define MAX 100
-#define MAX_DG 1000 // mã thẻ ngẫu nhiên từ 1->1000
-#define MAX_MASACH 1000 // tạo mã sách ngẫu nhiên 1->1000
-const int STACKSIZE = 100; 
+#define MAX_MASACH 500 // tối đa 500 cuốn sách mỗi đầu sách
+const int STACKSIZE = 1000; 
 //==============danh muc sach================
 struct danhmucsach {
 	string masach;
@@ -52,9 +51,9 @@ typedef struct list_dausach LIST_DS;
 //==================Muon tra======================
 struct Date
 {
-	int ngay_hien_tai;
-	int thang_hien_tai;
-	int nam_hien_tai;
+	int ngay;
+	int thang;
+	int nam;
 };
 struct muontra
 {

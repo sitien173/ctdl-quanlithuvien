@@ -49,7 +49,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 	clrscr();
 	while (1) {
 		// 41 là tung độ mặc định của các botton
-		Button(41);
+		Button();
 		// in ra menu
 		for (int i = 0; i < n; i++)
 		{
@@ -249,7 +249,9 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					// nếu temp là kí tự
 					if (i == -1)
 					{
-						tim_kiem_ds_doc_gia_ten(t, temp,1);
+						tungdo = 1;
+						tim_kiem_ds_doc_gia_ten(t, temp,tungdo);
+						tungdo = 0;
 						_getch();
 						break;
 					}
@@ -501,10 +503,13 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			if (chon == 3|| chon == 62)
 			{
 				string ten_sach;
-				xuat_ds_sach1(l);
 				do
 				{
-					cout << "\nNhap Ten Sach Can Tim: ";
+					xuat_ds_sach1(l);
+					gotoXY(1, 10);
+					cout << "                                            ";
+					gotoXY(1, 10);
+					cout << "Nhap Ten Sach Can Tim: ";
 					ten_sach = nhap_ki_tu1();
 					if (ten_sach == "-1") // ESC
 						break;
@@ -528,7 +533,10 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 				string ma_sach;
 				do
 				{
-					cout << "\nNhap Ma Sach: ";
+					gotoXY(1, 10);
+					cout << "                            ";
+					gotoXY(1, 10);
+					cout << "Nhap Ma Sach: ";
 					ma_sach = nhap_ki_tu1();
 					if (ma_sach == "-1") // ESC
 						break;
@@ -549,7 +557,10 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 				xuat_ds_sach1(l);
 				do
 				{
-					cout << "\nNhap Ma Sach: ";
+					gotoXY(1, 10);
+					cout << "                            ";
+					gotoXY(1, 10);
+					cout << "Nhap Ma Sach: ";
 					ma_sach = nhap_ki_tu1();
 					if (ma_sach == "-1") // ESC
 						break;
@@ -583,27 +594,12 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 		// Mượn sách
 		case 4:
 		{
-			do
-			{
-				int i = muonsach(t, l, l1);
-				if (i == -2) // ESC
-				{
-					break;
-				}
-				else
-				{
-					if (i == -1) // Không thành công
-					{
-						continue;
-					}
-					else
-					{
-						BaoLoi("Muon Thanh Cong");
-						break;
-					}
-				}
-			} while (1);
-			goto menu_chinh;
+			int i = muonsach(t, l, l1);
+			if (i == -2) // ESC
+				goto menu_chinh;
+			else if (i == 1)
+				BaoLoi("Muon Thanh Cong");
+			break;
 		}
 		// TRẢ SÁCH
 		case 5:
@@ -630,7 +626,10 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			xuat_ds_thong_tin_doc_gia(t, tungdo);
 			tungdo = 0;
 			do {
-				cout << "\nNhap Ma Doc Gia: ";
+				gotoXY(1, 10);
+				cout << "                                ";
+				gotoXY(1, 10);
+				cout << "Nhap Ma Doc Gia: ";
 				ma_doc_gia = nhap_so_nguyen();
 				if (ma_doc_gia == -1) // ESC
 					break;
@@ -686,6 +685,9 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 }
 int main()
 {
+	// giả sử tối đa 100000 độc giả
+	// tạo ngẫu nhiên 100000 mã thẻ ngẫu nhiên.chỉ chạy 1 lần
+	// tao_ma_doc_gia();
 	resizeConsole(1390, 650);
 	srand(time(NULL));
 	menu_xuli();

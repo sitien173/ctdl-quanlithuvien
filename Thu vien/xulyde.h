@@ -32,7 +32,7 @@ void sap_xep_doc_gia_theo_ten(docgia* arr, int n);// sắp xếp độc giả th
 void tim_kiem_pt_the_mang(TREE& p, TREE& q);//Phần tử p đang được thế mạng cho phần tử q
 void xoa_theo_ma_doc_gia(TREE& t, int x);// hàm có chức năng xóa 1 độc giả bất kì theo mã độc giả
 TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia);// tìm kiếm độc giả trong danh sách với mã độc giả
-void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int tungdo);// tìm kiếm tên độc giả
+void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int& tungdo);// tìm kiếm tên độc giả
 int sua_thong_tin_doc_gia(TREE& t, int ma_doc_gia);// hiệu chỉnh thông tin độc giả thành công rt 1 <> ESC rt -2
 int SoluongDG(TREE t);// đếm số đọc giả trong cây
 
@@ -73,7 +73,6 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1);// mượn thành công tr 1 <
 int trasach(TREE& t, LIST_DS& l);// trả sách thành công tr 1 <> -1 ; ESC rt -2
 
 // =========================================== Qua Han ================================
-int so_ngay_quahan(Date n1, Date n2);// hàm trả về số ngày quá hạn. Tính số ngày chênh lệch giữa 2 mốc thời gian
 void ds_quahan(TREE t, LIST_QUAHAN& l);// in ra danh sách các độc giả quá hạn
 
 // =================== 10 sách có lượt mượn nhiều nhất ====================
@@ -94,7 +93,7 @@ int nhap_doc_gia(docgia& x)
 	if (x.ten == "-1") // ESC
 		return -2;
 	cout << "Nhap gioi tinh doc gia: ";
-	x.phai = nhap_ki_tu();
+	x.phai = nhap_gioitinh();
 	if (x.phai == "-1") // ESC
 		return -2;
 	x.trangthaithe = 1; // trạng thái lúc thêm độc giả auto =1. có thể mượn sách
@@ -106,16 +105,28 @@ int nhap_doc_gia(docgia& x)
 int them_doc_gia_vao_ds(TREE& t)
 {
 	docgia x;
-	x.mathe = tao_ma_doc_gia(t);
+	ifstream filein("MADOCGIA.txt");
+	ofstream filetemp("Temp.txt");
+	filein >> x.mathe;
 	int i = nhap_doc_gia(x);
 	if ( i== -2) // ESC
 			return -2;
 	else
 	{
 		them_node_vao_cay(t, x);
-		BaoLoi("Them Thanh Cong");
+		int temp;
+		while (filein >> temp)
+		{
+			if (temp != x.mathe)
+				filetemp << temp << endl;
+		}
+		filein.close();
+		filetemp.close();
+		remove("MADOCGIA.txt");
+		rename("Temp.txt", "MADOCGIA.txt");
+		return 1;
 	}
-	return 1;
+	
 }
 
 // them 1 node vao cay theo ma doc gia 
@@ -265,6 +276,17 @@ void xoa_theo_ma_doc_gia(TREE& t, int x)
 		// đã tìm được mã độc giả
 		else
 		{
+			if (t->data.tongsosach > 0)
+			{
+				for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
+				{
+					if (p->data.trangthai == 0) // độc giả đang mượn sách
+					{
+						BaoLoi("DOC GIA DANG CON SACH MUON.KHONG THE XOA");
+						return;
+					}
+				}
+			}
 			NODE_DG* p = t;
 			// xóa node có 1 con hoặc không có con nào
 			if (t->pLeft == NULL) // cây con phải
@@ -304,24 +326,23 @@ TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia)
 }
 
 // tìm kiếm tên độc giả
-void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int tungdo)
+void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int& tungdo)
 {
-	
 	if (t != NULL)
 	{
-		
 		// ch1 là chuỗi con của tên độc giả
 		if (t->data.ten.find(ch1) != string::npos)
 		{
 			TextColor(14);
-			if (tungdo == 1)
-				xoa_hien_thi_doc_gia();
-			Xuat_Thong_Tin_Doc_Gia(t->data, tungdo++);
+			if(tungdo==1)
+			xoa_hien_thi_doc_gia();
+			Xuat_Thong_Tin_Doc_Gia(t->data, tungdo);
+			tungdo++;
 		}
 		tim_kiem_ds_doc_gia_ten(t->pLeft, ch1, tungdo);
 		tim_kiem_ds_doc_gia_ten(t->pRight, ch1, tungdo);
-
 	}
+	
 	TextColor(7);
 	return;
 }
@@ -366,7 +387,6 @@ int sua_thong_tin_doc_gia(TREE& t, int ma_doc_gia)
 int SoluongDG(TREE t)
 {
 	int n = 0;
-	const int STACKSIZE = 100;
 	TREE Stack[STACKSIZE];
 	int top = -1;
 	do
@@ -675,7 +695,7 @@ int them_sach(LIST_DS& l)
 	for (int j = 0; j < n; j++)
 	{
 		NODE_DMS* p = new NODE_DMS;
-		p->data.masach = tao_masach(l.ds_dausach[i]->dms, ma_dau_sach);
+		p->data.masach = tao_ma_sach(l.ds_dausach[i]->dms,ma_dau_sach);
 		p->data.vitri = temp;
 		p->data.trangthai = 0; // mặc định sách có thể mượn được
 		them_sach_vao_ds(l.ds_dausach[i]->dms, tao_node_sach(p->data));
@@ -729,41 +749,56 @@ void xuat_ds_sach1(LIST_DS l)
 	for (int i = 0; i < l.sl; i++)
 	{
 		int j = 0; // tung độ xuất sách
+		xoa_hien_thi_sach();
 		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; )
 		{
 			if (j < 40)
 			{
 				xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
-				p = p->pNext;
-			}
-			else
-			{
-				ButtonNext();
-				char c = _getch();
-				while (c == -32)
-					c = _getch();
-				if (c == 77)
+				if (p != l.ds_dausach[i]->dms.pTail)
+					p = p->pNext;
+				else // nếu p là node cuối thoát vòng lặp tăng i lên 1
 				{
-					xoa_hien_thi_sach();
-					for (j = 0; j < 40 ; )
-					{
-						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
-						if (p != l.ds_dausach[i]->dms.pTail)
-							p = p->pNext;
-						else // p là node cuối
-						{
-							break;
-						}
-					}
-					break;
+					ButtonNext();
+					char c = _getch();
+					if (c == -32)
+						c = _getch();
+					if (c == 77)
+						break;
+					else
+						return;
 				}
-				else return;
+			}
+			else if (j >=40 )
+			{
+				do
+				{
+					xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
+					ButtonNext();
+					char c = _getch();
+					if (c == -32)
+						c = _getch();
+					if (c == 77)
+					{
+						xoa_hien_thi_sach();
+						for (j = 0; j < 40; j++)
+						{
+							xuat_sach1(l.ds_dausach[i]->tensach, p->data, j + 1);
+							if (p != l.ds_dausach[i]->dms.pTail)
+								p = p->pNext;
+							else
+								break;
+						}
+						break;
+					}
+					return ;
+				} while (1);
 			}
 		}
 	}
 }
 
-// tim kiem sach theo ten sach nếu thấy in ra. nếu không trả về -1
+// tim kiem sach theo ten sach nếu thấy in ra. nếu không trả về -1 , ESC rt -2
 int tim_kiem_sach_ten(LIST_DS l, string ten_sach)
 {
 	int kt = 0; // biến dùng để kiểm tra có tìm thấy hay ko. Nếu thấy tăng kt lên <> =0
@@ -777,8 +812,58 @@ int tim_kiem_sach_ten(LIST_DS l, string ten_sach)
 			TextColor(15);
 			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
 			{
-				TextColor(14);
-				xuat_sach1(l.ds_dausach[i]->tensach,p->data,++tungdo);
+				if (tungdo < 40)
+				{
+					xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+					if (p != l.ds_dausach[i]->dms.pTail)
+						p = p->pNext;
+					else // nếu p là node cuối thoát vòng lặp tăng i lên 1
+					{
+						if (tungdo < 40)
+						{
+							xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+							if (p != l.ds_dausach[i]->dms.pTail)
+								p = p->pNext;
+							else // nếu p là node cuối thoát vòng lặp tăng i lên 1
+							{
+								ButtonNext();
+								char c = _getch();
+								if (c == -32)
+									c = _getch();
+								if (c == 77)
+									break;
+								else
+									return -2;
+							}
+						}
+					}
+				}
+				else if (tungdo >= 40)
+				{
+					do
+					{
+						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+						ButtonNext();
+						char c = _getch();
+						while (c == -32)
+							c = _getch();
+						if (c == 77)
+						{
+							xoa_hien_thi_sach();
+							for (tungdo = 0; tungdo < 40; tungdo++)
+							{
+								xuat_sach1(l.ds_dausach[i]->tensach, p->data, tungdo + 1);
+								if (p != l.ds_dausach[i]->dms.pTail)
+									p = p->pNext;
+								else
+									break;
+							}
+							break;
+						}
+						// bấm phím khác ngoài phím ->
+						return -2;
+					} while (1);
+				}
 			}
 		}
 	}
@@ -896,10 +981,10 @@ void them_phieu_muon(muontra& x)
 {
 	// phiếu mượn trả chỉ cần nhập mã sách . ngày mượn sẽ được cập nhật từ hệ thống thời gian thực, trạng thái sẽ mặc định = 0 nghĩa là sách đó đang mượn
 	thoi_gian_thuc(x.ngaymuon);
-	cout << "Ngay muon:" << x.ngaymuon.ngay_hien_tai << "/" << x.ngaymuon.thang_hien_tai << "/" << x.ngaymuon.nam_hien_tai << endl;
-	x.ngaytra.ngay_hien_tai = 0;
-	x.ngaytra.thang_hien_tai = 0;
-	x.ngaytra.nam_hien_tai = 0;
+	cout << "Ngay muon:" << x.ngaymuon.ngay << "/" << x.ngaymuon.thang << "/" << x.ngaymuon.nam << endl;
+	x.ngaytra.ngay = 0;
+	x.ngaytra.thang = 0;
+	x.ngaytra.nam = 0;
 	x.trangthai = 0; // trạng thái mặc định =0 độc giả đang mượn cuốn sách
 	cout << "Trang thai: " << x.trangthai << endl;
 }
@@ -924,9 +1009,9 @@ void xuat_thong_tin_phieu_muontra(muontra a, string ten_sach, int tungdo)
 	gotoXY(65, tungdo);
 	cout << ten_sach;
 	gotoXY(85, tungdo);
-	cout << a.ngaymuon.ngay_hien_tai << "/" << a.ngaymuon.thang_hien_tai << "/" << a.ngaymuon.nam_hien_tai;
+	cout << a.ngaymuon.ngay << "/" << a.ngaymuon.thang << "/" << a.ngaymuon.nam;
 	gotoXY(100, tungdo);
-	cout << a.ngaytra.ngay_hien_tai << "/" << a.ngaytra.thang_hien_tai << "/" << a.ngaytra.nam_hien_tai;
+	cout << a.ngaytra.ngay << "/" << a.ngaytra.thang << "/" << a.ngaytra.nam;
 	gotoXY(120, tungdo);
 	cout << a.trangthai;
 	gotoXY(x, y);
@@ -1005,63 +1090,75 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 {
 	int tungdo=0;
 	xuat_ds_thong_tin_doc_gia(t, tungdo);
+	TREE p = NULL;// lưu  độc giả tìm được
 	tungdo = 0;
 	int ma_doc_gia;
-	gotoXY(1, 10);
-	cout << "Nhap ma doc gia: ";
-	ma_doc_gia = nhap_so_nguyen();
-	if (ma_doc_gia == -1) // ESC
+	do
 	{
-		return -2;
-	}
-	TREE p = tim_kiem_docgia_ma(t, ma_doc_gia);
-	if (p == NULL)
-	{
-		BaoLoi("Ma doc gia khong ton tai.");
-		return -1;
-	}
-	xoa_hien_thi_doc_gia();
-	// kiểm tra số lượng sách độc giả đã mượn nếu > 3 không mượn được
-	int dem = dem_sach_docgia_muon(p);
-	if (dem >= 3)
-	{
-		BaoLoi("Doc gia da muon qua 3 cuon.Khong the muon them");
-		return -1;
-	}
-	int so_ngay_quahan = tim_kiem_doc_gia_qua_han(l1, ma_doc_gia);
-	if (so_ngay_quahan > 7)
-	{
-		BaoLoi("Doc gia da muon sach qua han (>7 ngay).Khong the muon them");
-		return -1;
-	}
+		gotoXY(1, 10);
+		cout << "                            ";
+		gotoXY(1, 10);
+		cout << "Nhap Ma DG: ";
+		ma_doc_gia = nhap_so_nguyen();
+		if (ma_doc_gia == -1) // ESC
+		{
+			return -2;
+		}
+		 p = tim_kiem_docgia_ma(t, ma_doc_gia);
+		if (p == NULL)
+		{
+			BaoLoi("Ma doc gia khong ton tai.");
+			continue;
+		}
+		xoa_hien_thi_doc_gia();
+		// kiểm tra số lượng sách độc giả đã mượn nếu > 3 không mượn được
+		int dem = dem_sach_docgia_muon(p);
+		if (dem >= 3)
+		{
+			BaoLoi("Doc gia da muon qua 3 cuon.Khong the muon them");
+			continue;
+		}
+		int so_ngay_quahan = tim_kiem_doc_gia_qua_han(l1, ma_doc_gia);
+		if (so_ngay_quahan > 7)
+		{
+			BaoLoi("Doc gia da muon sach qua han (>7 ngay).Khong the muon them");
+			continue;
+		}
+		break;
+	} while (1);
 	// thêm vào danh sách mượn trả
 	xuat_ds_dausach(l);
 	muontra x;
 	string temp;
-	gotoXY(1, 10);
-	cout << "Nhap Ten Sach : ";
-	temp = nhap_ki_tu1();
-	if (temp == "-1") // ESC
-	{
-		return -2;
-	}
-	else
-	{
+	do {
+		gotoXY(1, 10);
+		cout << "                              ";
+		gotoXY(1, 10);
+		cout << "Nhap Ten Sach: ";
+		temp = nhap_ki_tu1();
+		if (temp == "-1") // ESC
+		{
+			return -2;
+		}
 		xoa_hien_thi_dausach();
 		int j = tim_kiem_dau_sach_theo_ten(l, temp);
 		// Không tìm thấy tên sách
 		if (j == -1)
 		{
 			BaoLoi("Ten Sach Khong Tim Thay");
-			return -1;
+			continue;
 		}
+		break;
+	} while (1);
 		string ma;
 		int i = -1; // lưu vị trí của mã sách nhập vào 
-		bool kt = true; // biến tạm thời dùng để dừng vòng lặp
+		string ten_sach; // biến lưu tên sách từ mã đầu sách tìm được
 		do
 		{
 			gotoXY(1, 10);
-			cout << "Nhap Ma Dau Sach Sach Can Muon: ";
+			cout << "                                              ";
+			gotoXY(1, 10);
+			cout << "Nhap Ma Dau Sach Can Muon: ";
 			ma = nhap_ki_tu1();
 			if (ma == "-1") // ESC
 			{
@@ -1071,29 +1168,28 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 			if (i == -1)
 			{
 				BaoLoi("Ma dau sach khong dung.Vui long nhap lai.");
-				kt = false;
+				continue;
 			}
 			else
 			{
-				kt = true;
+				ten_sach = l.ds_dausach[i]->tensach;
+				break;
 			}
-		} while (kt == false);
+		} while (1);
 		xoa_hien_thi_dausach();
-		// in danh sách các sách còn mượn được
-		TextColor(15);
-		// biến tạm thời truyền vào hàm xuat_sach1 để in ra theo tung độ
-		int tungdo = 0;
-		for (NODE_DMS* q = l.ds_dausach[i]->dms.pHead; q != NULL; q = q->pNext)
-		{
-			if (q->data.trangthai == 0) // sách còn mượn được
-				xuat_sach1(l.ds_dausach[i]->tensach, q->data, ++tungdo);
-		}
-		TextColor(7);
+		// in danh sách các sách thuộc mã đầu sách tương ứng
+		int i1=tim_kiem_sach_ten(l, ten_sach);
+		if (i1 == -2) // ESC
+			return -2;
+		// tìm thấy sách
 		string ma_sach;
 		NODE_DMS* k = NULL; // lưu vị trí node trả về trong tim_kiem_sach
 		do
 		{
-			cout << "Nhap ma sach can muon: ";
+			gotoXY(1, 10);
+			cout << "                                   ";
+			gotoXY(1, 10);
+			cout << "Nhap Ma Sach Can Muon: ";
 			ma_sach = nhap_ki_tu1();
 			if (ma_sach == "-1") // ESC
 				return -2;
@@ -1101,32 +1197,27 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 			if (k == NULL)
 			{
 				BaoLoi("Ma sach khong ton tai. vui long nhap lai");
-				kt = false;
+				continue;
 			}
 			else
 			{
 				if (k->data.trangthai == 1)
 				{
 					BaoLoi("sach da co nguoi muon");
-					kt = false;
+					continue;
 				}
 				else if (k->data.trangthai == 2)
 				{
 					BaoLoi("Sach da thanh li");
-					kt = false;
+					continue;
 				}
-				else
-				{
-					x.masach = ma_sach;
-					k->data.trangthai = 1; // cập nhật sách đã mượn
-					l.ds_dausach[i]->soluongmuon++; // tăng số lượng mượn cuốn sách
-					kt = true;
-				}
-
 			}
-		} while (kt == false);
+			x.masach = ma_sach;
+			k->data.trangthai = 1; // cập nhật sách đã mượn
+			l.ds_dausach[i]->soluongmuon++; // tăng số lượng mượn cuốn sách
+			break;
+		} while (1);
 
-	}
 	p->data.tongsosach++;
 	them_phieu_muon(x);
 	them_vao_ds_muontra(p->data.mt, tao_node_muontra(x));
@@ -1140,109 +1231,75 @@ int trasach(TREE& t, LIST_DS& l)
 	xuat_ds_thong_tin_doc_gia(t, tungdo);
 	tungdo = 0;
 	int ma;
-	cout << "\nNhap ma doc gia: ";
-	ma = nhap_so_nguyen();
-	xoa_hien_thi_doc_gia();
-	if (ma == -1) // ESC
-		return -2;
-	TREE p = tim_kiem_docgia_ma(t, ma);
-	if (p == NULL)
+	TREE p = NULL;
+	do
 	{
-		BaoLoi("Ma doc gia khong ton tai.");
-		return -1;
-	}
-	else
-	{
-		TextColor(15);
-		if (xuat_sach_dang_muon(p, l) == 0) // độc giả không có sách mượn
-		{
-			BaoLoi("Doc Gia Khong Co Sach Muon");
-			return -1;
-		}
-		string ma_sach;
-		TextColor(7);
-		cout << "Nhap ma sach can tra: ";
-		ma_sach = nhap_ki_tu1();
-		if (ma_sach == "-1") // ESC
+		gotoXY(1, 10);
+		cout << "                             ";
+		gotoXY(1, 10);
+		cout << "Nhap ma doc gia: ";
+		ma = nhap_so_nguyen();
+		p= tim_kiem_docgia_ma(t, ma);
+		xoa_hien_thi_doc_gia();
+		if (ma == -1) // ESC
 			return -2;
 
-		NODE_DMS* k = tim_kiem_sach(l, ma_sach); // lưu vị trí của sách trả về trong danh sách qua mã sách
-		if (k == NULL)
+		if (p == NULL)
 		{
-			BaoLoi("Ma sach khong ton tai");
-			return -1;
+			BaoLoi("Ma doc gia khong ton tai.");
+			continue;
 		}
 		else
 		{
-			Date n1;
-			for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
+			TextColor(15);
+			if (xuat_sach_dang_muon(p, l) == 0) // độc giả không có sách mượn
 			{
-				if (q->data.masach == ma_sach)
-				{
-					k->data.trangthai = 0;// cập nhật lại sách cho mượn được 
-					q->data.trangthai = 1; // cập nhật lại đọc giả đã trả sách
-					thoi_gian_thuc(n1); // lấy thời gian hệ thống
-					q->data.ngaytra.ngay_hien_tai = n1.ngay_hien_tai;
-					q->data.ngaytra.thang_hien_tai = n1.thang_hien_tai;
-					q->data.ngaytra.nam_hien_tai = n1.nam_hien_tai;
-				}
+				BaoLoi("Doc Gia Khong Co Sach Muon");
+				return -1;
 			}
+			string ma_sach;
+			TextColor(7);
+			do
+			{
+				gotoXY(1, 10);
+				cout << "                                  ";
+				gotoXY(1, 10);
+				cout << "Nhap ma sach can tra: ";
+				ma_sach = nhap_ki_tu1();
+				if (ma_sach == "-1") // ESC
+					return -2;
+
+				NODE_DMS* k = tim_kiem_sach(l, ma_sach); // lưu vị trí của sách trả về trong danh sách qua mã sách
+				if (k == NULL)
+				{
+					BaoLoi("Ma sach khong ton tai");
+					continue;
+				}
+				else
+				{
+					Date n1;
+					for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
+					{
+						if (q->data.masach == ma_sach)
+						{
+							k->data.trangthai = 0;// cập nhật lại sách cho mượn được 
+							q->data.trangthai = 1; // cập nhật lại đọc giả đã trả sách
+							thoi_gian_thuc(n1); // lấy thời gian hệ thống
+							q->data.ngaytra.ngay = n1.ngay;
+							q->data.ngaytra.thang = n1.thang;
+							q->data.ngaytra.nam = n1.nam;
+						}
+					}
+				}
+				break;
+			} while (1);
+			break;
 		}
-	}
+	} while (1);
+
 	return 1;
 }
-
 // ========================================= Qua Han =============================
-
-// hàm trả về số ngày quá hạn. Tính số ngày chênh lệch giữa 2 mốc thời gian
-int so_ngay_quahan(Date n1, Date n2)
-{
-	int tong_ngay = 0;
-	// tính số ngày theo độ chênh lệch giữa 2 năm
-	while (n1.nam_hien_tai < n2.nam_hien_tai)
-	{
-		if (kt_namnhuan(n2.nam_hien_tai) == true) // là năm nhuận
-		{
-			tong_ngay += 366;
-		}
-		else
-		{
-			tong_ngay += 365;
-		}
-		n2.nam_hien_tai--;
-	}
-	// tính số ngày theo độ chênh lệch giữa 2 tháng
-	while (n1.thang_hien_tai < n2.thang_hien_tai)
-	{
-		if (n1.thang_hien_tai == 4 || n1.thang_hien_tai == 6 || n1.thang_hien_tai == 9 || n1.thang_hien_tai == 11)
-		{
-			tong_ngay += 30;
-		}
-		else if (n1.thang_hien_tai == 2)
-		{
-			if (kt_namnhuan(n1.nam_hien_tai) == true)
-			{
-				tong_ngay += 29;
-			}
-			else
-			{
-				tong_ngay += 28;
-			}
-		}
-		else
-		{
-			tong_ngay += 31;
-		}
-		n1.thang_hien_tai++;
-		return (tong_ngay - n1.ngay_hien_tai) + n2.ngay_hien_tai;
-	}
-	// tính số ngày chênh lệch giữa 2 ngày cùng tháng cùng năm
-	if (n1.ngay_hien_tai < n2.ngay_hien_tai)
-	{
-		return tong_ngay = n2.ngay_hien_tai - n1.ngay_hien_tai;
-	}
-	return 0;
-}
 
 // in ra danh sách các độc giả quá hạn
 void ds_quahan(TREE t, LIST_QUAHAN& l)
@@ -1270,10 +1327,10 @@ void ds_quahan(TREE t, LIST_QUAHAN& l)
 				thoi_gian_thuc(n1);
 				if (p->data.trangthai == 0)
 				{
-					l.ds_quahan[n - 1].so_ngay_quahan = so_ngay_quahan(p->data.ngaymuon, n1);
+					l.ds_quahan[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
 				}
 				else
-					l.ds_quahan[n - 1].so_ngay_quahan = 0;
+				l.ds_quahan[n - 1].so_ngay_quahan = 0;
 				l.ds_quahan[n - 1].ma_sach = p->data.masach;
 				l.ds_quahan[n - 1].ho = t->data.ho;
 				l.ds_quahan[n - 1].ten = t->data.ten;

@@ -22,44 +22,44 @@ void BaoLoi(string s) {
 	gotoXY(x, y);
 	TextColor(7);
 }
-void Button(int tungdo)
+void Button()
 {
-	gotoXY(50, tungdo + 3); TextColor(76); cout << "        ";
-	gotoXY(50, tungdo + 4); TextColor(78); cout << "  CHON  ";
-	gotoXY(50, tungdo + 5); TextColor(76); cout << "        ";
-	gotoXY(50, tungdo + 6); TextColor(79); cout << "  Enter ";
+	gotoXY(50, 44); TextColor(76); cout << "        ";
+	gotoXY(50, 45); TextColor(78); cout << "  CHON  ";
+	gotoXY(50, 46); TextColor(76); cout << "        ";
+	gotoXY(50, 47); TextColor(79); cout << "  Enter ";
 
-	gotoXY(70, tungdo + 3); TextColor(76); cout << "        ";
-	gotoXY(70, tungdo + 4); TextColor(78); cout << "  SUA   ";
-	gotoXY(70, tungdo + 5); TextColor(76); cout << "        ";
-	gotoXY(70, tungdo + 6); TextColor(79); cout << "   F3   ";
+	gotoXY(70, 44); TextColor(76); cout << "        ";
+	gotoXY(70, 45); TextColor(78); cout << "  SUA   ";
+	gotoXY(70, 46); TextColor(76); cout << "        ";
+	gotoXY(70, 47); TextColor(79); cout << "   F3   ";
 
-	gotoXY(90, tungdo + 3); TextColor(76); cout << "        ";
-	gotoXY(90, tungdo + 4); TextColor(78); cout << "  TIM   ";
-	gotoXY(90, tungdo + 5); TextColor(76); cout << "        ";
-	gotoXY(90, tungdo + 6); TextColor(79); cout << "   F4   ";
+	gotoXY(90, 44); TextColor(76); cout << "        ";
+	gotoXY(90, 45); TextColor(78); cout << "  TIM   ";
+	gotoXY(90, 46); TextColor(76); cout << "        ";
+	gotoXY(90, 47); TextColor(79); cout << "   F4   ";
 
-	gotoXY(110, tungdo + 3); TextColor(76); cout << "        ";
-	gotoXY(110, tungdo + 4); TextColor(78); cout << "  THEM  ";
-	gotoXY(110, tungdo + 5); TextColor(76); cout << "        ";
-	gotoXY(110, tungdo + 6); TextColor(79); cout << "   F1   ";
+	gotoXY(110, 44); TextColor(76); cout << "        ";
+	gotoXY(110, 45); TextColor(78); cout << "  THEM  ";
+	gotoXY(110, 46); TextColor(76); cout << "        ";
+	gotoXY(110, 47); TextColor(79); cout << "   F1   ";
 
-	gotoXY(130, tungdo + 3); TextColor(76); cout << "        ";
-	gotoXY(130, tungdo + 4); TextColor(78); cout << "  XOA   ";
-	gotoXY(130, tungdo + 5); TextColor(76); cout << "        ";
-	gotoXY(130, tungdo + 6); TextColor(79); cout << "   F2   ";
+	gotoXY(130, 44); TextColor(76); cout << "        ";
+	gotoXY(130, 45); TextColor(78); cout << "  XOA   ";
+	gotoXY(130, 46); TextColor(76); cout << "        ";
+	gotoXY(130, 47); TextColor(79); cout << "   F2   ";
 
-	gotoXY(150, tungdo + 3); TextColor(76); cout << "        ";
-	gotoXY(150, tungdo + 4); TextColor(78); cout << "  THOAT ";
-	gotoXY(150, tungdo + 5); TextColor(76); cout << "        ";
-	gotoXY(150, tungdo + 6); TextColor(79); cout << "   ESC  ";
-	gotoXY(0,0);
+	gotoXY(150, 44); TextColor(76); cout << "        ";
+	gotoXY(150, 45); TextColor(78); cout << "  THOAT ";
+	gotoXY(150, 46); TextColor(76); cout << "        ";
+	gotoXY(150, 47); TextColor(79); cout << "   ESC  ";
+	gotoXY(0, 0);
 	TextColor(7);
 }
 void ButtonNext()
 {
 	gotoXY(110, 42); TextColor(79); cout << "   ->   ";
-	TextColor(15);
+	TextColor(7);
 }
 
 // ham chuyen doi so sang chuoi 
@@ -214,67 +214,75 @@ void chuan_hoa_chu(string& str)
 	}
 }
 
-// ========================tạo mã độc giả không trùng================
-int tao_ma_doc_gia(TREE t)
-{
-	int ma;
-	TREE kt;
-	do
-	{
-		ma = rand() % MAX_DG + 1;
-		kt = tim_kiem_docgia_ma(t, ma);
-	} while (kt != NULL);
-	return ma;
-}
 
+
+// ========================tạo mã độc giả không trùng================
+// tạo 100000 mã độc giả 
+void tao_ma_doc_gia()
+{
+	int arr[100000 + 1];
+	int i = 1;
+	for (i; i <= 100000; i++)
+		arr[i] = i;
+	for (i = 1; i <= 100000; i++)
+	{
+		int j = rand() % 100000 + 1;
+		swap(arr[i], arr[j]);
+	}
+	ofstream fileout("MADOCGIA.txt");
+	for (int i = 1; i <= 100000; i++)
+	{
+		fileout << arr[i] << endl;
+	}
+	fileout.close();
+}
 bool kiem_tra_ma_sach(LIST_DMS& l, string ma)
 {
-	node_danhmucsach* p = l.pHead;
-	while (p != NULL)
+	for (NODE_DMS* p = l.pHead; p != NULL; p = p->pNext)
 	{
-		if (p->data.masach == ma)
-			return true;
-		p = p->pNext;
+		if (p->data.masach == ma) return true;
 	}
 	return false;
 }
-
-string tao_masach(LIST_DMS& l, string ma_dau_sach)
+string tao_ma_sach(LIST_DMS l, string ma_dau_sach)
 {
-	string str = ma_dau_sach + "-";
+	string temp;
 	do
 	{
-		int ma = rand() % MAX_MASACH + 1;
-		str += so_sang_chuoi(ma);
-	} while (kiem_tra_ma_sach(l, str) != false);
-	return str;
+		temp = ma_dau_sach + "-";
+		int ma = rand() % MAX_MASACH + 1;// random tu 1 -> 500
+		temp += so_sang_chuoi(ma);
+	} while (kiem_tra_ma_sach(l, temp) == true);
+	return temp;
 }
-
 // =============================== giải phóng==================
 void giaiphong_cay(TREE& t)
 {
 	if (t != NULL)
 	{
-		NODE_MT* p = t->data.mt.pHead;
-		NODE_MT* q = NULL;
-		while (p != NULL)
+		if (t->data.tongsosach > 0)
 		{
-			t->data.mt.pHead = p->pNext;
-			if (p != t->data.mt.pTail)
+			NODE_MT* p = t->data.mt.pHead;
+			NODE_MT* q = NULL;
+			while (p != NULL)
 			{
-				p = p->pNext;
-				q = p->pPrev;
-				delete q;
+				t->data.mt.pHead = p->pNext;
+				if (p != t->data.mt.pTail)
+				{
+					p = p->pNext;
+					q = p->pPrev;
+					delete q;
+				}
+				else // p là node cuối mt
+				{
+					delete p;
+					break;
+				}
 			}
-			else // p là node cuối mt
-			{
-				delete p;
-				break;
-			}
+			t->data.mt.pTail = NULL;
 		}
-		t->data.mt.pTail = NULL;
-		giaiphong_cay(t->pRight);
 		giaiphong_cay(t->pLeft);
+		giaiphong_cay(t->pRight);
 		delete t;
 		t = NULL;
 	}
@@ -283,12 +291,11 @@ void giai_phong_vung_nho_dau_sach(LIST_DS& l)
 {
 	for (int i = 0; i < l.sl; i++)
 	{
-		NODE_DMS* p;
+		NODE_DMS* p = NULL;
 		while (l.ds_dausach[i]->dms.pHead != NULL)
 		{
 			p = l.ds_dausach[i]->dms.pHead;
 			l.ds_dausach[i]->dms.pHead = p->pNext;
-			l.ds_dausach[i]->dms.pHead = l.ds_dausach[i]->dms.pHead->pNext;
 			delete p;
 		}
 		l.ds_dausach[i]->dms.pTail = NULL;
@@ -305,21 +312,37 @@ bool Kiem_Tra_Ki_Tu_So(char c)
 		return true;
 	return false;
 }
+// phím chức năng rt 1 , số rt 2,Không thuộc cả 2 rt 0
+int Kiem_tra_phim(char c)
+{
+	int arr[32] = { 72,75,77,80,81,73,44,46,59,39,47,93,91,92,61,82,83,79,71,122,123,68,67,66,65
+	,64,63,62,61,60,59,96 };
+	if (c >= '0' && c <= '9')
+		return 2;
+	// nhấn shift + key
+	if (GetKeyState(VK_SHIFT) & 0x8000)
+		return 1;
+	for (int i = 0; i < 32; i++)
+	{
+		if (c == arr[i])
+			return 1; 
+	}
+	return 0;
+}
 
 // Hàm nhập dữ liệu toàn kí tự . VD: họ, tên, giới tính. Kí tự bắt đầu phải là kí tự 
 string nhap_ki_tu()
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	string str;
-	bool KT;
+	bool KT = false;;
 	int length = 0; // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
-	Nhap:		c = _getch();
-		while (c == 13)
+		c = _getch();
+		if (c == 0 || c == -32)
 		{
-			BaoLoi("Khong duoc de trong");
 			c = _getch();
 		}
 		while (int(c) != 13)
@@ -328,12 +351,18 @@ string nhap_ki_tu()
 			{
 				return "-1";
 			}
-			if (Kiem_Tra_Ki_Tu_So(c) == true) // nếu nhập kí tự là số
+			int k = Kiem_tra_phim(c);
+			if (k == 1) // phím chức năng
+			{
+				BaoLoi("Phim Nhap Khong Hop Le");
+				break;
+			}
+			if (k == 2) // nếu nhập kí tự là số
 			{
 				BaoLoi("Khong duoc nhap so");
-				c = _getch();
-				continue;
+				break;
 			}
+
 			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
 			{
 
@@ -353,15 +382,28 @@ string nhap_ki_tu()
 				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
 			}
-
-			c = _getch();
+			break;
 		}
-		while (str.length() == 0)
+		if (c == 13)
 		{
-			BaoLoi("Khong duoc de trong");
-			goto Nhap;
+			int dem = 1;
+			int dem1 = 0;
+			for (int i = 0; i < length; i++)
+			{
+				if ((int)str[i] == 32)
+					dem++;
+				else
+					dem1++;
+			}
+			if (length == 0 || (dem >= 2 && dem1 == 0))
+			{
+				BaoLoi("Khong duoc de trong");
+				KT = false;
+			}
+			else
+				KT = true;
+
 		}
-		KT = true;
 	} while (KT == false);
 	cout << endl;
 	chuan_hoa_chu(str);
@@ -373,15 +415,14 @@ string nhap_ki_tu1()
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	string str;
-	bool KT;
+	bool KT=false;
 	int length = 0; // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
-	Nhap1:	c = _getch();
-		while (c == 13)
+		c = _getch();
+		if (c == 0 || c == -32)
 		{
-			BaoLoi("Khong duoc de trong");
 			c = _getch();
 		}
 		while (int(c) != 13)
@@ -389,6 +430,12 @@ string nhap_ki_tu1()
 			if (c == 27)
 			{
 				return "-1";
+			}
+			int k = Kiem_tra_phim(c);
+			if (k == 1) // phím chức năng
+			{
+				BaoLoi("Phim Nhap Khong Hop Le");
+				break;
 			}
 			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
 			{
@@ -410,20 +457,117 @@ string nhap_ki_tu1()
 				str.push_back(c);
 			}
 
-			c = _getch();
+			break;
 		}
-		while (str.length() == 0)
+		
+		if (c == 13)
 		{
-			BaoLoi("Khong duoc de trong");
-			goto Nhap1;
-		}
-		KT = true;
+			int dem = 1;
+			int dem1 = 0;
+			for (int i = 0; i < length; i++)
+			{
+				if ((int)str[i] == 32)
+					dem++;
+				else
+					dem1++;
+			}
+			if (length == 0 || (dem >= 2 && dem1 == 0))
+			{
+				BaoLoi("Khong duoc de trong");
+				KT = false;
+			}
+			else
+				KT = true;
+
+			}
 	} while (KT == false);
 	cout << endl;
 	chuan_hoa_chu(str);
 	return str;
 }
 
+string nhap_gioitinh()
+{
+
+	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
+	string str;
+	bool KT=false;
+	int length = 0; // biến cho con trỏ dịch đến cuối
+	char c;
+	do
+	{
+		c = _getch();
+		if (c == -32 || c==0) c = _getch();
+		while (int(c) != 13)
+		{
+			if (c == 27)
+			{
+				return "-1";
+			}
+			if (Kiem_tra_phim(c) == 1)
+			{
+				BaoLoi("Phim Nhap Khong Hop Le");
+				break;
+			}
+			if (Kiem_tra_phim(c) == 2) // nếu nhập kí tự là số
+			{
+				BaoLoi("Khong duoc nhap so");
+				break;
+			}
+
+			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
+			{
+
+				if (length > 0) // nếu như độ dài biến con trỏ dịch bằng 0 thì ko cho xóa tiếp
+				{
+					cout << "\b \b"; // khi bấm phím Backspace thì sẽ xóa từng kí tự của chuỗi kí tự hiện tại
+					length--;
+				}
+				if (str.length() != 0) // xóa kí tự cuối trong chuỗi string 
+				{
+					str.erase(str.begin() + (str.length() - 1));
+				}
+			}
+			else
+			{
+				cout << c;
+				length++; // cập nhật vụ trí con trỏ chỉ vị
+				str.push_back(c);
+			}
+			break;
+		}
+		if (c == 13)
+		{
+			int dem = 1;
+			int dem1 = 0;
+			for (int i = 0; i < length; i++)
+			{
+				if ((int)str[i] == 32)
+					dem++;
+				else
+					dem1++;
+			}
+			if (str.length() == 0 || (dem >= 2 && dem1 == 0))
+			{
+				BaoLoi("Khong duoc de trong");
+				KT = false;
+			}
+			if (str.length() >= 1)
+			{
+				chuan_hoa_chu(str);
+				if (str != "Nam" || str != "Nu")
+				{
+					BaoLoi("Gioi Tinh Chi Nhan Nam Hoac Nu");
+					KT = false;
+				}
+				else
+					KT = true;
+			}
+		}
+} while (KT == false);
+cout << endl;
+return str;
+}
 // ham co chuc nang cap nhat lai sach
 void cap_nhat_sach(TREE& t, LIST_DS& l)
 {
@@ -472,9 +616,9 @@ void thoi_gian_thuc(Date& x)
 {
 	time_t t = time(NULL);
 	tm* now = localtime(&t);
-	x.ngay_hien_tai = now->tm_mday;
-	x.thang_hien_tai = now->tm_mon + 1;
-	x.nam_hien_tai = now->tm_year + 1900;
+	x.ngay = now->tm_mday;
+	x.thang = now->tm_mon + 1;
+	x.nam = now->tm_year + 1900;
 }
 
 // kiem tra nam nhuan
@@ -521,16 +665,16 @@ void xoa_hien_thi_sach()
 {
 	int x = whereX();
 	int y = whereY();
-	for (int i = 0; i <= 40; i++)
+	for (int i = 0; i <= 41; i++)
 	{
-			gotoXY(45, i);
-			cout << "                                  ";
-			gotoXY(65, i);
-			cout << "                                   ";
-			gotoXY(95, i);
-			cout << "                                   ";
-			gotoXY(110, i);
-			cout << "                                    ";
+		gotoXY(45, i);
+		cout << "                                  ";
+		gotoXY(65, i);
+		cout << "                                   ";
+		gotoXY(95, i);
+		cout << "                                   ";
+		gotoXY(110, i);
+		cout << "                                    ";
 	}
 	gotoXY(x, y);
 }
@@ -586,4 +730,48 @@ void xoa_hien_thi_doc_gia()
 		cout << "                     ";
 	}
 	gotoXY(x, y);
+}
+// test
+int tinh_so_ngay(Date n1)
+{
+	Date n2;
+	thoi_gian_thuc(n2);
+	int sum = 0;
+	while (n2.nam >= n1.nam)
+	{
+		if (n1.nam == n2.nam && n2.thang == n1.thang)
+		{
+			sum += n2.ngay - n1.ngay;
+			break;
+		}
+		else
+		{
+			// các tháng 4 6 9 11 có 30 ngày
+			if (n1.thang == 4 || n1.thang == 6 || n1.thang == 9 || n1.thang == 11)
+			{
+				sum += 30 - n1.ngay;
+			}
+			if (n1.thang == 1 || n1.thang == 3 || n1.thang == 5 || n1.thang == 7 || n1.thang == 8 || n1.thang == 10 || n1.thang == 12)
+			{
+				sum += 31 - n1.ngay;
+			}
+			if (n1.thang == 2)
+			{
+				if (n1.nam % 4 == 0 && n1.nam % 100 != 0 || n1.nam % 400 == 0)
+				{
+					sum += 29 - n1.ngay;
+				}
+				else
+					sum += 28 - n1.ngay;
+			}
+			n1.thang++; n1.ngay = 0;
+			if (n1.thang == 13)
+			{
+				// tăng năm lên 1
+				n1.nam++;
+				n1.thang = 1;
+			}
+		}
+	}
+	return sum;
 }

@@ -1,99 +1,124 @@
-49
-7,Do Thi Thuy,Linh,Nu,1
+59
+290,Cao Van,Chi,Nam,1
 0
-38,Luu Nguyen Ky,Thu,Nam,1
+697,Nguyen Quang,Hung,Nam,1
+1
+978415-485,0,21/5/2019,0/0/0
+518,Ngo Minh,Tien,Nam,1
 0
-72,Le Quang,Loc,Nam,1
+49271,Nguyen,Linh,Nu,1
 0
-87,Phan Vo Anh,Hu,Nu,1
-0
-89,Nguyen Bich,Nguyen,Nu,1
-0
-104,Le Thanh,Tung,Nam,1
-0
-119,Nguyen Tu,Anh,Nu,1
-0
-124,Nguyen Huu,Tai,Nam,1
+721,Nguyen,Van,Nam,1
+3
+358,0,21/5/2019,0/0/0
+358,0,21/5/2019,0/0/0
+358,0,21/5/2019,0/0/0
+667,Nguyen Khac,Duy,Nam,1
 0
 151,Cao Trunh,Chinh,Nam,1
 0
-164,Nguyen Huu,Thuc,Nam,1
+9715,Nguyen Hai,Nam,Nam,1
 0
-175,Vo Minh,Trung,Nam,1
+11124,Hoang,Van,Bede,1
 0
-179,Nguyen Thi,Hanh,Nu,1
-0
-237,Cao Chi,Nguyen,Nam,1
-0
-238,Ngo Minh,Thuan,Nam,1
-0
-246,Tran Nhat,Dong,Nam,1
-0
-254,Nguyen The,Hung,Nam,1
-0
-262,Cao Van,Tai,Nam,1
-0
-287,Do Phuoc Dat,Huy,Nam,1
-0
-290,Cao Van,Chi,Nam,1
-0
-339,Vo Vu,Duc,Nam,1
-0
-350,Pham The,Tai,Nam,1
-0
-358,Nguyen Van,Binh,Nam,1
-0
-368,Nguyen Van,Hao,Nam,1
-0
-376,Tran Sy,Vien,Nam,1
-0
-388,Phan Minh,Quy,Nam,1
+72,Le Quang,Loc,Nam,1
 0
 441,Le Quang,Dinh,Nam,1
 0
+350,Pham The,Tai,Nam,1
+0
+89,Nguyen Bich,Nguyen,Nu,1
+0
+82750,Ngo Si,Tien,Nam,1
+0
+55705,Do Huu,Duc,Nam,1
+0
+246,Tran Nhat,Dong,Nam,1
+0
+368,Nguyen Van,Hao,Nam,1
+0
 484,Nguyen Anh,Son,Nam,1
-0
-518,Ngo Minh,Tien,Nam,1
-0
-545,Nguyen Thi Bich,Nga,Nu,1
-0
-561,Ngo Minh Tien,Dung,Nam,1
-0
-575,Cao Ky,Duyen,Nu,1
 0
 579,Pham Quoc,Vy,Nam,1
 0
-600,Tran Dang,Khoa,Nam,1
+99902,Nguyen Hao,Anh,Nam,1
 0
-611,Phan The,Hung,Nam,1
-0
-613,Nguyen Trung,Chinh,Nam,1
-0
-619,Luu Ngoc Huong,Uyen,Nu,1
-0
-645,Tran Thanh,Lam,Nam,1
-0
-661,Nguyen Bich,Tuyen,Nu,1
-0
-663,Ngo Dong,Do,Nam,1
-0
-666,Ngo Thi Hong,Linh,Nu,1
-0
-667,Nguyen Khac,Duy,Nam,1
-0
-697,Nguyen Quang,Hung,Nam,1
-0
-721,Nguyen,Van,Nam,1
-0
-724,Vu Minh,Hieu,Nam,1
+10659,Nguyen Tuan,Cuong,Nam,1
 0
 743,Mai Phuong,Thuy,Nu,1
 0
-826,Ngo Si,Cuong,Nam,1
+661,Nguyen Bich,Tuyen,Nu,1
 0
-834,Tran Nhat,Anh,Nam,1
+98931,Pham Dieu,Anh,Nu,1
+0
+237,Cao Chi,Nguyen,Nam,1
+0
+164,Nguyen Huu,Thuc,Nam,1
+0
+81025,Nguyen Van Thuy,Linh,Nu,1
+0
+97336,Le Quy,Duong,Nam,1
+0
+20427,Ngueyn Tu,Linh,Nu,1
+0
+254,Nguyen The,Hung,Nam,1
+0
+91077,Nguyen Tu,Linh,Nam,1
+0
+28122,Nguyen Van,Cuong,Nam,1
+0
+97570,Nguyen Chi,Bao,Nam,1
+0
+611,Phan The,Hung,Nam,1
+0
+339,Vo Vu,Duc,Nam,1
+0
+575,Cao Ky,Duyen,Nu,1
+0
+12850,Nguyen Minh,Tuan,Nam,1
+0
+54244,Nguyen Thi,Tuong Vy,Nu,1
+0
+238,Ngo Minh,Thuan,Nam,1
+0
+87,Phan Vo Anh,Hu,Nu,1
 0
 851,Cao Anh,Tuan,Nam,1
 0
-959,Nguyen Hoang,Uyen,Nu,1
+61052,Ngo Ba,Kha,Nam,1
+0
+119,Nguyen Tu,Anh,Nu,1
+0
+64467,Nguyen Tien,Dung,Nam,1
+0
+104,Le Thanh,Tung,Nam,1
+0
+91776,Doan My,Dung,Nu,1
+0
+65265,Lai Van,Sam,Nam,1
+0
+124,Nguyen Huu,Tai,Nam,1
+0
+834,Tran Nhat,Anh,Nam,1
+0
+663,Ngo Dong,Do,Nam,1
+0
+388,Phan Minh,Quy,Nam,1
+0
+72399,Nguyen Huu,Tu,Nam,1
+0
+613,Nguyen Trung,Chinh,Nam,1
+0
+77507,Cao Minh,Kha,Nam,1
+0
+561,Ngo Minh Tien,Dung,Nam,1
+0
+826,Ngo Si,Cuong,Nam,1
+0
+38,Luu Nguyen Ky,Thu,Nam,1
+1
+978123-109,0,26/5/2020,0/0/0
+600,Tran Dang,Khoa,Nam,1
+0
+89456,Tran Viet,Manh,Nam,1
 0

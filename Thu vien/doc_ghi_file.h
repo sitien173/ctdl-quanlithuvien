@@ -11,51 +11,50 @@ void khoi_tao_muontra(LIST_MT& l);
 void them_vao_ds_muontra(LIST_MT& l, NODE_MT* p);
 NODE_MT* tao_node_muontra(muontra x);
 int SoluongDG(TREE t);
-int so_ngay_quahan(Date n1, Date n2);
+void chuyen_cay_sang_mang(TREE t, docgia* arr, int& i);
+
 
 void GhiFileDG(TREE t)
 {
-	ofstream f("DOCGIA.txt");
-	int n;
-	int i = 0;
-	n = SoluongDG(t);
-	f << n << endl;
-	TREE Stack[STACKSIZE];
-	int top = -1;
-	do
+	int n = SoluongDG(t);
+	docgia *arr = new docgia[n];
+	int index = 0;
+	chuyen_cay_sang_mang(t, arr, index);
+	for (int j = 0; j < n; j++)
 	{
-		while (t != NULL)
+		int temp = rand() % (n-1) + 1;
+		hoandoi(arr[j], arr[temp]);
+	}
+	ofstream fileout("DOCGIA.txt");
+	fileout << n << endl;
+	for (int i = 0; i < n; i++)
+	{
+		fileout << arr[i].mathe << ',';
+		fileout << arr[i].ho << ',';
+		fileout << arr[i].ten << ',';
+		fileout << arr[i].phai << ',';
+		fileout << arr[i].trangthaithe << endl;
+		fileout << arr[i].tongsosach << endl;
+		if (arr[i].tongsosach > 0)
 		{
-			Stack[++top] = t;
-			t = t->pLeft;
-		}
-		if (top != -1)
-		{
-			t = Stack[top--];
-			f << t->data.mathe << ',';
-			f << t->data.ho << ',';
-			f << t->data.ten << ',';
-			f << t->data.phai << ',';
-			f << t->data.trangthaithe << endl;
-			f << t->data.tongsosach << endl;
-			if (t->data.tongsosach > 0)
+			for (NODE_MT* p = arr[i].mt.pHead; p != NULL; p = p->pNext)
 			{
-				for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
+				if (p->data.trangthai == 0) // chỉ ghi sách đang mượn chưa trả
 				{
-					f << p->data.masach << ',';
-					f << p->data.trangthai << ',';
-					f << p->data.ngaymuon.ngay_hien_tai << '/';
-					f << p->data.ngaymuon.thang_hien_tai << '/';
-					f << p->data.ngaymuon.nam_hien_tai << ',';
-					f << p->data.ngaytra.ngay_hien_tai << '/';
-					f << p->data.ngaytra.thang_hien_tai << '/';
-					f << p->data.ngaytra.nam_hien_tai << endl;
+					fileout << p->data.masach << ',';
+					fileout << p->data.trangthai << ',';
+					fileout << p->data.ngaymuon.ngay << '/';
+					fileout << p->data.ngaymuon.thang << '/';
+					fileout << p->data.ngaymuon.nam << ',';
+					fileout << p->data.ngaytra.ngay << '/';
+					fileout << p->data.ngaytra.thang << '/';
+					fileout << p->data.ngaytra.nam << endl;
 				}
 			}
-			t = t->pRight;
 		}
-		else break;
-	} while (1);
+	}
+	delete[] arr;
+	fileout.close();
 }
 
 void LoadtuFile_DSDG(TREE& t)
@@ -84,17 +83,17 @@ void LoadtuFile_DSDG(TREE& t)
 			getline(f, x.masach, ',');
 			f >> x.trangthai;
 			f.ignore();
-			f >> x.ngaymuon.ngay_hien_tai;
+			f >> x.ngaymuon.ngay;
 			f.ignore();
-			f >> x.ngaymuon.thang_hien_tai;
+			f >> x.ngaymuon.thang;
 			f.ignore();
-			f >> x.ngaymuon.nam_hien_tai;
+			f >> x.ngaymuon.nam;
 			f.ignore();
-			f >> x.ngaytra.ngay_hien_tai;
+			f >> x.ngaytra.ngay;
 			f.ignore();
-			f >> x.ngaytra.thang_hien_tai;
+			f >> x.ngaytra.thang;
 			f.ignore();
-			f >> x.ngaytra.nam_hien_tai;
+			f >> x.ngaytra.nam;
 			f.ignore();
 			them_vao_ds_muontra(p->data.mt, tao_node_muontra(x));
 		}
@@ -183,15 +182,21 @@ void Ghi_file_quahan(TREE t,List_quahan l)
 		if (top != -1)
 		{
 			t = Stack[top--];
-			for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
+			if (t->data.tongsosach > 0)
 			{
-				n++;
-				l.ds_quahan[n - 1].ma_doc_gia = t->data.mathe;
-				l.ds_quahan[n - 1].so_ngay_quahan = so_ngay_quahan(p->data.ngaymuon, n1);
-				l.ds_quahan[n - 1].ma_sach = p->data.masach;
-				l.ds_quahan[n - 1].ho = t->data.ho;
-				l.ds_quahan[n - 1].ten = t->data.ten;
-				l.ds_quahan[n - 1].phai = t->data.phai;
+				for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
+				{
+					n++;
+					l.ds_quahan[n - 1].ma_doc_gia = t->data.mathe;
+					if (p->data.trangthai == 0) // đang mượn
+						l.ds_quahan[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
+					else
+					l.ds_quahan[n - 1].so_ngay_quahan = 0;
+					l.ds_quahan[n - 1].ma_sach = p->data.masach;
+					l.ds_quahan[n - 1].ho = t->data.ho;
+					l.ds_quahan[n - 1].ten = t->data.ten;
+					l.ds_quahan[n - 1].phai = t->data.phai;
+				}
 			}
 			t = t->pRight;
 		}
