@@ -1,5 +1,5 @@
 5
-978123,Toi Ac Va Trung Phat,990,Fyodor Mikhaylovich Dostoyevsky,2007,Tieu Thuyet,5
+978123,Xu So Nobits,990,Afk Masfgasgf,2007,Tieu Thuyet,6
 99
 978123-109,1,Ngan 1
 978123-458,0,Ngan 1
@@ -81,7 +81,7 @@
 978123-317,0,Ngan 1
 978123-119,0,Ngan 1
 978123-461,0,Ngan 1
-978123-354,0,Ngan 1
+978123-354,1,Ngan 1
 978123-266,0,Ngan 1
 978123-158,0,Ngan 1
 978123-200,0,Ngan 1

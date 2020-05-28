@@ -39,8 +39,6 @@ void GhiFileDG(TREE t)
 		{
 			for (NODE_MT* p = arr[i].mt.pHead; p != NULL; p = p->pNext)
 			{
-				if (p->data.trangthai == 0) // chỉ ghi sách đang mượn chưa trả
-				{
 					fileout << p->data.masach << ',';
 					fileout << p->data.trangthai << ',';
 					fileout << p->data.ngaymuon.ngay << '/';
@@ -49,7 +47,6 @@ void GhiFileDG(TREE t)
 					fileout << p->data.ngaytra.ngay << '/';
 					fileout << p->data.ngaytra.thang << '/';
 					fileout << p->data.ngaytra.nam << endl;
-				}
 			}
 		}
 	}

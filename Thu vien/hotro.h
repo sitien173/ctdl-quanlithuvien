@@ -5,6 +5,7 @@
 TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia);
 void sap_xep_theo_theloai_dausach(LIST_DS& l);
 int SoluongDG(TREE t);
+void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo);
 
 
 void BaoLoi(string s) {
@@ -230,7 +231,7 @@ void tao_ma_doc_gia()
 		swap(arr[i], arr[j]);
 	}
 	ofstream fileout("MADOCGIA.txt");
-	for (int i = 1; i <= 100000; i++)
+	for ( i = 1; i <= 100000; i++)
 	{
 		fileout << arr[i] << endl;
 	}
@@ -287,7 +288,7 @@ void giaiphong_cay(TREE& t)
 		t = NULL;
 	}
 }
-void giai_phong_vung_nho_dau_sach(LIST_DS& l)
+void giaiphong_dausach(LIST_DS& l)
 {
 	for (int i = 0; i < l.sl; i++)
 	{
@@ -536,7 +537,7 @@ string nhap_gioitinh()
 			}
 			break;
 		}
-		if (c == 13)
+		if(c==13)
 		{
 			int dem = 1;
 			int dem1 = 0;
@@ -555,13 +556,20 @@ string nhap_gioitinh()
 			if (str.length() >= 1)
 			{
 				chuan_hoa_chu(str);
-				if (str != "Nam" || str != "Nu")
+				if (str == "Nam" || str == "Nu")
 				{
-					BaoLoi("Gioi Tinh Chi Nhan Nam Hoac Nu");
-					KT = false;
+					KT = true;
 				}
 				else
-					KT = true;
+				{
+					BaoLoi("GIOI TINH CHI NAM HOAC NU");
+					while (length > 0)
+					{
+						cout << "\b \b";
+						str.pop_back();
+						length--;
+					}
+				}
 			}
 		}
 } while (KT == false);
@@ -621,21 +629,55 @@ void thoi_gian_thuc(Date& x)
 	x.nam = now->tm_year + 1900;
 }
 
-// kiem tra nam nhuan
-bool kt_namnhuan(int nam)
+int tinh_so_ngay(Date n1)
 {
-	if (nam % 4 == 0 && nam % 100 != 0 || nam % 400 == 0)
+	Date n2;
+	thoi_gian_thuc(n2);
+	int sum = 0;
+	while (n2.nam >= n1.nam)
 	{
-		return true;
+		if (n1.nam == n2.nam && n2.thang == n1.thang)
+		{
+			sum += n2.ngay - n1.ngay;
+			break;
+		}
+		else
+		{
+			// các tháng 4 6 9 11 có 30 ngày
+			if (n1.thang == 4 || n1.thang == 6 || n1.thang == 9 || n1.thang == 11)
+			{
+				sum += 30 - n1.ngay;
+			}
+			if (n1.thang == 1 || n1.thang == 3 || n1.thang == 5 || n1.thang == 7 || n1.thang == 8 || n1.thang == 10 || n1.thang == 12)
+			{
+				sum += 31 - n1.ngay;
+			}
+			if (n1.thang == 2)
+			{
+				if (n1.nam % 4 == 0 && n1.nam % 100 != 0 || n1.nam % 400 == 0)
+				{
+					sum += 29 - n1.ngay;
+				}
+				else
+					sum += 28 - n1.ngay;
+			}
+			n1.thang++; n1.ngay = 0;
+			if (n1.thang == 13)
+			{
+				// tăng năm lên 1
+				n1.nam++;
+				n1.thang = 1;
+			}
+		}
 	}
-	return false;
+	return sum;
 }
 
 void xoa_hienthi_buttonNext()
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(110, 41);  cout << "        ";
+	gotoXY(110, 42); cout << "        ";
 	gotoXY(x, y);
 }
 void xoa_hien_thi_dausach()
@@ -731,47 +773,66 @@ void xoa_hien_thi_doc_gia()
 	}
 	gotoXY(x, y);
 }
-// test
-int tinh_so_ngay(Date n1)
+
+
+void huong_dan_su_dung()
 {
-	Date n2;
-	thoi_gian_thuc(n2);
-	int sum = 0;
-	while (n2.nam >= n1.nam)
-	{
-		if (n1.nam == n2.nam && n2.thang == n1.thang)
-		{
-			sum += n2.ngay - n1.ngay;
-			break;
-		}
-		else
-		{
-			// các tháng 4 6 9 11 có 30 ngày
-			if (n1.thang == 4 || n1.thang == 6 || n1.thang == 9 || n1.thang == 11)
-			{
-				sum += 30 - n1.ngay;
-			}
-			if (n1.thang == 1 || n1.thang == 3 || n1.thang == 5 || n1.thang == 7 || n1.thang == 8 || n1.thang == 10 || n1.thang == 12)
-			{
-				sum += 31 - n1.ngay;
-			}
-			if (n1.thang == 2)
-			{
-				if (n1.nam % 4 == 0 && n1.nam % 100 != 0 || n1.nam % 400 == 0)
-				{
-					sum += 29 - n1.ngay;
-				}
-				else
-					sum += 28 - n1.ngay;
-			}
-			n1.thang++; n1.ngay = 0;
-			if (n1.thang == 13)
-			{
-				// tăng năm lên 1
-				n1.nam++;
-				n1.thang = 1;
-			}
-		}
-	}
-	return sum;
+	gotoXY(80, 2);
+	TextColor(15);
+	cout << "HUONG DAN SU DUNG";
+	gotoXY(70, 4);
+	cout << char(24);
+	gotoXY(70, 6);
+	cout << char(25);
+	gotoXY(68, 5);
+	cout << char(27);
+	gotoXY(72, 5);
+	cout << char(26);
+	gotoXY(75, 5);
+	TextColor(14);
+	cout << "Su Dung 4 Phim Mui Ten De Di Chuyen";
+
+	gotoXY(66, 8); TextColor(76); cout << "        ";
+	gotoXY(66, 9); TextColor(78); cout << "  CHON  ";
+	gotoXY(66, 10); TextColor(76); cout << "        ";
+	gotoXY(66, 11); TextColor(79); cout << "  Enter ";
+	gotoXY(75, 10); TextColor(14); cout << "Bam Phim Enter De Chon Thao Tac";
+
+	gotoXY(66, 14); TextColor(76); cout << "        ";
+	gotoXY(66, 15); TextColor(78); cout << "  THOAT ";
+	gotoXY(66, 16); TextColor(76); cout << "        ";
+	gotoXY(66, 17); TextColor(79); cout << "   ESC  ";
+	gotoXY(75, 16); TextColor(14); cout << "Bam Phim ESC De Quay Lai Hoac Thoat";
+	gotoXY(0, 0);
+}
+void xoa_hien_thi_huong_dan()
+{
+	int x = whereX();
+	int y = whereY();
+	TextColor(7);
+	gotoXY(80, 2);
+	cout << "                  ";
+	gotoXY(70, 4);
+	cout << "   ";
+	gotoXY(70, 6);
+	cout << "   ";
+	gotoXY(68, 5);
+	cout << "   ";
+	gotoXY(72, 5);
+	cout << "   ";
+	gotoXY(75, 5);
+	cout << "                                    ";
+
+	gotoXY(66, 8);  cout << "        ";
+	gotoXY(66, 9);  cout << "        ";
+	gotoXY(66, 10);  cout <<"        ";
+	gotoXY(66, 11); cout << "        ";
+	gotoXY(75, 10); cout << "                               ";
+
+	gotoXY(66, 14); cout << "        ";
+	gotoXY(66, 15); cout << "        ";
+	gotoXY(66, 16); cout << "        ";
+	gotoXY(66, 17); cout << "        ";
+	gotoXY(75, 16); cout << "                                   ";
+	gotoXY(x, y);
 }

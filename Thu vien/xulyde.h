@@ -134,11 +134,10 @@ void them_node_vao_cay(TREE& t,docgia x)
 {
 	if (t == NULL)
 	{
-		NODE_DG* p = new NODE_DG;
-		if (p == NULL) return;
-		p->data = x;
-		p->pLeft = p->pRight = NULL;
-		t = p;
+		t = new NODE_DG;
+		if (t == NULL) return;
+		t->data = x;
+		t->pLeft = t->pRight = NULL;
 	}
 	else
 	{
@@ -176,34 +175,46 @@ void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo)
 //duyet theo LNR in ra ma the tang dan
 void xuat_ds_thong_tin_doc_gia(TREE t, int& i)
 {
-	if (t != NULL)
+	TREE Stack[STACKSIZE];
+	int top = -1;
+	do
 	{
-		xuat_ds_thong_tin_doc_gia(t->pLeft, i);
-		if (i <= 40)
+		while (t != NULL)
 		{
-			Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
+			Stack[++top] = t; // push vào Stack
+			t = t->pLeft;
 		}
-		else
+		if (top != -1)
 		{
-			ButtonNext();
-			char c = _getch();
-			while (c == -32)
-				c = _getch();
-
-			if (c == 77)
+			t = Stack[top--]; // pop Stack
+			if (i <= 40)
 			{
-				i = 0;
-				xoa_hien_thi_doc_gia();
 				Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
 			}
-			else 
+			else
 			{
-				xoa_hienthi_buttonNext();
-				return;
+				ButtonNext();
+				char c = _getch();
+				if (c == -32)
+					c = _getch();
+				if (c == 27) // ESC
+				{
+					xoa_hienthi_buttonNext();
+					return;
+				}
+				else if (c == 77)
+				{
+					i = 0;
+					xoa_hien_thi_doc_gia();
+					Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
+				}
 			}
+			t = t->pRight;
 		}
-		xuat_ds_thong_tin_doc_gia(t->pRight, i);
-	}
+		else
+			break;
+	} while (1);
+	TextColor(7);
 }
 
 // duyệt cây copy dữ liệu vào mảng
@@ -350,6 +361,7 @@ void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int& tungdo)
 // hiệu chỉnh thông tin độc giả thành công rt 1 <> ESC rt -2
 int sua_thong_tin_doc_gia(TREE& t, int ma_doc_gia)
 {
+	xoa_hien_thi_doc_gia();
 	TREE p = tim_kiem_docgia_ma(t, ma_doc_gia);
 	if (p == NULL)
 	{
@@ -358,26 +370,31 @@ int sua_thong_tin_doc_gia(TREE& t, int ma_doc_gia)
 	}
 	else
 	{
-		int tungdo = 0;
+		docgia x;
+		int tungdo = 1;
 		Xuat_Thong_Tin_Doc_Gia(p->data,tungdo);
 		TextColor(15);
 		cout << "Ma the: " << p->data.mathe << endl;
 		cout << "Ho: ";
-		p->data.ho = nhap_ki_tu();
-		if (p->data.ho == "-1") // ESC
+		x.ho = nhap_ki_tu();
+		if (x.ho == "-1") // ESC
 			return -2;
 		cout << "Ten: ";
-		p->data.ten = nhap_ki_tu();
-		if (p->data.ten == "-1") // ESC
+		x.ten = nhap_ki_tu();
+		if (x.ten == "-1") // ESC
 			return -2;
 		cout << "Phai: ";
-		p->data.phai = nhap_ki_tu();
-		if (p->data.phai == "-1") // ESC
+		x.phai = nhap_gioitinh();
+		if (x.phai == "-1") // ESC
 			return -2;
 		cout << "Trang thai the: ";
-		p->data.trangthaithe = nhap_so_nguyen();
-		if (p->data.trangthaithe == -1) // ESC
+		x.trangthaithe = nhap_so_nguyen();
+		if (x.trangthaithe == -1) // ESC
 			return -2;
+		p->data.ho = x.ho;
+		p->data.ten = x.ten;
+		p->data.phai = x.phai;
+		p->data.trangthaithe = x.trangthaithe;
 		TextColor(7);
 	}
 	return 1;
@@ -765,7 +782,7 @@ void xuat_ds_sach1(LIST_DS l)
 						c = _getch();
 					if (c == 77)
 						break;
-					else
+					if(c==27)
 						return;
 				}
 			}

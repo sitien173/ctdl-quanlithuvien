@@ -13,7 +13,7 @@ enum TRANGTHAI{UP,DOWN,LEFT,RIGHT,ENTER,ESC,F1,F2,F3,F4};
 // hàm có chức năng bắt phim vừa nhập để điều khiển menu
 TRANGTHAI key(char c)
 {
-	while (c == -32)
+	if (c == -32)
 	{
 		c = _getch();
 	}
@@ -48,6 +48,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 	// lặp vô hạn cho đến khi trả về giá trị của hàm thì dừng
 	clrscr();
 	while (1) {
+		huong_dan_su_dung();
 		// 41 là tung độ mặc định của các botton
 		Button();
 		// in ra menu
@@ -60,7 +61,6 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		TRANGTHAI trangthai = key(z);
 		switch (trangthai)
 		{
-		
 		case UP:
 		case LEFT:
 		{
@@ -86,38 +86,35 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		}
 		case F1:
 		{
-			TextColor(7);
 			return tt = 59;
 		}
 		case F2: 
 		{
-			TextColor(7);
 			return tt = 60;
 		}
 		case F3:
 		{
-			TextColor(7);
 			return tt = 61;
 		}
 		case F4:
 		{
-			TextColor(7);
 			return tt = 62;
 		}
 		case ESC:
 		{
-			TextColor(7);
 			return tt=27;
 		}
 		case ENTER:
+		{
+			xoa_hien_thi_huong_dan();
 			return tt + 1;
+		}
 		}
 		// reset lại màu sau khi đã chọn thao tác để in ra
 		for (int i = 0; i < n; i++)
 			mau[i] = 7;
 		mau[tt] = 14;
 	}
-	
 }
 void menu_xuli()
 {
@@ -173,10 +170,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 						BaoLoi("Danh sach rong");
 						goto menu_xuat;
 					}
-					TextColor(15);
 					xuat_ds_thong_tin_doc_gia(t,tungdo);
 					tungdo = 0;
-					TextColor(7);
 					_getch();
 					goto menu_xuat;
 				}
@@ -190,7 +185,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					sap_xep_doc_gia_theo_ten(arr, n);
 					for (int i = 0; i < n;i++)
 					{
-						TextColor(15);
 						if (i <= 40)
 						{
 							Xuat_Thong_Tin_Doc_Gia(arr[i], i + 1);
@@ -215,7 +209,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 								break;
 							}
 						}
-						TextColor(7);
 					}
 					tungdo = 0;
 					delete[] arr;
@@ -322,7 +315,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					gotoXY(1, 10);
 					cout << "                                           ";
 					gotoXY(1, 10);
-					cout << "Nhap ma doc gia: ";
+					cout << "Nhap MA DOC GIA: ";
 					ma = nhap_so_nguyen();
 					if (ma == -1) // ESC
 						break;
@@ -332,7 +325,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					else
 					{
 						BaoLoi("Sua Thanh Cong");
-						continue;
+						break;
 					}
 				} while (1);
 				goto menu_DG;
@@ -677,7 +670,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			GhiFileDS(l);
 			Ghi_file_quahan(t, l1);
 			giaiphong_cay(t);
-			giai_phong_vung_nho_dau_sach(l);
+			giaiphong_dausach(l);
 			return;
 		}
 		}
@@ -691,6 +684,5 @@ int main()
 	resizeConsole(1390, 650);
 	srand(time(NULL));
 	menu_xuli();
-	_getch();
 	return 0;
 }
