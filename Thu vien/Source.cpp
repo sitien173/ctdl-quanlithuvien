@@ -49,6 +49,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 	clrscr();
 	while (1) {
 		huong_dan_su_dung();
+		ve_khung_bao_loi();
 		// 41 là tung độ mặc định của các botton
 		Button();
 		// in ra menu
@@ -138,12 +139,12 @@ void menu_xuli()
 		// menu độc giả 
 		case 1: 
 		{
-			char menu_docgia[6][50] = { "THEM DOC GIA",
-										"XUAT DS DOC GIA",
-										"TIM KIEM DOC GIA",
-										"XOA DOC GIA",
+			char menu_docgia[6][50] = { "THEM DOC GIA      ",
+										"XUAT DS DOC GIA   ",
+										"TIM KIEM DOC GIA  ",
+										"XOA DOC GIA       ",
 										"HIEU CHINH DOC GIA",
-										"THOAT"
+										"THOAT             "
 			};
 menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu độc giả
 			// thêm độc giả

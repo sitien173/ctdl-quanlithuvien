@@ -20,7 +20,7 @@ void GhiFileDG(TREE t)
 	docgia *arr = new docgia[n];
 	int index = 0;
 	chuyen_cay_sang_mang(t, arr, index);
-	for (int j = 0; j < n; j++)
+	for (int j = 0; j < n-1; j++)
 	{
 		int temp = rand() % (n-1) + 1;
 		hoandoi(arr[j], arr[temp]);

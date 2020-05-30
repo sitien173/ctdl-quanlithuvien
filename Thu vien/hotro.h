@@ -12,13 +12,13 @@ void BaoLoi(string s) {
 	TextColor(15);
 	int n = s.length();
 	int x = whereX(), y = whereY();
-	gotoXY(3, 35);
+	gotoXY(3, 46);
 	cout << s;
 	Sleep(1000);
 	for (int i = 0; i < n; i++)
 	{
-		gotoXY(3 + i, 35);
-		cout << "    ";
+		gotoXY(3 + i, 46);
+		cout << " ";
 	}
 	gotoXY(x, y);
 	TextColor(7);
@@ -60,6 +60,11 @@ void Button()
 void ButtonNext()
 {
 	gotoXY(110, 42); TextColor(79); cout << "   ->   ";
+	TextColor(7);
+}
+void ButtonPrev()
+{
+	gotoXY(40, 42); TextColor(79); cout << "   <-   ";
 	TextColor(7);
 }
 
@@ -225,7 +230,7 @@ void tao_ma_doc_gia()
 	int i = 1;
 	for (i; i <= 100000; i++)
 		arr[i] = i;
-	for (i = 1; i <= 100000; i++)
+	for (i = 1; i <= 100000; i+=2)
 	{
 		int j = rand() % 100000 + 1;
 		swap(arr[i], arr[j]);
@@ -835,4 +840,17 @@ void xoa_hien_thi_huong_dan()
 	gotoXY(66, 17); cout << "        ";
 	gotoXY(75, 16); cout << "                                   ";
 	gotoXY(x, y);
+}
+void ve_khung_bao_loi()
+{
+	for (int i = 0; i < 168; i++)
+	{
+		if (i <= 43)
+		{
+			gotoXY(168, i);
+			cout << "|";
+		}
+		gotoXY(i, 43);
+		cout << "=";
+	}
 }
