@@ -538,24 +538,14 @@ void xuat_ds_dausach(LIST_DS& l)
 			xuat_dau_sach(*l.ds_dausach[i], i + 1);
 		else
 		{
-			ButtonPrev();
 			ButtonNext();
 			char c = _getch();
-			while (c == -32)
+			if (c == -32)
 				c = _getch();
 			if (c == 77)
 			{
 				xoa_hien_thi_dausach();
 				for (int j = i,tungdo=1; tungdo < 40 && j < l.sl; j++,tungdo++)
-				{
-					xuat_dau_sach(*l.ds_dausach[j], tungdo);
-					i = j;
-				}
-			}
-			if (c == 75)
-			{
-				xoa_hien_thi_dausach();
-				for (int j = i, tungdo = 1; tungdo < 40 && j < l.sl; j++, tungdo++)
 				{
 					xuat_dau_sach(*l.ds_dausach[j], tungdo);
 					i = j;

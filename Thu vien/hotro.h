@@ -62,11 +62,7 @@ void ButtonNext()
 	gotoXY(110, 42); TextColor(79); cout << "   ->   ";
 	TextColor(7);
 }
-void ButtonPrev()
-{
-	gotoXY(40, 42); TextColor(79); cout << "   <-   ";
-	TextColor(7);
-}
+
 
 // ham chuyen doi so sang chuoi 
 string so_sang_chuoi(int number)
@@ -840,17 +836,4 @@ void xoa_hien_thi_huong_dan()
 	gotoXY(66, 17); cout << "        ";
 	gotoXY(75, 16); cout << "                                   ";
 	gotoXY(x, y);
-}
-void ve_khung_bao_loi()
-{
-	for (int i = 0; i < 168; i++)
-	{
-		if (i <= 43)
-		{
-			gotoXY(168, i);
-			cout << "|";
-		}
-		gotoXY(i, 43);
-		cout << "=";
-	}
 }

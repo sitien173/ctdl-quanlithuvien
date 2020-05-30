@@ -49,7 +49,6 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 	clrscr();
 	while (1) {
 		huong_dan_su_dung();
-		ve_khung_bao_loi();
 		// 41 là tung độ mặc định của các botton
 		Button();
 		// in ra menu
