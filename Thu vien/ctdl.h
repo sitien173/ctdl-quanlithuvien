@@ -7,7 +7,7 @@
 #include <ctime>
 using namespace std;
 #define MAX 1000 // tối đa 1000 đầu sách và độc giả quá hạn
-#define MAX_MASACH 100 // tối đa 100 cuốn sách mỗi đầu sách
+#define MAX_MASACH 500 // tối đa 500 cuốn sách mỗi đầu sách
 const int STACKSIZE = 1000; // size Stack = 1000
 //==============danh muc sach================
 struct danhmucsach {

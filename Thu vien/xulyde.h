@@ -669,7 +669,6 @@ int xoa_dau_sach(LIST_DS& l, string ma_dau_sach)
 
 
 // =========================================Danh muc sach=====================================
-
 // tạo 1 node mới 
 NODE_DMS* tao_node_sach(danhmucsach& x)
 {
@@ -683,7 +682,6 @@ NODE_DMS* tao_node_sach(danhmucsach& x)
 	p->pNext = NULL;
 	return p;
 }
-
 // Thêm sách nếu thêm thành công rt 1 <> -1 ; ESC rt -2;
 int them_sach(LIST_DS& l)
 {
@@ -713,17 +711,15 @@ int them_sach(LIST_DS& l)
 	temp = nhap_ki_tu1();
 	if (temp == "-1") // ESC
 		return -2;
-	khoi_tao_sach(l.ds_dausach[i]->dms);
+	danhmucsach x;
 	for (int j = 0; j < n; j++)
 	{
-		NODE_DMS* p = new NODE_DMS;
-		p->data.masach = tao_ma_sach(l.ds_dausach[i]->dms,ma_dau_sach);
-		p->data.vitri = temp;
-		p->data.trangthai = 0; // mặc định sách có thể mượn được
-		them_sach_vao_ds(l.ds_dausach[i]->dms, tao_node_sach(p->data));
+		x.masach = tao_ma_sach(l.ds_dausach[i]->dms,ma_dau_sach);
+		x.vitri = temp;
+		x.trangthai = 0; // mặc định sách có thể mượn được
+		them_sach_vao_ds(l.ds_dausach[i]->dms, tao_node_sach(x));
 		l.ds_dausach[i]->soluongsach++;
 	}
-	
 	return 1;
 }
 

@@ -248,7 +248,9 @@ void tao_ma_doc_gia()
 	int arr[100000 + 1];
 	int i = 1;
 	for (i; i <= 100000; i++)
+	{
 		arr[i] = i;
+	}
 	for (i = 1; i <= 100000; i+=2)
 	{
 		int j = rand() % 100000 + 1;
@@ -860,77 +862,3 @@ void xoa_hien_thi_huong_dan()
 	gotoXY(75, 16); cout << "                                   ";
 	gotoXY(x, y);
 }
-
-//int tim_kiem_sach_ten(LIST_DS l, string ten_sach)
-//{
-//	int kt = 0; // biến dùng để kiểm tra có tìm thấy hay ko. Nếu thấy tăng kt lên <> =0
-//	int tungdo = 0;
-//	xoa_hien_thi_sach();
-//	for (int i = 0; i < l.sl; i++)
-//	{
-//		if (l.ds_dausach[i]->tensach.find(ten_sach) != string::npos)
-//		{
-//			kt++; // tăng kt để biết đã tìm thấy
-//			TextColor(15);
-//			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL;)
-//			{
-//				if (tungdo < 40)
-//				{
-//					xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
-//					// p chưa là node cuối
-//					if (p != l.ds_dausach[i]->dms.pTail)
-//						p = p->pNext;
-//					else // nếu p là node cuối thoát vòng lặp tăng i lên 1
-//					{
-//						if (tungdo < 40)
-//						{
-//							xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
-//							if (p != l.ds_dausach[i]->dms.pTail)
-//								p = p->pNext;
-//							else // nếu p là node cuối thoát vòng lặp tăng i lên 1
-//							{
-//								ButtonNext();
-//								char c = _getch();
-//								if (c == -32)
-//									c = _getch();
-//								if (c == 77)
-//									break;
-//								if (c == 27)
-//									return -2;
-//							}
-//						}
-//					}
-//				}
-//				else if (tungdo >= 40)
-//				{
-//					do
-//					{
-//						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
-//						ButtonNext();
-//						char c = _getch();
-//						if (c == -32)
-//							c = _getch();
-//						if (c == 77)
-//						{
-//							xoa_hien_thi_sach();
-//							for (tungdo = 0; tungdo < 40; tungdo++)
-//							{
-//								xuat_sach1(l.ds_dausach[i]->tensach, p->data, tungdo + 1);
-//								if (p != l.ds_dausach[i]->dms.pTail)
-//									p = p->pNext;
-//								else
-//									break;
-//							}
-//							break;
-//						}
-//						// bấm phím khác ngoài phím ->
-//						return -2;
-//					} while (1);
-//				}
-//			}
-//		}
-//	}
-//	TextColor(7);
-//	if (kt == 0)
-//		return -1;
-//}
