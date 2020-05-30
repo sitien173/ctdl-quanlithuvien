@@ -5,8 +5,7 @@
 TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia);
 void sap_xep_theo_theloai_dausach(LIST_DS& l);
 int SoluongDG(TREE t);
-void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo);
-
+int Kiem_tra_phim(char c);
 
 void BaoLoi(string s) {
 	TextColor(15);
@@ -63,6 +62,20 @@ void ButtonNext()
 	TextColor(7);
 }
 
+// tách mã sách chỉ lấy mã đầu sách
+string tach_ma_sach(string a)
+{
+	string temp;
+	int n = a.length();
+	int dem = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (a[i] == '-')
+			dem = i;
+	}
+	temp = a.substr(0, dem);
+	return temp;
+}
 
 // ham chuyen doi so sang chuoi 
 string so_sang_chuoi(int number)
@@ -118,12 +131,9 @@ int nhap_so_nguyen() // Hàm nhập dữ liệu toàn số .
 	char c;
 	do
 	{
-	Nhap:	c = _getch();
-		while (c == 13)
-		{
-			BaoLoi("Khong duoc de trong");
+		c = _getch();
+		if (c == 0 || c == -32)
 			c = _getch();
-		}
 		while (int(c) != 13)
 		{
 			if (c == 27)
@@ -158,15 +168,28 @@ int nhap_so_nguyen() // Hàm nhập dữ liệu toàn số .
 
 			c = _getch();
 		}
-		while (str.length() == 0)
+		if (c == 13)
 		{
-			BaoLoi("Khong duoc de trong");
-			goto Nhap;
-		}
-		KT = true;
+			int dem = 1;
+			int dem1 = 0;
+			for (int i = 0; i < length; i++)
+			{
+				if ((int)str[i] == 32)
+					dem++;
+				else
+					dem1++;
+			}
+			if (length == 0 || (dem >= 2 && dem1 == 0))
+			{
+				BaoLoi("Khong duoc de trong");
+				KT = false;
+			}
+			else
+				KT = true;
+		} 
 	} while (KT == false);
 	cout << endl;
-	return atoi(str.c_str());
+	return atoi(str.c_str()); // chuyển kí tự sang số
 }
 
 void chuan_hoa_chu(string& str)
@@ -837,3 +860,77 @@ void xoa_hien_thi_huong_dan()
 	gotoXY(75, 16); cout << "                                   ";
 	gotoXY(x, y);
 }
+
+//int tim_kiem_sach_ten(LIST_DS l, string ten_sach)
+//{
+//	int kt = 0; // biến dùng để kiểm tra có tìm thấy hay ko. Nếu thấy tăng kt lên <> =0
+//	int tungdo = 0;
+//	xoa_hien_thi_sach();
+//	for (int i = 0; i < l.sl; i++)
+//	{
+//		if (l.ds_dausach[i]->tensach.find(ten_sach) != string::npos)
+//		{
+//			kt++; // tăng kt để biết đã tìm thấy
+//			TextColor(15);
+//			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL;)
+//			{
+//				if (tungdo < 40)
+//				{
+//					xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+//					// p chưa là node cuối
+//					if (p != l.ds_dausach[i]->dms.pTail)
+//						p = p->pNext;
+//					else // nếu p là node cuối thoát vòng lặp tăng i lên 1
+//					{
+//						if (tungdo < 40)
+//						{
+//							xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+//							if (p != l.ds_dausach[i]->dms.pTail)
+//								p = p->pNext;
+//							else // nếu p là node cuối thoát vòng lặp tăng i lên 1
+//							{
+//								ButtonNext();
+//								char c = _getch();
+//								if (c == -32)
+//									c = _getch();
+//								if (c == 77)
+//									break;
+//								if (c == 27)
+//									return -2;
+//							}
+//						}
+//					}
+//				}
+//				else if (tungdo >= 40)
+//				{
+//					do
+//					{
+//						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+//						ButtonNext();
+//						char c = _getch();
+//						if (c == -32)
+//							c = _getch();
+//						if (c == 77)
+//						{
+//							xoa_hien_thi_sach();
+//							for (tungdo = 0; tungdo < 40; tungdo++)
+//							{
+//								xuat_sach1(l.ds_dausach[i]->tensach, p->data, tungdo + 1);
+//								if (p != l.ds_dausach[i]->dms.pTail)
+//									p = p->pNext;
+//								else
+//									break;
+//							}
+//							break;
+//						}
+//						// bấm phím khác ngoài phím ->
+//						return -2;
+//					} while (1);
+//				}
+//			}
+//		}
+//	}
+//	TextColor(7);
+//	if (kt == 0)
+//		return -1;
+//}

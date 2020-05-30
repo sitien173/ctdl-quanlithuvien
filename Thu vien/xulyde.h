@@ -432,7 +432,7 @@ int nhap_DauSach(LIST_DS& l, dausach& data)
 	while (1)
 	{
 		cout << "Ma ISBN : ";
-		data.ISBN = nhap_ki_tu1();
+		data.ISBN = nhap_so_nguyen();
 		if (data.ISBN == "-1") // ESC
 			return -2;
 		if (tim_kiem_dau_sach_theo_ma(l, data.ISBN) != -1)
@@ -699,8 +699,13 @@ int them_sach(LIST_DS& l)
 		return -1;
 	}
 	int n;
-	cout << "\nNhap So Luong Sach Can Them: ";
+	cout << "So Luong Sach Can Them [<=100]:\n";
 	n = nhap_so_nguyen();
+	if (n > 100)
+	{
+		BaoLoi("So Sach Vuot Muc Cho Phep");
+		return -1;
+	}
 	if (n == -1) // ESC
 		return -2;
 	string temp;
@@ -765,13 +770,13 @@ void xuat_ds_sach1(LIST_DS l)
 {
 	for (int i = 0; i < l.sl; i++)
 	{
-		int j = 0; // tung độ xuất sách
+		int j = 1; // tung độ xuất sách
 		xoa_hien_thi_sach();
 		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; )
 		{
 			if (j < 40)
 			{
-				xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
+				xuat_sach1(l.ds_dausach[i]->tensach, p->data, j++);
 				if (p != l.ds_dausach[i]->dms.pTail)
 					p = p->pNext;
 				else // nếu p là node cuối thoát vòng lặp tăng i lên 1
@@ -782,7 +787,7 @@ void xuat_ds_sach1(LIST_DS l)
 						c = _getch();
 					if (c == 77)
 						break;
-					if(c==27)
+					if (c == 27)
 						return;
 				}
 			}
@@ -790,7 +795,7 @@ void xuat_ds_sach1(LIST_DS l)
 			{
 				do
 				{
-					xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++j);
+					xuat_sach1(l.ds_dausach[i]->tensach, p->data, j++);
 					ButtonNext();
 					char c = _getch();
 					if (c == -32)
@@ -827,42 +832,33 @@ int tim_kiem_sach_ten(LIST_DS l, string ten_sach)
 		{
 			kt++; // tăng kt để biết đã tìm thấy
 			TextColor(15);
-			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
+			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL;)
 			{
 				if (tungdo < 40)
 				{
-					xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+					// p chưa là node cuối
 					if (p != l.ds_dausach[i]->dms.pTail)
-						p = p->pNext;
+							p = p->pNext;
 					else // nếu p là node cuối thoát vòng lặp tăng i lên 1
 					{
-						if (tungdo < 40)
-						{
-							xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
-							if (p != l.ds_dausach[i]->dms.pTail)
-								p = p->pNext;
-							else // nếu p là node cuối thoát vòng lặp tăng i lên 1
-							{
-								ButtonNext();
-								char c = _getch();
-								if (c == -32)
-									c = _getch();
-								if (c == 77)
-									break;
-								else
-									return -2;
-							}
-						}
+						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
+						p = p->pNext;
+							ButtonNext();
+							char c = _getch();
+							if (c == -32)
+								c = _getch();
+							if (c == 77)
+								break;
+							if (c == 27)
+								return -2;
 					}
 				}
 				else if (tungdo >= 40)
 				{
-					do
-					{
-						xuat_sach1(l.ds_dausach[i]->tensach, p->data, ++tungdo);
 						ButtonNext();
 						char c = _getch();
-						while (c == -32)
+						if (c == -32)
 							c = _getch();
 						if (c == 77)
 						{
@@ -873,13 +869,15 @@ int tim_kiem_sach_ten(LIST_DS l, string ten_sach)
 								if (p != l.ds_dausach[i]->dms.pTail)
 									p = p->pNext;
 								else
+								{
+									xuat_sach1(l.ds_dausach[i]->tensach, p->data, tungdo + 1);
+									p = p->pNext;
 									break;
+								}
 							}
-							break;
 						}
-						// bấm phím khác ngoài phím ->
+						else if(c==27)
 						return -2;
-					} while (1);
 				}
 			}
 		}
@@ -1144,10 +1142,10 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 		break;
 	} while (1);
 	// thêm vào danh sách mượn trả
-	xuat_ds_dausach(l);
 	muontra x;
 	string temp;
 	do {
+		xuat_ds_dausach(l);
 		gotoXY(1, 10);
 		cout << "                              ";
 		gotoXY(1, 10);
@@ -1193,12 +1191,14 @@ int muonsach(TREE& t, LIST_DS& l, LIST_QUAHAN l1)
 				break;
 			}
 		} while (1);
+		// tìm thấy sách
 		xoa_hien_thi_dausach();
 		// in danh sách các sách thuộc mã đầu sách tương ứng
-		int i1=tim_kiem_sach_ten(l, ten_sach);
-		if (i1 == -2) // ESC
-			return -2;
-		// tìm thấy sách
+		int i1 = tim_kiem_sach_ten(l, ten_sach);
+		if (i1 == -1) // Khoong tim thay
+		{
+			BaoLoi("Khong Tim Thay Ten Sach");
+		}
 		string ma_sach;
 		NODE_DMS* k = NULL; // lưu vị trí node trả về trong tim_kiem_sach
 		do

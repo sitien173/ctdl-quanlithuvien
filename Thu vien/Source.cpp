@@ -2,7 +2,7 @@
 char thaotac[][50] =
 {					"DOC GIA                           ",
 				    "DAU SACH                          ",
-				    "DANH SACH SACH                    ",
+				    "SACH                              ",
 				    "MUON SACH                         ",
 					"TRA SACH                          ",
 				    "DANH SACH SACH 1 DOC GIA DANG MUON",
@@ -124,10 +124,10 @@ void menu_xuli()
 
 	khoi_tao_cay(t);
 	khoi_tao_dau_sach(l);
-	cap_nhat_sach(t, l);
 	LoadtuFile_DSDG(t);
 	LoadFileDS(l);
 	Load_file_quahan(l1);
+	cap_nhat_sach(t, l);
 	while (1)
 	{
 		clrscr();
@@ -495,26 +495,36 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			// tim kiem sach
 			if (chon == 3|| chon == 62)
 			{
-				string ten_sach;
+				string temp;
+				string temp1;
 				do
 				{
-					xuat_ds_sach1(l);
-					gotoXY(1, 10);
-					cout << "                                            ";
-					gotoXY(1, 10);
-					cout << "Nhap Ten Sach Can Tim: ";
-					ten_sach = nhap_ki_tu1();
-					if (ten_sach == "-1") // ESC
+					xuat_ds_dausach(l);
+					gotoXY(0, 11);
+					cout <<"                                    ";
+					gotoXY(0, 10);
+					cout << "Nhap Ten Sach Hoac Ma Sach Can Tim: \n";
+					temp = nhap_ki_tu1();
+					if (temp == "-1") // ESC
 						break;
-					if (tim_kiem_sach_ten(l, ten_sach) == -1)
+					temp1 = tach_ma_sach(temp);
+					int tam = tim_kiem_dau_sach_theo_ma(l, temp1);
+					// nếu tìm thấy
+					if (tam != -1)
 					{
-						BaoLoi("Ten Sach Khong Ton Tai");
-						continue;
-					}
-					else
+						xoa_hien_thi_dausach();
+						xuat_dau_sach(*l.ds_dausach[tam],1);
+						_getch();
+					}// nếu nhập tên sách không tìm thấy
+					if (tim_kiem_dau_sach_theo_ten(l, temp) != -1)
 					{
 						_getch();
 						break;
+					} // tìm thấy
+					else
+					{
+						BaoLoi("Khong Tim Thay Sach");
+						continue;
 					}
 				} while (1);
 				goto menu_sach;
