@@ -5,6 +5,6 @@ C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(20
 C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(222,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(695,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(583): warning C4715: 'tim_kiem_dau_sach_theo_ten': not all control paths return a value
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(888): warning C4715: 'tim_kiem_sach_ten': not all control paths return a value
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(890): warning C4715: 'tim_kiem_sach_ten': not all control paths return a value
 C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(40): warning C4715: 'key': not all control paths return a value
   Thu vien.vcxproj -> C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe

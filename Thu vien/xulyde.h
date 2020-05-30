@@ -344,7 +344,7 @@ void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int& tungdo)
 		// ch1 là chuỗi con của tên độc giả
 		if (t->data.ten.find(ch1) != string::npos)
 		{
-			TextColor(14);
+			TextColor(15);
 			if(tungdo==1)
 			xoa_hien_thi_doc_gia();
 			Xuat_Thong_Tin_Doc_Gia(t->data, tungdo);
@@ -787,8 +787,10 @@ void xuat_ds_sach1(LIST_DS l)
 						c = _getch();
 					if (c == 77)
 						break;
-					if (c == 27)
+					else
+					{
 						return;
+					}
 				}
 			}
 			else if (j >=40 )

@@ -6,9 +6,9 @@
 #include <fstream>
 #include <ctime>
 using namespace std;
-#define MAX 100
-#define MAX_MASACH 500 // tối đa 500 cuốn sách mỗi đầu sách
-const int STACKSIZE = 1000; 
+#define MAX 1000 // tối đa 1000 đầu sách và độc giả quá hạn
+#define MAX_MASACH 100 // tối đa 100 cuốn sách mỗi đầu sách
+const int STACKSIZE = 1000; // size Stack = 1000
 //==============danh muc sach================
 struct danhmucsach {
 	string masach;
@@ -37,7 +37,7 @@ struct dausach
 	string tacgia;
 	int namxuatban;
 	string theloai;
-	int soluongsach;
+	int soluongsach; // số lượng sách độc giả đã và đang mượn
 	int soluongmuon; // biến lưu trữ số lần mượn sách của độc giả
 	LIST_DMS dms; // con trỏ trỏ đến các sách thuộc đầu sách tương ứng
 };
@@ -107,7 +107,7 @@ struct quahan
 };
 struct List_quahan
 {
-	quahan ds_quahan[100];
+	quahan ds_quahan[MAX]; // tối đa 1000 độc giả
 	int sl=0 ; // số lượng thực tế độc giả có trong danh sách quá hạn
 };
 typedef struct List_quahan LIST_QUAHAN;
