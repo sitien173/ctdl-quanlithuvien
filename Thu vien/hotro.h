@@ -126,7 +126,7 @@ int nhap_so_nguyen() // Hàm nhập dữ liệu toàn số .
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	string str;
-	bool KT;
+	bool KT=false;
 	int length = 0; // biến cho con trỏ dịch đến cuối
 	char c;
 	do
@@ -165,7 +165,6 @@ int nhap_so_nguyen() // Hàm nhập dữ liệu toàn số .
 				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
 			}
-
 			c = _getch();
 		}
 		if (c == 13)
@@ -186,7 +185,8 @@ int nhap_so_nguyen() // Hàm nhập dữ liệu toàn số .
 			}
 			else
 				KT = true;
-		} 
+
+		}
 	} while (KT == false);
 	cout << endl;
 	return atoi(str.c_str()); // chuyển kí tự sang số

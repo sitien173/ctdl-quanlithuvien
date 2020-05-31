@@ -1,99 +1,101 @@
 49
+80825,Nguyen Tu,Anh,Nu,1
+0
 154,Pham Diem,Quynh,Nu,1
 0
-55807,Vu Nhu,Quynh,Nu,1
-0
-57943,Nguyen Thuong,Thuong,Nu,1
-0
-98445,Tran Thanh,Lam,Nam,1
+66205,Huynh Quoc,Khanh,Nam,1
 0
 99199,Pham Quoc,My,Nam,1
 0
-53053,Le Thi,Thuy,Nu,1
+80365,Mai Kim,Yen,Nu,1
 0
-12821,Nguyen Thanh,Hang,Nu,1
+8,Tran Nhat,Anh,Nam,1
 0
-89083,Tran Ngoc,Anh,Nu,1
+9265,Cao Quynh,Nhu,Nu,1
 0
-81569,Ho Van,Hoang,Nam,1
+42625,Le Hoang,Khanh,Nam,1
 0
-59811,Nguyen Thanh,Nam,Nam,1
-0
-28,Nguyen Dinh,Trung,Nam,1
-0
-52781,Nguyen Thien,Tam,Nam,1
-0
-84433,Nguyen Thanh,Tuyen,Nu,1
-0
-63125,Tran Thien,Y,Nu,1
-0
-73805,Do Phuoc Dat,Huy,Nam,1
-0
-43427,Nguyen Hong,Nhung,Nu,1
-0
-52,Nguyen Thanh,Luan,Nam,1
+5895,Nguyen Duc,Huy,Nam,1
 0
 60345,Tran Viet,Hung,Nam,1
 0
-91285,Ngo Si,Tien,Nam,1
+18,Nguyen Thanh,Luan,Nam,1
+0
+63769,Hoang Phuong,Tam,Nu,1
+0
+11893,Nguyen Thi Thanh,Huyen,Nu,1
+0
+96191,Nguyen Dang,The,Nam,1
 0
 77659,Tran My,Linh,Nu,1
 0
+50783,Nguyen Quoc,Thanh,Nam,1
+0
+94425,Nguyen Kim,Ngan,Nu,1
+0
+12821,Nguyen Thanh,Hang,Nu,1
+0
+63213,Le My,Duyen,Nu,1
+0
+81569,Ho Van,Hoang,Nam,1
+0
+89343,Nguyen Thuy,Tien,Nu,1
+0
+84433,Nguyen Thanh,Tuyen,Nu,1
+0
+86761,Chau Thu,Ngan,Nu,1
+0
+98445,Tran Thanh,Lam,Nam,1
+0
+91285,Ngo Si,Tien,Nam,1
+0
+53053,Le Thi,Thuy,Nu,1
+0
+26963,Vu Thi,Yen,Nu,1
+0
+57943,Nguyen Thuong,Thuong,Nu,1
+0
+97851,Nguyen Van,Binh,Nam,1
+0
+52,Nguyen Thanh,Luan,Nam,1
+0
+64983,Nguyen Van,Long,Nam,1
+0
+59811,Nguyen Thanh,Nam,Nam,1
+0
+73805,Do Phuoc Dat,Huy,Nam,1
+0
+34981,Trinh Kieu,Oanh,Nu,1
+0
+52781,Nguyen Thien,Tam,Nam,1
+0
+63125,Tran Thien,Y,Nu,1
+0
 58567,Le Hoang Kim,Ngan,Nu,1
-0
-56859,Nguyen Hoang,Minh,Nam,1
-0
-6,Luu Nguyen Ky,Thu,Nam,1
-0
-29359,Nguyen Thi Tuong,Vy,Nu,1
 0
 52525,Nguyen Van,Dat,Nam,1
 0
 44885,Le Quy,Duong,Nam,1
 0
-63769,Hoang Phuong,Tam,Nu,1
+89083,Tran Ngoc,Anh,Nu,1
 0
-34981,Trinh Kieu,Oanh,Nu,1
-0
-86761,Chau Thu,Ngan,Nu,1
-0
-42625,Le Hoang,Khanh,Nam,1
-0
-18,Nguyen Thanh,Luan,Nam,1
+29359,Nguyen Thi Tuong,Vy,Nu,1
 0
 24465,Hoang Thanh,Lam,Nam,1
 0
-66205,Huynh Quoc,Khanh,Nam,1
+55807,Vu Nhu,Quynh,Nu,1
 0
-5895,Nguyen Duc,Huy,Nam,1
+56859,Nguyen Hoang,Minh,Nam,1
 0
-96191,Nguyen Dang,The,Nam,1
+43427,Nguyen Hong,Nhung,Nu,1
 0
-64983,Nguyen Van,Long,Nam,1
-0
-80825,Nguyen Tu,Anh,Nu,1
-0
-80365,Mai Kim,Yen,Nu,1
-0
-9265,Cao Quynh,Nhu,Nu,1
-0
-97851,Nguyen Van,Binh,Nam,1
-0
-8,Tran Nhat,Anh,Nam,1
-0
-94425,Nguyen Kim,Ngan,Nu,1
-0
-89343,Nguyen Thuy,Tien,Nu,1
-0
-50783,Nguyen Quoc,Thanh,Nam,1
-0
-63213,Le My,Duyen,Nu,1
-0
-11893,Nguyen Thi Thanh,Huyen,Nu,1
+6,Luu Nguyen Ky,Thu,Nam,0
+2
+123-1,0,31/5/2020,0/0/0
+123-2,0,12/5/2020,0/0/0
+1821,Nguyen Vo Thanh,Chung,Nam,1
 0
 74285,Bui Tuan,Huy,Nam,1
 0
-26963,Vu Thi,Yen,Nu,1
-0
-1821,Nguyen Vo Thanh,Chung,Nam,1
+28,Nguyen Dinh,Trung,Nam,1
 0
