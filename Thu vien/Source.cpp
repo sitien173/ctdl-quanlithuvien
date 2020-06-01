@@ -536,9 +536,9 @@ menu_DS:	int chon = menu_dong(menu_dausach, 8); // chọn thao tác trong menu �
 			{
 				xuat_ds_thong_tin_doc_gia(t, tungdo);
 				tungdo = 0;
-				gotoXY(1, 10);
+				gotoXY(0, 10);
 				cout << "                         ";
-				gotoXY(1, 10);
+				gotoXY(0, 10);
 				cout << "Nhap Ma Doc Gia: ";
 				int ma_doc_gia;
 				ma_doc_gia = nhap_so_nguyen();
@@ -561,15 +561,15 @@ menu_DS:	int chon = menu_dong(menu_dausach, 8); // chọn thao tác trong menu �
 					else  // xuất các sách độc giả đang mượn
 					{
 						xoa_hien_thi_doc_gia();
-						cout << xuat_sach_dang_muon(p, l);
+						xuat_sach_dang_muon(p, l);
 						string ma_sach;
 						NODE_DMS* dms=NULL;
 						NODE_MT* mt = NULL;
 						do
 						{
-							gotoXY(1, 10);
+							gotoXY(0, 10);
 							cout << "                                  ";
-							gotoXY(1, 10); 
+							gotoXY(0, 10); 
 							cout << "Nhap Ma Sach Bi Mat: ";
 							ma_sach = nhap_ki_tu1();
 							if (ma_sach == "-1") // ESC

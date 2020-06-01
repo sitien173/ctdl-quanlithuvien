@@ -1,8 +1,8 @@
 3
-123,Doremon,123412,Fask,2009,Truyen,4
+123,Doremon,123412,Fask,2009,Truyen,5
 100
 123-1,1,Ngan 1
-123-2,1,Ngan 1
+123-2,2,Ngan 1
 123-3,2,Ngan 1
 123-4,0,Ngan 1
 123-5,0,Ngan 1

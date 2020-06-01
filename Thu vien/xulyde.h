@@ -1099,10 +1099,13 @@ int xuat_sach_dang_muon(TREE t, LIST_DS l)
 		{
 			for (NODE_DMS* k = l.ds_dausach[i]->dms.pHead; k != NULL; k = k->pNext)
 			{
-				if (p->data.masach == k->data.masach && p->data.trangthai == 0)
+				if (p->data.masach == k->data.masach)
 				{
-					kt++;
-					xuat_thong_tin_phieu_muontra(p->data, l.ds_dausach[i]->tensach, ++tungdo);
+					if (p->data.trangthai == 0 || p->data.trangthai == 2)
+					{
+						kt++;
+						xuat_thong_tin_phieu_muontra(p->data, l.ds_dausach[i]->tensach, ++tungdo);
+					}
 				}
 			}
 		}
@@ -1165,6 +1168,11 @@ int muonsach(TREE& t, LIST_DS& l)
 			continue;
 		}
 		xoa_hien_thi_doc_gia();
+		if (p->data.trangthaithe == 0) // thẻ bị khóa
+		{
+			BaoLoi("The Doc Gia Da Bi Khoa");
+			continue;
+		}
 		// kiểm tra số lượng sách độc giả đã mượn nếu > 3 không mượn được
 		int dem = dem_sach_docgia_muon(p);
 		if (dem >= 3)
@@ -1326,6 +1334,7 @@ int trasach(TREE& t, LIST_DS& l)
 							q->data.ngaytra.thang = n1.thang;
 							q->data.ngaytra.nam = n1.nam;
 						}
+
 					}
 				}
 				break;

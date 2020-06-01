@@ -703,7 +703,7 @@ void xoa_hienthi_buttonNext()
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(110, 42); cout << "        ";
+	gotoXY(110, 42); cout << "           ";
 	gotoXY(x, y);
 }
 void xoa_hien_thi_dausach()
@@ -791,16 +791,14 @@ void xoa_hien_thi_doc_gia()
 		gotoXY(45, i);
 		cout << "                     ";
 		gotoXY(65, i);
-		cout << "                     ";
+		cout << "                         ";
 		gotoXY(90, i);
-		cout << "                     ";
+		cout << "                          ";
 		gotoXY(100, i);
-		cout << "                     ";
+		cout << "                        ";
 	}
 	gotoXY(x, y);
 }
-
-
 void huong_dan_su_dung()
 {
 	gotoXY(80, 2);
