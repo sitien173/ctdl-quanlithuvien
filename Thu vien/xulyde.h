@@ -167,8 +167,11 @@ void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo)
 		cout << a.ho << " " << a.ten;
 		gotoXY(90, tungdo);
 		cout << a.phai;
-		gotoXY(107, tungdo);
-		cout << a.trangthaithe;
+		gotoXY(103, tungdo);
+		if(a.trangthaithe ==1)
+		cout << "HOAT DONG";
+		else
+		cout << "KHOA";
 	gotoXY(x, y);
 }
 
@@ -560,21 +563,52 @@ void xuat_ds_dausach(LIST_DS& l)
 	TextColor(7);
 }
 
-// tim kiếm đầu sách theo tên đầu sách nếu có xuất ra đầu sách <> -1;
+// tim kiếm đầu sách theo tên đầu sách nếu có xuất ra đầu sách <> -1 , ESC rt -2
 int tim_kiem_dau_sach_theo_ten(LIST_DS l, string temp)
 {
 	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách hay ko
 	int tungdo = 0;
+	int tungdo1 = 3;
 	xoa_hien_thi_dausach();
 	for (int i = 0; i < l.sl; i++)
 	{
 		// nếu tìm thấy temp là chuỗi con của tên đầu sách
 		if (l.ds_dausach[i]->tensach.find(temp) != string::npos)
 		{
-			TextColor(14);
+			TextColor(15);
 			xuat_dau_sach(*l.ds_dausach[i],++tungdo);
 			kt = 1;
-			continue;
+			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; )
+			{
+				if (tungdo1 < 40)
+				{
+					xuat_sach1(l.ds_dausach[i]->tensach, p->data, tungdo1++);
+					p = p->pNext;
+				}
+				else if (tungdo1 >= 40)
+				{
+					ButtonNext();
+					char c = _getch();
+					if (c == -32) c = _getch();
+					if (c == 77)
+					{
+						xoa_hien_thi_dausach();
+						xoa_hien_thi_sach();
+						xuat_dau_sach(*l.ds_dausach[i], tungdo);
+						for (int j = 3; j < 40; j++)
+						{
+							xuat_sach1(l.ds_dausach[i]->tensach, p->data, j);
+							p = p->pNext;
+							if (p == l.ds_dausach[i]->dms.pTail)
+							{
+								xuat_sach1(l.ds_dausach[i]->tensach, p->data, j);
+								return 1;
+							}
+						}
+					}
+					else return -2;
+				}
+			}
 		}
 	}
 	TextColor(7);
@@ -709,13 +743,15 @@ int them_sach(LIST_DS& l)
 	danhmucsach x;
 	// lược bỏ phần mã đầu sách
 	int q = 0;
-	if (l.ds_dausach[i]->dms.pTail != NULL)
+	if ( l.ds_dausach[i]->soluongsach > 0)
 	{
 		string str;
-		size_t pos = l.ds_dausach[i]->dms.pTail->data.masach.find("-"); // lấy vị trí của kí tự - trong chuỗi
+		int pos = l.ds_dausach[i]->dms.pTail->data.masach.find("-"); // lấy vị trí của kí tự - trong chuỗi
 		str = l.ds_dausach[i]->dms.pTail->data.masach.substr(pos+1); //  lấy chuỗi con của l.ds_dausach[i]->dms.pTail->data.masach bắt đầu sau kí tự -
 		q = chuoi_sang_so(str);
 	}
+	else
+		khoi_tao_sach(l.ds_dausach[i]->dms);
 	for (int j = 0; j < n; j++)
 	{
 		if (q == 0)
@@ -749,13 +785,13 @@ void xuat_sach1(string ten_sach, danhmucsach a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(45, 0);
+	gotoXY(45, 2);
 	cout << "Ma Sach";
-	gotoXY(65, 0);
+	gotoXY(65, 2);
 	cout << "Ten Sach";
-	gotoXY(95, 0);
+	gotoXY(95, 2);
 	cout << "Trang Thai";
-	gotoXY(110, 0);
+	gotoXY(110, 2);
 	cout << "Vi Tri";
 	gotoXY(45, tungdo);
 	cout << a.masach;
@@ -779,7 +815,6 @@ void xuat_ds_sach1(LIST_DS l)
 		{
 			if (j < 40)
 			{
-				Sleep(500);
 				xuat_sach1(l.ds_dausach[i]->tensach, p->data, j++);
 				if (p != l.ds_dausach[i]->dms.pTail)
 					p = p->pNext;
@@ -801,7 +836,6 @@ void xuat_ds_sach1(LIST_DS l)
 			{
 				do
 				{
-					//xuat_sach1(l.ds_dausach[i]->tensach, p->data, j++);
 					ButtonNext();
 					char c = _getch();
 					if (c == -32)
@@ -811,7 +845,6 @@ void xuat_ds_sach1(LIST_DS l)
 						xoa_hien_thi_sach();
 						for (j = 0; j < 40; j++)
 						{
-							Sleep(500);
 							xuat_sach1(l.ds_dausach[i]->tensach, p->data, j + 1);
 							if (p != l.ds_dausach[i]->dms.pTail)
 								p = p->pNext;
@@ -1184,7 +1217,7 @@ int muonsach(TREE& t, LIST_DS& l)
 		do
 		{
 			gotoXY(1, 10);
-			cout << "                                              ";
+			cout << "                                        ";
 			gotoXY(1, 10);
 			cout << "Nhap Ma Dau Sach Can Muon: ";
 			ma = nhap_ki_tu1();

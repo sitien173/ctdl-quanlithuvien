@@ -2,7 +2,6 @@
 char thaotac[][50] =
 {					"DOC GIA                           ",
 				    "DAU SACH                          ",
-				    "SACH                              ",
 				    "MUON SACH                         ",
 					"TRA SACH                          ",
 					"LAM MAT SACH                      ",
@@ -133,7 +132,7 @@ void menu_xuli()
 	{
 		clrscr();
 		int tungdo = 0;
-menu_chinh: 	int tt = menu_dong(thaotac, 10); // chọn thao tác với menu chính
+menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chính
 		switch (tt)
 		{
 		// menu độc giả 
@@ -339,13 +338,15 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 		// menu đầu sách
 		case 2:
 		{
-			char menu_dausach[6][50] = { "THEM DAU SACH      ",
+			char menu_dausach[8][50] = { "THEM DAU SACH      ",
 										 "XUAT DAU SACH      ",
-									     "TIM KIEM DAU SACH  ",
+									     "TIM KIEM SACH      ",
 									     "XOA DAU SACH       ",
 									     "HIEU CHINH DAU SACH",
-									     "THOAT" };
-menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu đầu sách
+										 "THEM SACH          ",
+										 "XOA SACH           ",
+									     "THOAT              " };
+menu_DS:	int chon = menu_dong(menu_dausach, 8); // chọn thao tác trong menu đầu sách
 			// Thêm đầu sách
 			if (chon == 1 || chon == 62) // Thêm Đầu Sách
 			{
@@ -375,10 +376,10 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			// tìm kiếm đầu sách
 			if (chon == 3 || chon == 62) // 62 F4 
 			{
-				xuat_ds_dausach(l);
 				string ten_sach;
 				do
 				{
+					xuat_ds_dausach(l);
 					gotoXY(1, 10);
 					cout << "                              ";
 					gotoXY(1, 10);
@@ -450,24 +451,8 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				} while (1);
 				goto menu_DS;
 			}
-			// Thoat
-			if (chon == 6) 
-				goto menu_chinh;
-			break;
-		}
-		// menu Sach
-		case 3:
-		{
-			char menu_sach[6][50] = { "THEM SACH    ",
-									  "XUAT SACH    ",
-									  "TIM KIEM SACH",
-									  "XOA SACH     ",
-									  "HIEU CHINH   ",
-									  "THOAT        "
-			};
-menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_sach
-			// Them Sach
-			if (chon == 1 || chon == 59)
+			// thêm sách
+			if (chon == 6 )
 			{
 				xuat_ds_dausach(l); // in ra các đầu sách đang có
 				do {
@@ -484,54 +469,10 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 						break;
 					}
 				} while (1);
-				goto menu_sach;
+				goto menu_chinh;
 			}
-			// Xuat Sach
-			if (chon == 2)
-			{
-				xuat_ds_sach1(l);
-				_getch();
-				goto menu_sach;
-			}
-			// tim kiem sach
-			if (chon == 3|| chon == 62)
-			{
-				string temp;
-				string temp1;
-				do
-				{
-					xuat_ds_dausach(l);
-					gotoXY(0, 11);
-					cout <<"                                    ";
-					gotoXY(0, 10);
-					cout << "Nhap Ten Sach Hoac Ma Sach Can Tim: \n";
-					temp = nhap_ki_tu1();
-					if (temp == "-1") // ESC
-						break;
-					temp1 = tach_ma_sach(temp);
-					int tam = tim_kiem_dau_sach_theo_ma(l, temp1);
-					// nếu tìm thấy
-					if (tam != -1)
-					{
-						xoa_hien_thi_dausach();
-						xuat_dau_sach(*l.ds_dausach[tam],1);
-						_getch();
-					}// nếu nhập tên sách không tìm thấy
-					if (tim_kiem_dau_sach_theo_ten(l, temp) != -1)
-					{
-						_getch();
-						break;
-					} // tìm thấy
-					else
-					{
-						BaoLoi("Khong Tim Thay Sach");
-						continue;
-					}
-				} while (1);
-				goto menu_sach;
-			}
-			// Xoa sach
-			if (chon == 4 || chon == 60)
+			// xóa sách
+			if (chon == 7 )
 			{
 				xuat_ds_sach1(l);
 				string ma_sach;
@@ -552,51 +493,15 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 					else
 						continue;
 				} while (1);
-				goto menu_sach;
+				goto menu_chinh;
 			}
-			// Hiệu Chỉnh Sách
-			if (chon == 5 || chon == 61)
-			{
-				string ma_sach;
-				xuat_ds_sach1(l);
-				do
-				{
-					gotoXY(1, 10);
-					cout << "                            ";
-					gotoXY(1, 10);
-					cout << "Nhap Ma Sach: ";
-					ma_sach = nhap_ki_tu1();
-					if (ma_sach == "-1") // ESC
-						break;
-					NODE_DMS* p = tim_kiem_sach(l, ma_sach);
-					if (p == NULL) // Mã sách ko tìm thấy
-					{
-						BaoLoi("Ma Sach Khong Ton Tai");
-						continue;
-					}
-					else
-					{
-						int i = hieu_chinh_sach(p->data, ma_sach);
-						if (i == -2) // ESC
-						{
-							break;
-						}
-						else if (i == 1)
-						{
-							BaoLoi("Hieu Chinh Thanh Cong");
-							break;
-						}
-					}
-
-				} while (1);
-				goto menu_sach;
-			}
-			if (chon == 6)
+			// Thoat
+			if (chon == 8) 
 				goto menu_chinh;
 			break;
 		}
 		// Mượn sách
-		case 4:
+		case 3:
 		{
 			int i = muonsach(t, l);
 			if (i == -2) // ESC
@@ -606,7 +511,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			break;
 		}
 		// TRẢ SÁCH
-		case 5:
+		case 4:
 		{
 			do
 			{
@@ -624,7 +529,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			goto menu_chinh;
 		}
 		// Làm mất sách
-		case 6:
+		case 5:
 		{
 			TREE p = NULL;
 			do
@@ -700,7 +605,7 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			break;
 		}
 		// Danh sách sách động giả đang mượn
-		case 7:
+		case 6:
 		{
 			int ma_doc_gia;
 			xuat_ds_thong_tin_doc_gia(t, tungdo);
@@ -738,14 +643,14 @@ menu_sach:		int chon = menu_dong(menu_sach, 6); // bien chon thao tac voi menu_s
 			goto menu_chinh;
 		}
 		// Danh sách độc giả quá hạn
-		case 8:
+		case 7:
 		{
 			ds_quahan(t, l1);
 			_getch();
 			goto menu_chinh;
 		}
 		// Top 10 Sách
-		case 9:
+		case 8:
 		{
 			top10sach(l);
 			_getch();
