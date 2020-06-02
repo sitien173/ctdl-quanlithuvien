@@ -15,11 +15,8 @@
 0
 60345,Tran Viet,Hung,Nam,1
 0
-6,Luu Nguyen Ky,Thu,Nam,0
-3
-123978-1,1,2/6/2020,2/6/2020
-909124-1,1,2/6/2020,2/6/2020
-123978-1,0,2/4/2020,0/0/0
+6,Luu Nguyen Ky,Thu,Nam,1
+0
 80365,Mai Kim,Yen,Nu,1
 0
 42625,Le Hoang,Khanh,Nam,1

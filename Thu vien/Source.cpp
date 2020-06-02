@@ -670,7 +670,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 8); // chọn thao tác trong menu �
 int main()
 {
 	// giả sử tối đa 100000 độc giả
-	// tạo ngẫu nhiên 100000 mã thẻ ngẫu nhiên.chỉ chạy 1 lần
+	// tạo ngẫu nhiên 100000 mã thẻ ngẫu nhiên.chỉ chạy 1 lần khi file MADOCGIA rỗng
 	// tao_ma_doc_gia();
 	resizeConsole(1390, 650);
 	srand(time(NULL));
