@@ -43,9 +43,6 @@
     <Text Include="DAUSACH.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="QUAHAN.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="MADOCGIA.txt">
       <Filter>Resource Files</Filter>
     </Text>

@@ -126,7 +126,6 @@ void menu_xuli()
 	khoi_tao_dau_sach(l);
 	LoadtuFile_DSDG(t);
 	LoadFileDS(l);
-	
 	cap_nhat_trangthaithe_DG(t);
 	while (1)
 	{
