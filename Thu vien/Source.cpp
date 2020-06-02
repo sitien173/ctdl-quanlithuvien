@@ -126,8 +126,8 @@ void menu_xuli()
 	khoi_tao_dau_sach(l);
 	LoadtuFile_DSDG(t);
 	LoadFileDS(l);
-	Load_file_quahan(l1);
-	cap_nhat_sach(t, l);
+	
+	cap_nhat_trangthaithe_DG(t);
 	while (1)
 	{
 		clrscr();
@@ -660,7 +660,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 8); // chọn thao tác trong menu �
 		{
 			GhiFileDG(t);
 			GhiFileDS(l);
-			Ghi_file_quahan(t, l1);
 			giaiphong_cay(t);
 			giaiphong_dausach(l);
 			return;

@@ -6,6 +6,7 @@ TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia);
 void sap_xep_theo_theloai_dausach(LIST_DS& l);
 int SoluongDG(TREE t);
 int Kiem_tra_phim(char c);
+int tinh_so_ngay(Date n1);
 
 void BaoLoi(string s) {
 	TextColor(15);
@@ -13,7 +14,7 @@ void BaoLoi(string s) {
 	int x = whereX(), y = whereY();
 	gotoXY(3, 46);
 	cout << s;
-	Sleep(1000);
+	Sleep(1500);
 	for (int i = 0; i < n; i++)
 	{
 		gotoXY(3 + i, 46);
@@ -245,7 +246,7 @@ void chuan_hoa_chu(string& str)
 // tạo 100000 mã độc giả 
 void tao_ma_doc_gia()
 {
-	int arr[100000 + 1];
+	int* arr=new int[MAX_MATHE + 1];
 	int i = 1;
 	for (i; i <= 100000; i++)
 	{
@@ -261,27 +262,11 @@ void tao_ma_doc_gia()
 	{
 		fileout << arr[i] << endl;
 	}
+	delete[] arr;
 	fileout.close();
 }
-bool kiem_tra_ma_sach(LIST_DMS& l, string ma)
-{
-	for (NODE_DMS* p = l.pHead; p != NULL; p = p->pNext)
-	{
-		if (p->data.masach == ma) return true;
-	}
-	return false;
-}
-string tao_ma_sach(LIST_DMS l, string ma_dau_sach)
-{
-	string temp;
-	do
-	{
-		temp = ma_dau_sach + "-";
-		int ma = rand() % MAX_MASACH + 1;// random tu 1 -> 500
-		temp += so_sang_chuoi(ma);
-	} while (kiem_tra_ma_sach(l, temp) == true);
-	return temp;
-}
+
+
 // =============================== giải phóng==================
 void giaiphong_cay(TREE& t)
 {
@@ -602,41 +587,48 @@ string nhap_gioitinh()
 cout << endl;
 return str;
 }
-// ham co chuc nang cap nhat lai sach
-void cap_nhat_sach(TREE& t, LIST_DS& l)
+
+void cap_nhat_trangthaithe_DG(TREE& t)
 {
 	if (t != NULL)
 	{
 		for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
+		{	
+		int j = tinh_so_ngay(p->data.ngaymuon);
+		if (j > 7) // nếu mượn sách quá hạn
 		{
-			for (int i = 0; i < l.sl; i++)
-			{
-				for (NODE_DMS* k = l.ds_dausach[i]->dms.pHead; k != NULL; k = k->pNext)
-				{
-					if (p->data.masach == k->data.masach)
-					{
-						if (p->data.trangthai == 1) // sách đã trả
-						{
-							k->data.trangthai = 0;
-						}
-						else if (p->data.trangthai == 0) // sách độc giả đang mượn
-						{
-							k->data.trangthai = 1; // cập nhật lại sách đã có người mượn
-						}
-						else if (p->data.trangthai == 2) // sách đã bị mất
-						{
-							k->data.trangthai = 2; // cập nhật lại sách đã thanh lí
-						}
-					}
-				}
-			}
+			t->data.trangthaithe = 0; // khóa thẻ
+			break;
 		}
-		cap_nhat_sach(t->pLeft, l);
-		cap_nhat_sach(t->pRight, l);
+		else if (p->data.trangthai == 2)// làm mất sách
+		{
+			t->data.trangthaithe = 0; // khóa thẻ
+			break;
+		}
+		else
+			t->data.trangthaithe = 1; // mở thẻ
+		 }
+		cap_nhat_trangthaithe_DG(t->pLeft);
+		cap_nhat_trangthaithe_DG(t->pRight);
 	}
-
 }
 
+int dem_so_sach_con_muonduoc(LIST_DS l,string ISBN)
+{
+	int sum = 0;
+	for (int i = 0; i < l.sl; i++)
+	{
+		if (l.ds_dausach[i]->ISBN == ISBN)
+		{
+			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
+			{
+				if (p->data.trangthai == 0 )
+					sum++;
+			}
+		}
+	}
+	return sum;
+}
 // hoán đổi vị trí 2 độc giả
 void hoandoi(docgia& a, docgia& b)
 {
@@ -654,7 +646,7 @@ void thoi_gian_thuc(Date& x)
 	x.thang = now->tm_mon + 1;
 	x.nam = now->tm_year + 1900;
 }
-
+// tính ngày chênh lệch giữa 2 mốc thời gian
 int tinh_so_ngay(Date n1)
 {
 	Date n2;
@@ -735,9 +727,9 @@ void xoa_hien_thi_sach()
 	int y = whereY();
 	for (int i = 0; i <= 41; i++)
 	{
-		gotoXY(45, i);
+		gotoXY(40, i);
 		cout << "                                  ";
-		gotoXY(65, i);
+		gotoXY(55, i);
 		cout << "                                   ";
 		gotoXY(95, i);
 		cout << "                                   ";

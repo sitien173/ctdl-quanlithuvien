@@ -1,11 +1,10 @@
 ﻿  Source.cpp
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(90,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(106,52): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(209,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(222,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(677,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(617): warning C4715: 'tim_kiem_dau_sach_theo_ten': not all control paths return a value
-C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(928): warning C4715: 'tim_kiem_sach_ten': not all control paths return a value
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(91,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(107,52): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(210,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(223,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(676,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(624): warning C4715: 'tim_kiem_dau_sach_theo_ten': not all control paths return a value
+C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(935): warning C4715: 'tim_kiem_sach_ten': not all control paths return a value
 C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(40): warning C4715: 'key': not all control paths return a value
-  LINK : C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe not found or not built by the last incremental link; performing full link
   Thu vien.vcxproj -> C:\Users\tien\Desktop\QUAN_LI_THU_VIEN\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe
