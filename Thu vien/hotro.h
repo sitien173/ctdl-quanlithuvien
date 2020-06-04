@@ -8,59 +8,75 @@ int SoluongDG(TREE t);
 int Kiem_tra_phim(char c);
 int tinh_so_ngay(Date n1);
 
+void Box_BaoLoi()
+{
+	int tungdo = 50;
+	TextColor(14);
+	gotoXY(88, tungdo - 1);
+	cout << "ERROR";
+	TextColor(4);
+	gotoXY(boxx, tungdo); cout << char(201);
+	for (int i = 1; i < boxs + 1; i++) cout << char(205);
+	cout << char(187);
+	gotoXY(boxx, tungdo + 1); cout << char(186);
+	gotoXY(boxx + boxs + 1, tungdo + 1); cout << char(186);
+	gotoXY(boxx, tungdo + 2); cout << char(186);
+	gotoXY(boxx + boxs + 1, tungdo + 2); cout << char(186);
+	gotoXY(boxx, tungdo + 3); cout << char(186);
+	gotoXY(boxx + boxs + 1, tungdo + 3); cout << char(186);
+	gotoXY(boxx, tungdo + 4); cout << char(186);
+	gotoXY(boxx + boxs + 1, tungdo + 4); cout << char(186);
+	gotoXY(boxx + 1, tungdo + 5);
+	for (int i = 1; i <= boxs; i++) cout << char(205);
+	gotoXY(boxx, tungdo + 5); cout << char(200);
+	gotoXY(boxx + boxs + 1, tungdo + 5); cout << char(188);
+	TextColor(7);
+}
+void xoa_hienthi_box_baoloi()
+{
+	int tungdo = 50;
+	TextColor(14);
+	gotoXY(88, tungdo - 1);
+	cout << "      ";
+	TextColor(4);
+	gotoXY(boxx, tungdo); cout << " ";
+	for (int i = 1; i < boxs + 1; i++) cout << " ";
+	cout << " ";
+	gotoXY(boxx, tungdo + 1); cout << " ";
+	gotoXY(boxx + boxs + 1, tungdo + 1); cout << " ";
+	gotoXY(boxx, tungdo + 2);  cout << " ";
+	gotoXY(boxx + boxs + 1, tungdo + 2); cout << " ";
+	gotoXY(boxx, tungdo + 3);  cout << " ";
+	gotoXY(boxx + boxs + 1, tungdo + 3); cout << " ";
+	gotoXY(boxx, tungdo + 4); cout << " ";
+	gotoXY(boxx + boxs + 1, tungdo + 4); cout << " ";
+	gotoXY(boxx + 1, tungdo + 5);
+	for (int i = 1; i <= boxs; i++) cout << " ";
+	gotoXY(boxx, tungdo + 5); cout << " ";
+	gotoXY(boxx + boxs + 1, tungdo + 5); cout << " ";
+	TextColor(7);
+}
 void BaoLoi(string s) {
 	TextColor(15);
 	int n = s.length();
 	int x = whereX(), y = whereY();
-	gotoXY(3, 46);
+	Box_BaoLoi();
+	gotoXY(boxx+25, boxy+47);
 	cout << s;
 	Sleep(1500);
 	for (int i = 0; i < n; i++)
 	{
-		gotoXY(3 + i, 46);
+		gotoXY(boxx + 25+i, boxy + 47);
 		cout << " ";
 	}
+	xoa_hienthi_box_baoloi();
 	gotoXY(x, y);
 	TextColor(7);
 }
-void Button()
-{
-	gotoXY(50, 44); TextColor(76); cout << "        ";
-	gotoXY(50, 45); TextColor(78); cout << "  CHON  ";
-	gotoXY(50, 46); TextColor(76); cout << "        ";
-	gotoXY(50, 47); TextColor(79); cout << "  Enter ";
 
-	gotoXY(70, 44); TextColor(76); cout << "        ";
-	gotoXY(70, 45); TextColor(78); cout << "  SUA   ";
-	gotoXY(70, 46); TextColor(76); cout << "        ";
-	gotoXY(70, 47); TextColor(79); cout << "   F3   ";
-
-	gotoXY(90, 44); TextColor(76); cout << "        ";
-	gotoXY(90, 45); TextColor(78); cout << "  TIM   ";
-	gotoXY(90, 46); TextColor(76); cout << "        ";
-	gotoXY(90, 47); TextColor(79); cout << "   F4   ";
-
-	gotoXY(110, 44); TextColor(76); cout << "        ";
-	gotoXY(110, 45); TextColor(78); cout << "  THEM  ";
-	gotoXY(110, 46); TextColor(76); cout << "        ";
-	gotoXY(110, 47); TextColor(79); cout << "   F1   ";
-
-	gotoXY(130, 44); TextColor(76); cout << "        ";
-	gotoXY(130, 45); TextColor(78); cout << "  XOA   ";
-	gotoXY(130, 46); TextColor(76); cout << "        ";
-	gotoXY(130, 47); TextColor(79); cout << "   F2   ";
-
-	gotoXY(150, 44); TextColor(76); cout << "        ";
-	gotoXY(150, 45); TextColor(78); cout << "  THOAT ";
-	gotoXY(150, 46); TextColor(76); cout << "        ";
-	gotoXY(150, 47); TextColor(79); cout << "   ESC  ";
-	gotoXY(0, 0);
-	TextColor(7);
-}
 void ButtonNext()
 {
-	gotoXY(110, 42); TextColor(79); cout << "   ->   ";
-	TextColor(7);
+	gotoXY(110, 42); cout << "->";
 }
 
 // tách mã sách chỉ lấy mã đầu sách
@@ -123,12 +139,12 @@ bool Kiem_Tra_Du_Lieu(char c)
 	return false;
 }
 
-int nhap_so_nguyen() // Hàm nhập dữ liệu toàn số .
+int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	string str;
+	string str=so_sang_chuoi(n);
 	bool KT=false;
-	int length = 0; // biến cho con trỏ dịch đến cuối
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
@@ -190,7 +206,7 @@ int nhap_so_nguyen() // Hàm nhập dữ liệu toàn số .
 		}
 	} while (KT == false);
 	cout << endl;
-	return atoi(str.c_str()); // chuyển kí tự sang số
+	n= atoi(str.c_str()); // chuyển kí tự sang số
 }
 
 void chuan_hoa_chu(string& str)
@@ -327,7 +343,7 @@ bool Kiem_Tra_Ki_Tu_So(char c)
 // phím chức năng rt 1 , số rt 2,Không thuộc cả 2 rt 0
 int Kiem_tra_phim(char c)
 {
-	int arr[32] = { 72,75,77,80,81,73,44,46,59,39,47,93,91,92,61,82,83,79,71,122,123,68,67,66,65
+	int arr[32] = { 72,75,77,80,81,73,44,46,59,39,47,93,91,92,61,82,83,79,71,-122,-123,68,67,66,65
 	,64,63,62,61,60,59,96 };
 	if (c >= '0' && c <= '9')
 		return 2;
@@ -342,13 +358,12 @@ int Kiem_tra_phim(char c)
 	return 0;
 }
 
-// Hàm nhập dữ liệu toàn kí tự . VD: họ, tên, giới tính. Kí tự bắt đầu phải là kí tự 
-string nhap_ki_tu()
+// Hàm nhập dữ liệu toàn kí tự . VD: họ, tên, giới tính. ESC rt -1
+int nhap_ki_tu(string& str)
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	string str;
 	bool KT = false;;
-	int length = 0; // biến cho con trỏ dịch đến cuối
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
@@ -361,17 +376,17 @@ string nhap_ki_tu()
 		{
 			if (c == 27)
 			{
-				return "-1";
+				return -1;
 			}
 			int k = Kiem_tra_phim(c);
 			if (k == 1) // phím chức năng
 			{
-				BaoLoi("Phim Nhap Khong Hop Le");
+				BaoLoi("PHIM NHAP KHONG HOP LE");
 				break;
 			}
 			if (k == 2) // nếu nhập kí tự là số
 			{
-				BaoLoi("Khong duoc nhap so");
+				BaoLoi("KHONG DUOC NHAP SO");
 				break;
 			}
 
@@ -390,6 +405,7 @@ string nhap_ki_tu()
 			}
 			else
 			{
+				TextColor(15);
 				cout << c;
 				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
@@ -409,7 +425,7 @@ string nhap_ki_tu()
 			}
 			if (length == 0 || (dem >= 2 && dem1 == 0))
 			{
-				BaoLoi("Khong duoc de trong");
+				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
 			}
 			else
@@ -419,16 +435,14 @@ string nhap_ki_tu()
 	} while (KT == false);
 	cout << endl;
 	chuan_hoa_chu(str);
-	return str;
 }
 
-// Hàm nhập dữ liệu kí tự và số dưới dạng kí tự.
-string nhap_ki_tu1()
+// Hàm nhập dữ liệu kí tự và số dưới dạng kí tự.ESC rt -1
+int nhap_ki_tu1(string& str)
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	string str;
 	bool KT=false;
-	int length = 0; // biến cho con trỏ dịch đến cuối
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
@@ -441,12 +455,12 @@ string nhap_ki_tu1()
 		{
 			if (c == 27)
 			{
-				return "-1";
+				return -1;
 			}
 			int k = Kiem_tra_phim(c);
 			if (k == 1) // phím chức năng
 			{
-				BaoLoi("Phim Nhap Khong Hop Le");
+				BaoLoi("PHIM NHAP KHONG HOP LE");
 				break;
 			}
 			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
@@ -464,6 +478,7 @@ string nhap_ki_tu1()
 			}
 			else
 			{
+				TextColor(15);
 				cout << c;
 				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
@@ -485,7 +500,7 @@ string nhap_ki_tu1()
 			}
 			if (length == 0 || (dem >= 2 && dem1 == 0))
 			{
-				BaoLoi("Khong duoc de trong");
+				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
 			}
 			else
@@ -495,16 +510,15 @@ string nhap_ki_tu1()
 	} while (KT == false);
 	cout << endl;
 	chuan_hoa_chu(str);
-	return str;
 }
 
-string nhap_gioitinh()
+int nhap_gioitinh(string& str)
 {
 
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	string str;
+	
 	bool KT=false;
-	int length = 0; // biến cho con trỏ dịch đến cuối
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
@@ -514,16 +528,16 @@ string nhap_gioitinh()
 		{
 			if (c == 27)
 			{
-				return "-1";
+				return -1;
 			}
 			if (Kiem_tra_phim(c) == 1)
 			{
-				BaoLoi("Phim Nhap Khong Hop Le");
+				BaoLoi("PHIM NHAP KHONG HOP LE");
 				break;
 			}
 			if (Kiem_tra_phim(c) == 2) // nếu nhập kí tự là số
 			{
-				BaoLoi("Khong duoc nhap so");
+				BaoLoi("KHONG DUOC NHAP SO");
 				break;
 			}
 
@@ -542,6 +556,7 @@ string nhap_gioitinh()
 			}
 			else
 			{
+				TextColor(15);
 				cout << c;
 				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
@@ -561,7 +576,7 @@ string nhap_gioitinh()
 			}
 			if (str.length() == 0 || (dem >= 2 && dem1 == 0))
 			{
-				BaoLoi("Khong duoc de trong");
+				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
 			}
 			if (str.length() >= 1)
@@ -585,50 +600,9 @@ string nhap_gioitinh()
 		}
 } while (KT == false);
 cout << endl;
-return str;
 }
 
-void cap_nhat_trangthaithe_DG(TREE& t)
-{
-	if (t != NULL)
-	{
-		for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
-		{	
-		int j = tinh_so_ngay(p->data.ngaymuon);
-		if (j > 7) // nếu mượn sách quá hạn
-		{
-			t->data.trangthaithe = 0; // khóa thẻ
-			break;
-		}
-		else if (p->data.trangthai == 2)// làm mất sách
-		{
-			t->data.trangthaithe = 0; // khóa thẻ
-			break;
-		}
-		else
-			t->data.trangthaithe = 1; // mở thẻ
-		 }
-		cap_nhat_trangthaithe_DG(t->pLeft);
-		cap_nhat_trangthaithe_DG(t->pRight);
-	}
-}
 
-int dem_so_sach_con_muonduoc(LIST_DS l,string ISBN)
-{
-	int sum = 0;
-	for (int i = 0; i < l.sl; i++)
-	{
-		if (l.ds_dausach[i]->ISBN == ISBN)
-		{
-			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
-			{
-				if (p->data.trangthai == 0 )
-					sum++;
-			}
-		}
-	}
-	return sum;
-}
 // hoán đổi vị trí 2 độc giả
 void hoandoi(docgia& a, docgia& b)
 {
@@ -695,7 +669,7 @@ void xoa_hienthi_buttonNext()
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(110, 42); cout << "           ";
+	gotoXY(110, 42); cout << "        ";
 	gotoXY(x, y);
 }
 void xoa_hien_thi_dausach()
@@ -738,42 +712,7 @@ void xoa_hien_thi_sach()
 	}
 	gotoXY(x, y);
 }
-void xoa_hien_thi_botton(int tungdo)
-{
-	int x = whereX();
-	int y = whereY();
-	gotoXY(50, tungdo + 3);  cout << "        ";
-	gotoXY(50, tungdo + 4);  cout << "        ";
-	gotoXY(50, tungdo + 5);  cout << "        ";
-	gotoXY(50, tungdo + 6);  cout << "        ";
 
-	gotoXY(70, tungdo + 3);  cout << "        ";
-	gotoXY(70, tungdo + 4);  cout << "        ";
-	gotoXY(70, tungdo + 5);  cout << "        ";
-	gotoXY(70, tungdo + 6);  cout << "        ";
-
-	gotoXY(90, tungdo + 3);  cout << "        ";
-	gotoXY(90, tungdo + 4);  cout << "        ";
-	gotoXY(90, tungdo + 5);  cout << "        ";
-	gotoXY(90, tungdo + 6);  cout << "        ";
-
-	gotoXY(110, tungdo + 3);  cout << "        ";
-	gotoXY(110, tungdo + 4);  cout << "        ";
-	gotoXY(110, tungdo + 5);  cout << "        ";
-	gotoXY(110, tungdo + 6);  cout << "        ";
-
-	gotoXY(130, tungdo + 3);  cout << "        ";
-	gotoXY(130, tungdo + 4);  cout << "        ";
-	gotoXY(130, tungdo + 5);  cout << "        ";
-	gotoXY(130, tungdo + 6);  cout << "        ";
-
-	gotoXY(150, tungdo + 3);  cout << "        ";
-	gotoXY(150, tungdo + 4);  cout << "        ";
-	gotoXY(150, tungdo + 5);  cout << "        ";
-	gotoXY(150, tungdo + 6);  cout << "        ";
-	gotoXY(x, y);
-	TextColor(7);
-}
 void xoa_hien_thi_doc_gia()
 {
 	int x = whereX();
@@ -851,4 +790,68 @@ void xoa_hien_thi_huong_dan()
 	gotoXY(66, 17); cout << "        ";
 	gotoXY(75, 16); cout << "                                   ";
 	gotoXY(x, y);
+}
+void Box_NhapDG()
+{
+	TextColor(15);
+	gotoXY(boxx, boxy); cout << char(201);
+	for (int i = 1; i < boxs + 1; i++) cout << char(205);
+	cout << char(187);
+	gotoXY(boxx, boxy + 1); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 1); cout << char(186);
+	gotoXY(boxx, boxy + 2); cout << char(186) << " Ma DG: ";
+	gotoXY(boxx + boxs + 1, boxy + 2); cout << char(186);
+	gotoXY(boxx, boxy + 3); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 3); cout << char(186);
+	gotoXY(boxx, boxy + 4); cout << char(186) << " Nhap Ho: ";
+	gotoXY(boxx + boxs + 1, boxy + 4); cout << char(186);
+	gotoXY(boxx, boxy + 5); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 5); cout << char(186);
+	gotoXY(boxx, boxy + 6); cout << char(186) << " Nhap Ten: ";
+	gotoXY(boxx + boxs + 1, boxy + 6); cout << char(186);
+	gotoXY(boxx, boxy + 7); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 7); cout << char(186);
+	gotoXY(boxx, boxy + 8); cout << char(186) << " Nhap Phai: ";
+	gotoXY(boxx + boxs + 1, boxy + 8); cout << char(186);
+	gotoXY(boxx, boxy + 9); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 9); cout << char(186);
+	gotoXY(boxx, boxy + 10); cout << char(186) << " Trang thai the: ";
+	gotoXY(boxx + boxs + 1, boxy + 10); cout << char(186);
+	gotoXY(boxx, boxy + 11); cout << char(200);
+	for (int i = 1; i < boxs + 1; i++) cout << char(205);
+	cout << char(188);
+}
+void Box_NhapDS()
+{
+	TextColor(15);
+	gotoXY(boxx, boxy); cout << char(201);
+	for (int i = 1; i < boxs + 1; i++) cout << char(205);
+	cout << char(187);
+	gotoXY(boxx, boxy + 1); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 1); cout << char(186);
+	gotoXY(boxx, boxy + 2); cout << char(186) << " ISBN: ";
+	gotoXY(boxx + boxs + 1, boxy + 2); cout << char(186);
+	gotoXY(boxx, boxy + 3); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 3); cout << char(186);
+	gotoXY(boxx, boxy + 4); cout << char(186) << " Ten Sach: ";
+	gotoXY(boxx + boxs + 1, boxy + 4); cout << char(186);
+	gotoXY(boxx, boxy + 5); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 5); cout << char(186);
+	gotoXY(boxx, boxy + 6); cout << char(186) << " So Trang: ";
+	gotoXY(boxx + boxs + 1, boxy + 6); cout << char(186);
+	gotoXY(boxx, boxy + 7); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 7); cout << char(186);
+	gotoXY(boxx, boxy + 8); cout << char(186) << " Tac Gia: ";
+	gotoXY(boxx + boxs + 1, boxy + 8); cout << char(186);
+	gotoXY(boxx, boxy + 9); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 9); cout << char(186);
+	gotoXY(boxx, boxy + 10); cout << char(186) << " Nam XB: ";
+	gotoXY(boxx + boxs + 1, boxy + 10); cout << char(186);
+	gotoXY(boxx, boxy + 11); cout << char(186);
+	gotoXY(boxx + boxs + 1, boxy + 11); cout << char(186);
+	gotoXY(boxx, boxy + 12); cout << char(186) << " The Loai: ";
+	gotoXY(boxx + boxs + 1, boxy + 12); cout << char(186);
+	gotoXY(boxx, boxy + 13); cout << char(200);
+	for (int i = 1; i < boxs + 1; i++) cout << char(205);
+	cout << char(188);
 }

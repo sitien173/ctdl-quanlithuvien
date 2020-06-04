@@ -8,6 +8,9 @@
 using namespace std;
 #define MAX 1000 // tối đa 1000 đầu sách 
 #define MAX_MATHE 100000 // tối đa 100000 độc giả
+#define boxx 50 //Vi tri x bat dau cua box
+#define boxy 5 //Vi tri y bat dau cua box
+#define boxs 80 //Box size
 const int STACKSIZE = 500; // size Stack = 500
 //==============danh muc sach================
 struct danhmucsach {
