@@ -10,7 +10,7 @@ int tinh_so_ngay(Date n1);
 
 void Box_BaoLoi()
 {
-	int tungdo = 50;
+	int tungdo = 45;
 	TextColor(14);
 	gotoXY(88, tungdo - 1);
 	cout << "ERROR";
@@ -34,7 +34,7 @@ void Box_BaoLoi()
 }
 void xoa_hienthi_box_baoloi()
 {
-	int tungdo = 50;
+	int tungdo = 45;
 	TextColor(14);
 	gotoXY(88, tungdo - 1);
 	cout << "      ";
@@ -61,12 +61,12 @@ void BaoLoi(string s) {
 	int n = s.length();
 	int x = whereX(), y = whereY();
 	Box_BaoLoi();
-	gotoXY(boxx+25, boxy+47);
+	gotoXY(boxx+25, boxy+42);
 	cout << s;
 	Sleep(1500);
 	for (int i = 0; i < n; i++)
 	{
-		gotoXY(boxx + 25+i, boxy + 47);
+		gotoXY(boxx + 25+i, boxy + 42);
 		cout << " ";
 	}
 	xoa_hienthi_box_baoloi();
@@ -732,6 +732,40 @@ void xoa_hien_thi_doc_gia()
 	}
 	gotoXY(x, y);
 }
+void ButtonEnter(int hoanhdo,int tungdo)
+{
+	int x = whereX();
+	int y = whereY();
+	gotoXY(hoanhdo, tungdo); TextColor(76); cout << "        ";
+	gotoXY(hoanhdo, tungdo+1); TextColor(78); cout << "  CHON  ";
+	gotoXY(hoanhdo, tungdo+2); TextColor(76); cout << "        ";
+	gotoXY(hoanhdo, tungdo+3); TextColor(79); cout << "  Enter ";
+	gotoXY(x, y);
+}
+void ButtonESC(int hoanhdo, int tungdo)
+{
+	int x = whereX(), y = whereY();
+	gotoXY(hoanhdo, tungdo); TextColor(76); cout << "        ";
+	gotoXY(hoanhdo, tungdo+1); TextColor(78); cout << "  THOAT ";
+	gotoXY(hoanhdo, tungdo+2); TextColor(76); cout << "        ";
+	gotoXY(hoanhdo, tungdo+3); TextColor(79); cout << "   ESC  ";
+	gotoXY(x, y);
+}
+void xoa_hien_thi_button()
+{
+	int x = whereX(), y = whereY();
+	TextColor(7);
+	gotoXY(boxx + boxs - 5, boxy + 15);  cout << "        ";
+	gotoXY(boxx + boxs - 5, boxy + 16);  cout << "        ";
+	gotoXY(boxx + boxs - 5, boxy + 17);  cout << "        ";
+	gotoXY(boxx + boxs - 5, boxy + 18);  cout << "        ";
+
+	gotoXY(boxx, boxy + 15);  cout << "        ";
+	gotoXY(boxx, boxy + 16);  cout << "        ";
+	gotoXY(boxx, boxy + 17);  cout << "        ";
+	gotoXY(boxx, boxy + 18);  cout << "        ";
+	gotoXY(x, y);
+}
 void huong_dan_su_dung()
 {
 	gotoXY(80, 2);
@@ -795,6 +829,8 @@ void xoa_hien_thi_huong_dan()
 }
 void Box_NhapDG()
 {
+	ButtonEnter(boxx+boxs -5, boxy+15);
+	ButtonESC(boxx, boxy + 15);
 	TextColor(15);
 	gotoXY(boxx, boxy); cout << char(201);
 	for (int i = 1; i < boxs + 1; i++) cout << char(205);
@@ -825,6 +861,8 @@ void Box_NhapDG()
 }
 void Box_NhapDS()
 {
+	ButtonEnter(boxx + boxs - 5, boxy + 15);
+	ButtonESC(boxx, boxy + 15);
 	TextColor(15);
 	gotoXY(boxx, boxy); cout << char(201);
 	for (int i = 1; i < boxs + 1; i++) cout << char(205);

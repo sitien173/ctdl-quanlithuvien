@@ -351,7 +351,6 @@ void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int& tungdo)
 		// ch1 là chuỗi con của tên độc giả
 		if (t->data.ten.find(ch1) != string::npos)
 		{
-			TextColor(15);
 			if (tungdo == 1)
 				xoa_hien_thi_doc_gia();
 			Xuat_Thong_Tin_Doc_Gia(t->data, tungdo);
@@ -360,8 +359,6 @@ void tim_kiem_ds_doc_gia_ten(TREE t, string ch1, int& tungdo)
 		tim_kiem_ds_doc_gia_ten(t->pLeft, ch1, tungdo);
 		tim_kiem_ds_doc_gia_ten(t->pRight, ch1, tungdo);
 	}
-
-	TextColor(7);
 	return;
 }
 
@@ -387,7 +384,6 @@ int sua_thong_tin_doc_gia(TREE& t)
 			continue;
 		}
 		xoa_hien_thi_doc_gia();
-		TextColor(15);
 		Box_NhapDG();
 		gotoXY(boxx + 10, boxy + 2);
 		cout << p->data.mathe;
@@ -423,7 +419,6 @@ int sua_thong_tin_doc_gia(TREE& t)
 		p->data.ten = x.ten;
 		p->data.phai = x.phai;
 		p->data.trangthaithe = x.trangthaithe;
-		TextColor(7);
 		break;
 	} while (1);
 	return 1;
@@ -506,6 +501,7 @@ void xuat_dau_sach(dausach& a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
+	TextColor(15);
 	gotoXY(40, 0);
 	cout << "Ma Dau Sach";
 	gotoXY(55, 0);
@@ -531,6 +527,7 @@ void xuat_dau_sach(dausach& a, int tungdo)
 	gotoXY(155, tungdo);
 	cout << a.theloai;
 	gotoXY(x, y);
+	TextColor(7);
 }
 
 // Thêm đầu sách vào danh sách đầu sách để quản lí
@@ -606,7 +603,6 @@ int tim_kiem_dau_sach_theo_ten(LIST_DS l, string temp)
 		// nếu tìm thấy temp là chuỗi con của tên đầu sách
 		if (l.ds_dausach[i]->tensach.find(temp) != string::npos)
 		{
-			TextColor(15);
 			xoa_hien_thi_dausach();
 			xuat_dau_sach(*l.ds_dausach[i], 1);
 			kt++;
@@ -650,7 +646,6 @@ int tim_kiem_dau_sach_theo_ten(LIST_DS l, string temp)
 			}
 		}
 	}
-	TextColor(7);
 	if (kt == 0)
 		return -1;
 }
@@ -830,6 +825,7 @@ void xuat_sach1(string ten_sach, danhmucsach a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
+	TextColor(15);
 	gotoXY(40, 2);
 	cout << "Ma Sach";
 	gotoXY(55, 2);
@@ -847,6 +843,7 @@ void xuat_sach1(string ten_sach, danhmucsach a, int tungdo)
 	gotoXY(110, tungdo);
 	cout << a.vitri;
 	gotoXY(x, y);
+	TextColor(7);
 }
 
 // xuất các sách có trong danh sách sách
@@ -953,30 +950,36 @@ void them_phieu_muon(muontra& x)
 // in thong tin của 1 phiếu mượn trả
 void xuat_thong_tin_phieu_muontra(muontra a, string ten_sach, int tungdo)
 {
+	TextColor(15);
 	int x = whereX();
 	int y = whereY();
 	gotoXY(45, 0);
 	cout << "Ma Sach";
-	gotoXY(65, 0);
+	gotoXY(60, 0);
 	cout << "Ten Sach";
-	gotoXY(85, 0);
-	cout << "Ngay Muon";
 	gotoXY(100, 0);
+	cout << "Ngay Muon";
+	gotoXY(130, 0);
 	cout << "Ngay Tra";
-	gotoXY(120, 0);
+	gotoXY(160, 0);
 	cout << "Trang Thai";
 	gotoXY(45, tungdo);
 	cout << a.masach;
-	gotoXY(65, tungdo);
+	gotoXY(60, tungdo);
 	cout << ten_sach;
-	gotoXY(85, tungdo);
-	cout << a.ngaymuon.ngay << "/" << a.ngaymuon.thang << "/" << a.ngaymuon.nam;
 	gotoXY(100, tungdo);
+	cout << a.ngaymuon.ngay << "/" << a.ngaymuon.thang << "/" << a.ngaymuon.nam;
+	gotoXY(130, tungdo);
 	cout << a.ngaytra.ngay << "/" << a.ngaytra.thang << "/" << a.ngaytra.nam;
-	gotoXY(120, tungdo);
-	cout << a.trangthai;
+	gotoXY(160, tungdo);
+	if (a.trangthai == 0)
+		cout << "DANG MUON";
+	else if (a.trangthai == 1)
+		cout << "DA TRA";
+	else
+		cout << "LAM MAT";
 	gotoXY(x, y);
-
+	TextColor(7);
 }
 
 // thêm phiếu vào danh sách để quản lí
@@ -1161,14 +1164,12 @@ int trasach(TREE& t, LIST_DS& l)
 		}
 		else
 		{
-			TextColor(15);
 			if (xuat_sach_dang_muon(p, l) == 0) // độc giả không có sách mượn
 			{
 				BaoLoi("DOC GIA KHONG CO SACH MUON");
 				return -1;
 			}
 			string ma_sach="";
-			TextColor(7);
 			do
 			{
 				gotoXY(1, 10);
@@ -1327,10 +1328,8 @@ void top10sach(LIST_DS l)
 
 		}
 	}
-	TextColor(15);
 	for (int k = 0; k < l.sl && k < 10; k++)
 	{
 		xuat_dau_sach(*l.ds_dausach[k], k + 1);
 	}
-	TextColor(7);
 }

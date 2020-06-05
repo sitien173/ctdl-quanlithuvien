@@ -41,6 +41,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 	clrscr();
 	while (1) {
 		huong_dan_su_dung();
+		xoa_hien_thi_button();
 		// in ra menu
 		for (int i = 0; i < n; i++)
 		{
@@ -232,12 +233,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 						}
 						else
 						{
-							TextColor(14);
 							// xóa hiển thị màn hình độc giả cũ
 							xoa_hien_thi_doc_gia();
 							Xuat_Thong_Tin_Doc_Gia(p->data, ++tungdo);
 							tungdo = 0;
-							TextColor(7);
 							_getch();
 							break;
 						}
@@ -338,32 +337,46 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				_getch();
 				goto menu_DS;
 			}
-			// tìm kiếm đầu sách
+			// tìm kiếm sach
 			if (chon == 3 ) 
 			{
 				int k1 = 0;
 				string ten_sach="";
+				string temp = "";
+				int i = 0;
 				do
 				{
 					xuat_ds_dausach(l);
+					gotoXY(1, 11);
+					cout << "                                 ";
 					gotoXY(1, 10);
-					cout << "                              ";
-					gotoXY(1, 10);
-					cout << "Nhap Ten Sach Can Tim: ";
+					cout << "NHAP TEN HOAC MA SACH CAN TIM:\n ";
 					k1 = nhap_ki_tu1(ten_sach);
 					if (k1 == -1) // ESC;
 						break;
-					int i = tim_kiem_dau_sach_theo_ten(l, ten_sach);
-					if (i == -1) // không tìm thấy
+					temp = tach_ma_sach(ten_sach);
+					i = tim_kiem_dau_sach_theo_ma(l, temp);
+					if (i != -1) // tim thay sach
 					{
-						BaoLoi("KHONG TIM THAY");
-						ten_sach = "";
-						continue;
-					}
-					else
-					{
+						xoa_hien_thi_dausach();
+						tim_kiem_dau_sach_theo_ten(l, l.ds_dausach[i]->tensach);
 						_getch();
 						break;
+					}
+					else // tim kiem theo ten
+					{
+						i = tim_kiem_dau_sach_theo_ten(l, ten_sach);
+						if (i != -1) // không tìm thấy
+						{
+							_getch();
+							break;
+						}
+						else
+						{
+							BaoLoi("KHONG TIM THAY");
+							ten_sach = "";
+							continue;
+						}
 					}
 				} while (1);
 				goto menu_DS;
