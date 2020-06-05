@@ -157,13 +157,13 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					sap_xep_doc_gia_theo_ten(arr, n);
 					for (int i = 0; i < n;i++)
 					{
-						if (i <= 40)
+						if (i < 40)
 						{
 							Xuat_Thong_Tin_Doc_Gia(arr[i], i + 1);
-							ButtonNext();
 						}
 						else
 						{
+							ButtonNext();
 							char c = _getch();
 							TRANGTHAI next = key(c);
 							if (next == RIGHT)
@@ -202,7 +202,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 				tungdo = 0;
 				do
 				{
-					string temp;
+					string temp="";
 					gotoXY(1, 10);
 					cout << "                                           ";
 					gotoXY(1, 10);
@@ -264,6 +264,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					if (p == NULL)
 					{
 						BaoLoi("MA DOC GIA KHONG DUNG");
+						key = 0;
 						continue;
 					}
 					else
@@ -283,30 +284,18 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 			// Hiệu chỉnh 
 			if (chon == 5 ) 
 			{
-				int k1 = 0;
 				// in danh sách độc giả
 				if (t != NULL)
 					xuat_ds_thong_tin_doc_gia(t, tungdo);
 				tungdo = 0;
-				int ma=0;
-				do {
-					gotoXY(1, 10);
-					cout << "                                           ";
-					gotoXY(1, 10);
-					cout << "Nhap MA DOC GIA: ";
-					k1 = nhap_so_nguyen(ma);
-					if (k1 == -1) // ESC
-						break;
-					int i = sua_thong_tin_doc_gia(t, ma);
-					if (i == -2) // ESC
-						break;
-					else
-					{
-						BaoLoi("HIEU CHINH THANH CONG");
-						break;
-					}
-				} while (1);
+				int i = sua_thong_tin_doc_gia(t);
+				if (i == -2) // ESC
 				goto menu_DG;
+				else // i=1
+				{
+					BaoLoi("HIEU CHINH THANH CONG");
+					break;
+				}
 			}
 			// thoát || ESC
 			if (chon == 6 || chon == 27)
@@ -353,7 +342,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			if (chon == 3 ) 
 			{
 				int k1 = 0;
-				string ten_sach;
+				string ten_sach="";
 				do
 				{
 					xuat_ds_dausach(l);
@@ -368,6 +357,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					if (i == -1) // không tìm thấy
 					{
 						BaoLoi("KHONG TIM THAY");
+						ten_sach = "";
 						continue;
 					}
 					else
@@ -381,20 +371,15 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			// hieu chinh dau sach
 			if (chon == 4 )
 			{
-				string ma_dau_sach;
-				do {
-					int i=sua_dau_sach(l);
-					// sửa không thành công
-					if (i == -1)
-						continue;
-					else if (i == -2) // ESC
-						break;
-					else
-					{
-						BaoLoi("HIEU CHINH THANH CONG");
-						break;
-					}
-				} while (1);
+			int i=sua_dau_sach(l);
+				// sửa không thành công
+			if (i == -2) // ESC
+				break;
+			else if(i==1)
+			{
+			 BaoLoi("HIEU CHINH THANH CONG");
+			 break;
+			}
 				goto menu_DS;
 			}
 			// thêm sách
@@ -455,6 +440,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 		{
 			int k1 = 0; // check ESC cua ham nhap
 			TREE p = NULL;
+			int ma_doc_gia=0;
 			do
 			{
 				xuat_ds_thong_tin_doc_gia(t, tungdo);
@@ -463,7 +449,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				cout << "                         ";
 				gotoXY(0, 10);
 				cout << "Nhap Ma Doc Gia: ";
-				int ma_doc_gia=0;
 				k1 = nhap_so_nguyen(ma_doc_gia);
 				if (k1 == -1) // ESC
 					break;
@@ -471,6 +456,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				if (p == NULL)
 				{
 					BaoLoi("MA DOC GIA KHONG DUNG");
+					ma_doc_gia = 0;
 					continue;
 				} 
 				else // tìm thấy độc giả
@@ -479,6 +465,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					if (i == 0)
 					{
 						BaoLoi("DOC GIA KHONG MUON SACH");
+						ma_doc_gia = 0;
 						continue;
 					}
 					else  // xuất các sách độc giả đang mượn
@@ -486,7 +473,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 						int k1 = 0;
 						xoa_hien_thi_doc_gia();
 						xuat_sach_dang_muon(p, l);
-						string ma_sach;
+						string ma_sach="";
 						NODE_DMS* dms=NULL;
 						NODE_MT* mt = NULL;
 						do
@@ -502,7 +489,8 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 							// nếu không tìm thấy
 							if (dms == NULL)
 							{
-								BaoLoi("MA DOC GIA KHONG DUNG");
+								BaoLoi("MA SACH KHONG DUNG");
+								ma_sach = "";
 								continue;
 							}
 							else // nếu tìm thấy
@@ -547,6 +535,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				if (p == NULL)
 				{
 					BaoLoi("MA DOC GIA KHONG DUNG");
+					ma_doc_gia = 0;
 					continue;
 				}
 				else
@@ -555,6 +544,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					if (xuat_sach_dang_muon(p, l) == 0) // độc giả không mượn sách
 					{
 						BaoLoi("DOC GIA KHONG MUON SACH");
+						ma_doc_gia = 0;
 						continue;
 					}
 					else

@@ -719,13 +719,15 @@ void xoa_hien_thi_doc_gia()
 	int y = whereY();
 	for (int i = 0; i <= 41; i++)
 	{
-		gotoXY(45, i);
+		gotoXY(50, i);
 		cout << "                     ";
 		gotoXY(65, i);
 		cout << "                         ";
 		gotoXY(90, i);
 		cout << "                          ";
-		gotoXY(100, i);
+		gotoXY(120, i);
+		cout << "                        ";
+		gotoXY(137, i);
 		cout << "                        ";
 	}
 	gotoXY(x, y);
