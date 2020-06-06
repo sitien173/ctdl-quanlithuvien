@@ -1,50 +1,52 @@
-24
-48203,Tran Nhat,Anh,Nam,1
+25
+6549,Hoang Phuong,Tam,Nu,1
+0
+51133,Ngo Si,Tien,Nam,1
+0
+72853,Nguyen Ba,Uoc,Nam,1
+0
+48725,Dau Truong,Quan,Nam,1
 0
 82151,Mai Kim,Yen,Nu,1
 0
-23812,Pham Diem,Quynh,Nu,1
-0
-6291,Nguyen Huu,Thuc,Nam,1
-0
-47501,Nguyen Hai,Nam,Nu,1
-0
-73531,Bui Tuan,Huy,Nam,1
-0
-69835,Nguyen Thanh,Luan,Nam,1
-0
 13281,Huynh Anh,Tuan,Nam,1
-0
-54813,Nguyen Van,Binh,Nam,1
-0
-92,Ngo Minh,Thuan,Nam,1
 0
 81157,Pham Quoc,Vy,Nam,1
 0
 17235,Tran Ngoc,Sang,Nam,1
 0
-51133,Ngo Si,Tien,Nam,1
+48203,Tran Nhat,Anh,Nam,1
 0
-42327,Do Phuoc Dat,Huy,Nam,1
+54813,Nguyen Van,Binh,Nam,1
+0
+6291,Nguyen Huu,Thuc,Nam,1
+0
+30334,Tran Diem,Quynh,Nu,1
 0
 70,Le Quang,Loc,,1
 1
 123978-1,0,6/6/2020,0/0/0
-72853,Nguyen Ba,Uoc,Nam,1
-0
-43045,Nguyen Bich,Nguyen,Nu,1
-0
 70149,Nguyen Hoang,Uyen,Nu,1
 0
-6549,Hoang Phuong,Tam,Nu,1
-0
-59559,Le Quy,Duong,Nam,1
-0
-30334,Tran Diem,Quynh,Nu,1
+95417,Nguyen Ba,Uoc,Nam,1
 0
 17036,Vo Vu,Duc,Nam,1
 0
-48725,Dau Truong,Quan,Nam,1
+73531,Bui Tuan,Huy,Nam,1
+0
+92,Ngo Minh,Thuan,Nam,1
+0
+59559,Le Quy,Duong,Nam,1
+0
+23812,Pham Diem,Quynh,Nu,1
+0
+42327,Do Phuoc Dat,Huy,Nam,1
+0
+43045,Nguyen Bich,Nguyen,Nu,1
 0
 90773,Nguyen Duc,Tam,Nam,1
+0
+69835,Nguyen Thanh,Luan,Nam,1
+0
+47501,Nguyen Hai,Nam,Nu,1
 0
