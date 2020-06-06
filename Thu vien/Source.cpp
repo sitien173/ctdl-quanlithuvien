@@ -1,22 +1,21 @@
 ﻿#include "xulyde.h"
 char thaotac[][50] =
-{					"          DOC GIA                 ",
-				    "          DAU SACH                ",
-				    "          MUON SACH               ",
-					"          TRA SACH                ",
-					"         LAM MAT SACH             ",
-				    "    TIM SACH DOC GIA DANG MUON    ",
-				    "     DANH SACH DOC GIA QUA HAN    ",
-				    "    TOP 10 SACH MUON NHIEU NHAT   ",
-					"       THOAT CHUONG TRINH         "};
+{					"DOC GIA                    ",
+				    "DAU SACH                   ",
+				    "MUON SACH                  ",
+					"TRA SACH                   ",
+					"LAM MAT SACH               ",
+				    "TIM SACH DOC GIA DANG MUON ",
+				    "DANH SACH DOC GIA QUA HAN  ",
+				    "TOP 10 SACH MUON NHIEU NHAT",
+					"THOAT CHUONG TRINH         "};
 enum TRANGTHAI{UP,DOWN,LEFT,RIGHT,ENTER,ESC};
 // hàm có chức năng bắt phim vừa nhập để điều khiển menu
 TRANGTHAI key(char c)
 {
 	if (c == -32)
-	{
 		c = _getch();
-	}
+	
 	if (c == 72)
 		return UP;
 	if (c == 80)
@@ -56,9 +55,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		case LEFT:
 		{
 			if (tt == 0)
-			{
 				tt = n - 1;
-			}
 			else
 				tt--;
 			break;
@@ -67,17 +64,14 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		case RIGHT:
 		{
 			if (tt == n - 1)
-			{
 				tt = 0;
-			}
 			else
 				tt++;
-
 			break;
 		}
 		case ESC:
 		{
-			return tt=27;
+			return tt = 27;
 		}
 		case ENTER:
 		{

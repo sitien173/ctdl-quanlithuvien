@@ -1,5 +1,5 @@
 4
-123978,Anh Hung Ban Phim,112,Ngo Si Tien,2020,Sach Truu Tuong,6
+123978,Anh Hung Ban Phim,112,Fabigas,2020,Sach Truu Tuong,1
 100
 123978-1,1,Ngan 1
 123978-2,0,Ngan 1
@@ -153,7 +153,7 @@
 12452-48,0,Ngan 2
 12452-49,0,Ngan 2
 12452-50,0,Ngan 2
-909124,Doremi,1241,Jfgaks,2003,Truyen,2
+909124,Doremi,124,Freijg,2003,Truyen Hai,2
 80
 909124-1,0,Ngan 1
 909124-2,0,Ngan 1
@@ -235,7 +235,7 @@
 909124-78,0,Ngan 1
 909124-79,0,Ngan 1
 909124-80,0,Ngan 1
-1123412,Thien,12,Ads,2019,Truyen,0
+1123412,Tam Quoc Dien Nghia,123,Nguyen Huu Minh,2019,Truyen Ngan,0
 2
 1123412-1,0,Ngan 1
 1123412-2,0,Ngan 2

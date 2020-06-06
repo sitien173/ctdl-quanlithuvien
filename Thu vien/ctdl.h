@@ -46,7 +46,6 @@ struct dausach
 };
 struct list_dausach
 {
-	
 	int sl;
 	dausach* ds_dausach[MAX];
 };
