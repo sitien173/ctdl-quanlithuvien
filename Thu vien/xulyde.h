@@ -5,6 +5,7 @@
 //=============================================Khoi tao===============================
 void khoi_tao_muontra(LIST_MT& l)
 {
+	// test
 	l.pHead = l.pTail = NULL;
 }
 void khoi_tao_cay(TREE& t)
