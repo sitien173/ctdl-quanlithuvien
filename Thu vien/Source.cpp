@@ -202,7 +202,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					cout << "                                           ";
 					gotoXY(1, 10);
 					cout << "Nhap Doc Gia(Ten Hoac MA): ";
-					k1 = nhap_ki_tu1(temp);
+					k1 = nhap_ki_tu(temp,1);
 					if (k1 == -1) // ESC
 						break;
 					// chuyển đổi chuỗi về số
@@ -345,7 +345,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					cout << "                                 ";
 					gotoXY(1, 10);
 					cout << "NHAP TEN HOAC MA SACH CAN TIM:\n ";
-					k1 = nhap_ki_tu1(ten_sach);
+					k1 = nhap_ki_tu(ten_sach,1);
 					if (k1 == -1) // ESC;
 						break;
 					temp = tach_ma_sach(ten_sach);
@@ -489,7 +489,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 							cout << "                                  ";
 							gotoXY(0, 10); 
 							cout << "Nhap Ma Sach Bi Mat: ";
-							k1= nhap_ki_tu1(ma_sach);
+							k1= nhap_ki_tu(ma_sach,1);
 							if (k1 == -1) // ESC
 								break;
 							dms=tim_kiem_sach(l, ma_sach);

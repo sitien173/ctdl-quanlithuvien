@@ -1,4 +1,4 @@
-4
+5
 123978,Anh Hung Ban Phim,112,Fabigas,2020,Sach Truu Tuong,1
 100
 123978-1,1,Ngan 1
@@ -239,3 +239,5 @@
 2
 1123412-1,0,Ngan 1
 1123412-2,0,Ngan 2
+2147483647,Doremon,-2147483648,Fjaskfka,-2147483648,Truyen,0
+0

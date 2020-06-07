@@ -1,14 +1,11 @@
 ﻿  Source.cpp
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(106,20): warning C4018: '<': signed/unsigned mismatch
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(122,52): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(225,20): warning C4018: '<': signed/unsigned mismatch
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(238,20): warning C4018: '<': signed/unsigned mismatch
+D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(25,20): warning C4018: '<': signed/unsigned mismatch
+D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(38,20): warning C4018: '<': signed/unsigned mismatch
+D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(153,20): warning C4018: '<': signed/unsigned mismatch
+D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(169,52): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
 D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(600,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(209): warning C4715: 'nhap_so_nguyen': not all control paths return a value
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(437): warning C4715: 'nhap_ki_tu': not all control paths return a value
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(606): warning C4715: 'nhap_gioitinh': not all control paths return a value
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(512): warning C4715: 'nhap_ki_tu1': not all control paths return a value
-D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(651): warning C4715: 'tim_kiem_dau_sach_theo_ten': not all control paths return a value
+D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(281): warning C4715: 'nhap_so_nguyen': not all control paths return a value
+D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(379): warning C4715: 'nhap_ki_tu': not all control paths return a value
+D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(656): warning C4715: 'tim_kiem_dau_sach_theo_ten': not all control paths return a value
 D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(31): warning C4715: 'key': not all control paths return a value
-  LINK : D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe not found or not built by the last incremental link; performing full link
   Thu vien.vcxproj -> D:\QUANLITHUVIEN - Copy\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe

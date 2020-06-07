@@ -8,6 +8,53 @@ int SoluongDG(TREE t);
 int Kiem_tra_phim(char c);
 int tinh_so_ngay(Date n1);
 
+void chuan_hoa_chu(string& str)
+{
+	// xử lí khoảng trắng đầu
+
+	while (str[0] == ' ')
+	{
+		str.erase(str.begin() + 0);
+	}
+	// xử lí khoảng trắng cuối
+	while (str[str.length() - 1] == ' ')
+	{
+		str.erase(str.begin() + str.length() - 1);
+	}
+	// xử lí khoảng trắng giữa
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (str[i] == ' ' && str[i + 1] == ' ')
+		{
+			str.erase(str.begin() + i);
+			i--;
+		}
+	}
+	// chuan hóa kí tự chữ cái đầu viết hoa sau 
+	if (str[0] >= 97 && str[0] <= 122)
+	{
+		str[0] -= 32;
+	}
+	for (int i = 1; i < str.length(); i++)
+	{
+		if (str[i] == ' ')
+		{
+			i++;
+			if (str[i] >= 97 && str[i] <= 122)
+			{
+				str[i] -= 32;
+			}
+		}
+		else
+		{
+			if (str[i] >= 65 && str[i] <= 90)
+			{
+				str[i] += 32;
+			}
+		}
+	}
+}
+
 void Box_BaoLoi()
 {
 	int tungdo = 45;
@@ -128,6 +175,7 @@ int chuoi_sang_so(string x)
 		return -1;
 }
 
+// ************************NHAP***************************
 // hàm kiểm tra dữ liệu của chuỗi nhập vào phải là các kí tự số hoặc kí tự chữ cái đsung true <> false
 bool Kiem_Tra_Du_Lieu(char c)
 {
@@ -137,7 +185,28 @@ bool Kiem_Tra_Du_Lieu(char c)
 	}
 	return false;
 }
-
+bool Kiem_Tra_Ki_Tu_So(char c)
+{
+	if (c >= '0' && c <= '9')
+		return true;
+	return false;
+}
+int Kiem_tra_phim(char c)
+{
+	int arr[32] = { 72,75,77,80,81,73,44,46,59,39,47,93,91,92,61,82,83,79,71,-122,-123,68,67,66,65
+	,64,63,62,61,60,59,96 };
+	if (Kiem_Tra_Ki_Tu_So(c)==true) // so
+		return 2;
+	// nhấn shift + key
+	if (GetKeyState(VK_SHIFT) & 0x8000)
+		return 1;
+	for (int i = 0; i < 32; i++)
+	{
+		if (c == arr[i])
+			return 1;
+	}
+	return 0;
+} // phím chức năng rt 1, số rt 2, Không thuộc cả 2 rt 0
 int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
@@ -200,60 +269,116 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 				KT = false;
 			}
 			else
+			{
+				chuan_hoa_chu(str);
 				KT = true;
+			}
 
 		}
 	} while (KT == false);
 	cout << endl;
-	n = atoi(str.c_str()); // chuyển kí tự sang số
+	n = atoi(str.c_str()); // chuyen doi chuoi sang so
 }
-
-void chuan_hoa_chu(string& str)
+//flag =0 nhap toan ki tu, flag=1 nhap ki tu va so, flag =2 nhap gioitinh
+int nhap_ki_tu(string& str,int flag)
 {
-	// xử lí khoảng trắng đầu
+	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
+	bool KT = false;;
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
+	char c;
+	do
+	{
+		c = _getch();
+		if (c == 0 || c == -32)
+		{
+			c = _getch();
+		}
+		while (int(c) != 13)
+		{
+			if (c == 27)
+			{
+				return -1;
+			}
+			int k = Kiem_tra_phim(c);
+			if (k == 1) // phím chức năng
+			{
+				BaoLoi("PHIM NHAP KHONG HOP LE");
+				break;
+			}
+			if (k == 2 && (flag==0 || flag==2)) // nếu nhập kí tự là số
+			{
+				BaoLoi("KHONG DUOC NHAP SO");
+				break;
+			}
 
-	while (str[0] == ' ')
-	{
-		str.erase(str.begin() + 0);
-	}
-	// xử lí khoảng trắng cuối
-	while (str[str.length() - 1] == ' ')
-	{
-		str.erase(str.begin() + str.length() - 1);
-	}
-	// xử lí khoảng trắng giữa
-	for (int i = 0; i < str.length(); i++)
-	{
-		if (str[i] == ' ' && str[i + 1] == ' ')
-		{
-			str.erase(str.begin() + i);
-			i--;
-		}
-	}
-	// chuan hóa kí tự chữ cái đầu viết hoa sau 
-	if (str[0] >= 97 && str[0] <= 122)
-	{
-		str[0] -= 32;
-	}
-	for (int i = 1; i < str.length(); i++)
-	{
-		if (str[i] == ' ')
-		{
-			i++;
-			if (str[i] >= 97 && str[i] <= 122)
+			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
 			{
-				str[i] -= 32;
+
+				if (length > 0) // nếu như độ dài biến con trỏ dịch bằng 0 thì ko cho xóa tiếp
+				{
+					cout << "\b \b"; // khi bấm phím Backspace thì sẽ xóa từng kí tự của chuỗi kí tự hiện tại
+					length--;
+				}
+				if (str.length() != 0) // xóa kí tự cuối trong chuỗi string 
+				{
+					str.erase(str.begin() + (str.length() - 1));
+				}
 			}
-		}
-		else
-		{
-			if (str[i] >= 65 && str[i] <= 90)
+			else
 			{
-				str[i] += 32;
+				TextColor(15);
+				cout << c;
+				length++; // cập nhật vụ trí con trỏ chỉ vị
+				str.push_back(c);
 			}
+			break;
 		}
-	}
-}
+		if (c == 13)
+		{
+			int dem = 1;
+			int dem1 = 0;
+			for (int i = 0; i < length; i++)
+			{
+				if ((int)str[i] == 32)
+					dem++;
+				else
+					dem1++;
+			}
+			if (length == 0 || (dem >= 2 && dem1 == 0))
+			{
+				BaoLoi("KHONG DUOC DE TRONG");
+				KT = false;
+			}
+			else if(flag==0 || flag==1)
+				KT = true;
+			else // flag=2 nhap gioi tinh
+			{
+				if (dem1 != 0)
+				{
+					chuan_hoa_chu(str);
+					if (str == "Nam" || str == "Nu")
+						KT = true;
+					else
+					{
+						BaoLoi("GIOI TINH CHI NAM HOAC NU");
+						while (length > 0)
+						{
+							cout << "\b \b";
+							str.pop_back();
+							length--;
+						}
+						KT = false;
+					}
+				}
+			}
+
+		}
+	} while (KT == false);
+	cout << endl;
+	chuan_hoa_chu(str);
+} 
+
+
 
 
 
@@ -333,277 +458,9 @@ void giaiphong_dausach(LIST_DS& l)
 
 
 // kiểm tra 1 chuỗi có kí tự nào là số không nếu có trả về true <> false
-bool Kiem_Tra_Ki_Tu_So(char c)
-{
-	if (c >= '0' && c <= '9')
-		return true;
-	return false;
-}
-// phím chức năng rt 1 , số rt 2,Không thuộc cả 2 rt 0
-int Kiem_tra_phim(char c)
-{
-	int arr[32] = { 72,75,77,80,81,73,44,46,59,39,47,93,91,92,61,82,83,79,71,-122,-123,68,67,66,65
-	,64,63,62,61,60,59,96 };
-	if (c >= '0' && c <= '9')
-		return 2;
-	// nhấn shift + key
-	if (GetKeyState(VK_SHIFT) & 0x8000)
-		return 1;
-	for (int i = 0; i < 32; i++)
-	{
-		if (c == arr[i])
-			return 1;
-	}
-	return 0;
-}
 
-// Hàm nhập dữ liệu toàn kí tự . VD: họ, tên, giới tính. ESC rt -1
-int nhap_ki_tu(string& str)
-{
-	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	bool KT = false;;
-	int length = str.length(); // biến cho con trỏ dịch đến cuối
-	char c;
-	do
-	{
-		c = _getch();
-		if (c == 0 || c == -32)
-		{
-			c = _getch();
-		}
-		while (int(c) != 13)
-		{
-			if (c == 27)
-			{
-				return -1;
-			}
-			int k = Kiem_tra_phim(c);
-			if (k == 1) // phím chức năng
-			{
-				BaoLoi("PHIM NHAP KHONG HOP LE");
-				break;
-			}
-			if (k == 2) // nếu nhập kí tự là số
-			{
-				BaoLoi("KHONG DUOC NHAP SO");
-				break;
-			}
 
-			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
-			{
 
-				if (length > 0) // nếu như độ dài biến con trỏ dịch bằng 0 thì ko cho xóa tiếp
-				{
-					cout << "\b \b"; // khi bấm phím Backspace thì sẽ xóa từng kí tự của chuỗi kí tự hiện tại
-					length--;
-				}
-				if (str.length() != 0) // xóa kí tự cuối trong chuỗi string 
-				{
-					str.erase(str.begin() + (str.length() - 1));
-				}
-			}
-			else
-			{
-				TextColor(15);
-				cout << c;
-				length++; // cập nhật vụ trí con trỏ chỉ vị
-				str.push_back(c);
-			}
-			break;
-		}
-		if (c == 13)
-		{
-			int dem = 1;
-			int dem1 = 0;
-			for (int i = 0; i < length; i++)
-			{
-				if ((int)str[i] == 32)
-					dem++;
-				else
-					dem1++;
-			}
-			if (length == 0 || (dem >= 2 && dem1 == 0))
-			{
-				BaoLoi("KHONG DUOC DE TRONG");
-				KT = false;
-			}
-			else
-				KT = true;
-
-		}
-	} while (KT == false);
-	cout << endl;
-	chuan_hoa_chu(str);
-}
-
-// Hàm nhập dữ liệu kí tự và số dưới dạng kí tự.ESC rt -1
-int nhap_ki_tu1(string& str)
-{
-	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	bool KT = false;
-	int length = str.length(); // biến cho con trỏ dịch đến cuối
-	char c;
-	do
-	{
-		c = _getch();
-		if (c == 0 || c == -32)
-		{
-			c = _getch();
-		}
-		while (int(c) != 13)
-		{
-			if (c == 27)
-			{
-				return -1;
-			}
-			int k = Kiem_tra_phim(c);
-			if (k == 1) // phím chức năng
-			{
-				BaoLoi("PHIM NHAP KHONG HOP LE");
-				break;
-			}
-			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
-			{
-
-				if (length > 0) // nếu như độ dài biến con trỏ dịch bằng 0 thì ko cho xóa tiếp
-				{
-					cout << "\b \b"; // khi bấm phím Backspace thì sẽ xóa từng kí tự của chuỗi kí tự hiện tại
-					length--;
-				}
-				if (str.length() != 0) // xóa kí tự cuối trong chuỗi string 
-				{
-					str.erase(str.begin() + (str.length() - 1));
-				}
-			}
-			else
-			{
-				TextColor(15);
-				cout << c;
-				length++; // cập nhật vụ trí con trỏ chỉ vị
-				str.push_back(c);
-			}
-
-			break;
-		}
-
-		if (c == 13)
-		{
-			int dem = 1;
-			int dem1 = 0;
-			for (int i = 0; i < length; i++)
-			{
-				if ((int)str[i] == 32)
-					dem++;
-				else
-					dem1++;
-			}
-			if (length == 0 || (dem >= 2 && dem1 == 0))
-			{
-				BaoLoi("KHONG DUOC DE TRONG");
-				KT = false;
-			}
-			else
-				KT = true;
-
-		}
-	} while (KT == false);
-	cout << endl;
-	chuan_hoa_chu(str);
-}
-
-int nhap_gioitinh(string& str)
-{
-	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	bool KT = false;
-	int length = str.length(); // biến cho con trỏ dịch đến cuối
-	char c;
-	do
-	{
-		c = _getch();
-		if (c == -32 || c == 0) c = _getch();
-		while (int(c) != 13)
-		{
-			if (c == 27)
-			{
-				return -1;
-			}
-			if (Kiem_tra_phim(c) == 1)
-			{
-				BaoLoi("PHIM NHAP KHONG HOP LE");
-				break;
-			}
-			if (Kiem_tra_phim(c) == 2) // nếu nhập kí tự là số
-			{
-				BaoLoi("KHONG DUOC NHAP SO");
-				break;
-			}
-
-			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
-			{
-
-				if (length > 0) // nếu như độ dài biến con trỏ dịch bằng 0 thì ko cho xóa tiếp
-				{
-					cout << "\b \b"; // khi bấm phím Backspace thì sẽ xóa từng kí tự của chuỗi kí tự hiện tại
-					length--;
-				}
-				if (str.length() != 0) // xóa kí tự cuối trong chuỗi string 
-				{
-					str.erase(str.begin() + (str.length() - 1));
-				}
-			}
-			else
-			{
-				TextColor(15);
-				cout << c;
-				length++; // cập nhật vụ trí con trỏ chỉ vị
-				str.push_back(c);
-			}
-			break;
-		}
-		if (c == 13)
-		{
-			int dem = 1;
-			int dem1 = 0;
-			for (int i = 0; i < length; i++)
-			{
-				if ((int)str[i] == 32)
-					dem++;
-				else
-					dem1++;
-			}
-			if (str.length() == 0 || (dem >= 2 && dem1 == 0))
-			{
-				BaoLoi("KHONG DUOC DE TRONG");
-				while (length > 0)
-				{
-					cout << "\b \b";
-					str.pop_back();
-					length--;
-				}
-				KT = false;
-			}
-				if (dem1 != 0)
-				{
-					chuan_hoa_chu(str);
-					if (str == "Nam" || str == "Nu")
-						KT = true;
-					else
-					{
-						BaoLoi("GIOI TINH CHI NAM HOAC NU");
-						while (length > 0)
-						{
-							cout << "\b \b";
-							str.pop_back();
-							length--;
-						}
-						KT = false;
-					}
-				}
-				
-		}
-	} while (KT == false);
-	cout << endl;
-}
 
 
 // hoán đổi vị trí 2 độc giả

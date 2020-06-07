@@ -80,25 +80,24 @@ void top10sach(LIST_DS l);
 int nhap_doc_gia(docgia& x)
 {
 	Box_NhapDG();
-	int k = 0;
+	int k = 0; // check ESC nhap
 	x.trangthaithe = 1; // trạng thái lúc thêm độc giả auto =1. có thể mượn sách
 	gotoXY(boxx + 18, boxy + 10);
 	cout << x.trangthaithe;
 	gotoXY(boxx + 10, boxy + 2);
 	cout << x.mathe;
 	gotoXY(boxx + 11, boxy + 4);
-	k = nhap_ki_tu(x.ho);
+	k = nhap_ki_tu(x.ho,0);
 	if (k == -1) // ESC
 		return -2;
 	gotoXY(boxx + 12, boxy + 6);
-	k = nhap_ki_tu(x.ten);
+	k = nhap_ki_tu(x.ten,0);
 	if (k == -1) // ESC
 		return -2;
 	gotoXY(boxx + 13, boxy + 8);
-	k = nhap_gioitinh(x.phai);
+	k = nhap_ki_tu(x.phai,2);
 	if (k == -1) // ESC
 		return -2;
-
 	x.tongsosach = 0;
 	return 1;
 }
@@ -390,21 +389,21 @@ int sua_thong_tin_doc_gia(TREE& t)
 		x.ho = p->data.ho;
 		gotoXY(boxx + 11, boxy + 4);
 		cout << x.ho;
-		k = nhap_ki_tu(x.ho);
+		k = nhap_ki_tu(x.ho,0);
 		if (k == -1) // ESC
 			return -2;
 
 		x.ten = p->data.ten;
 		gotoXY(boxx + 12, boxy + 6);
 		cout << x.ten;
-		k = nhap_ki_tu(x.ten);
+		k = nhap_ki_tu(x.ten,0);
 		if (k == -1) // ESC
 			return -2;
 
 		x.phai = p->data.phai;
 		gotoXY(boxx + 13, boxy + 8);
 		cout << x.phai;
-		k = nhap_gioitinh(x.phai);
+		k = nhap_ki_tu(x.phai,2);
 		if (k == -1) // ESC
 			return -2;
 
@@ -454,24 +453,30 @@ int nhap_DauSach(LIST_DS& l, dausach& data)
 {
 	Box_NhapDS();
 	int k = 0;
-	int tam = 0;
 	while (1)
 	{
 		gotoXY(boxx + 8, boxy + 2);
-		k = nhap_so_nguyen(tam);
+		k = nhap_ki_tu(data.ISBN,1);
 		if (k == -1) // ESC
 			return -2;
-		data.ISBN = so_sang_chuoi(tam);
 		if (tim_kiem_dau_sach_theo_ma(l, data.ISBN) != -1)
 		{
 			BaoLoi("MA ISBN DA TON TAI");
 			gotoXY(boxx + 8, boxy + 2);
 			cout << "                  ";
-			tam=0;
+			data.ISBN = "";
+			continue;
+		}
+		if (chuoi_sang_so(data.ISBN) == -1)
+		{
+			BaoLoi("MA ISBN CHI GOM CAC SO NGUYEN");
+			gotoXY(boxx + 8, boxy + 2);
+			cout << "                  ";
+			data.ISBN = "";
 			continue;
 		}
 		gotoXY(boxx + 12, boxy + 4);
-		k = nhap_ki_tu1(data.tensach);
+		k = nhap_ki_tu(data.tensach,1);
 		if (k == -1) // ESC
 			return -2;
 		gotoXY(boxx + 12, boxy + 6);
@@ -479,7 +484,7 @@ int nhap_DauSach(LIST_DS& l, dausach& data)
 		if (data.sotrang == -1) // ESC
 			return -2;
 		gotoXY(boxx + 11, boxy + 8);
-		k = nhap_ki_tu(data.tacgia);
+		k = nhap_ki_tu(data.tacgia,0);
 		if (k == -1) // ESC
 			return -2;
 		gotoXY(boxx + 10, boxy + 10);
@@ -487,7 +492,7 @@ int nhap_DauSach(LIST_DS& l, dausach& data)
 		if (k == -1) // ESC
 			return -2;
 		gotoXY(boxx + 12, boxy + 12);
-		k = nhap_ki_tu(data.theloai);
+		k = nhap_ki_tu(data.theloai,0);
 		if (k == -1) // ESC
 			return -2;
 		data.soluongmuon = 0;
@@ -673,7 +678,7 @@ int sua_dau_sach(LIST_DS& l)
 		cout << "                             ";
 		gotoXY(1, 10);
 		cout << "Nhap ISBN: ";
-		k = nhap_ki_tu1(ma_dau_sach);
+		k = nhap_ki_tu(ma_dau_sach,1);
 		if (k == -1) // ESC
 		{
 			return -2;
@@ -695,7 +700,7 @@ int sua_dau_sach(LIST_DS& l)
 		data.tensach = l.ds_dausach[i]->tensach;
 		gotoXY(boxx + 12, boxy + 4);
 		cout << data.tensach;
-		k = nhap_ki_tu1(data.tensach);
+		k = nhap_ki_tu(data.tensach,1);
 		if (k == -1) // ESC
 			return -2;
 
@@ -709,7 +714,7 @@ int sua_dau_sach(LIST_DS& l)
 		data.tacgia = l.ds_dausach[i]->tacgia;
 		gotoXY(boxx + 11, boxy + 8);
 		cout << data.tacgia;
-		k = nhap_ki_tu(data.tacgia);
+		k = nhap_ki_tu(data.tacgia,0);
 		if (k == -1) // ESC
 			return -2;
 
@@ -723,7 +728,7 @@ int sua_dau_sach(LIST_DS& l)
 		data.theloai = l.ds_dausach[i]->theloai;
 		gotoXY(boxx + 12, boxy + 12);
 		cout << data.theloai;
-		k = nhap_ki_tu(data.theloai);
+		k = nhap_ki_tu(data.theloai,0);
 		if (k == -1) // ESC
 			return -2;
 
@@ -755,7 +760,7 @@ int them_sach(LIST_DS& l)
 	int k = 0;
 	string ma_dau_sach="";
 	cout << "\nNHAP ISBN: ";
-	k = nhap_ki_tu1(ma_dau_sach);
+	k = nhap_ki_tu(ma_dau_sach,1);
 	if (k == -1) // ESC
 		return -2;
 	int i = tim_kiem_dau_sach_theo_ma(l, ma_dau_sach);
@@ -771,7 +776,7 @@ int them_sach(LIST_DS& l)
 		return -2;
 	string temp="";
 	cout << "Them Vao Vi Tri: ";
-	k = nhap_ki_tu1(temp);
+	k = nhap_ki_tu(temp,1);
 	if (k == -1) // ESC
 		return -2;
 	danhmucsach x;
@@ -795,7 +800,7 @@ int them_sach(LIST_DS& l)
 
 		cout << "Ma Sach: " << x.masach << endl;
 		cout << "Them Vao Vi Tri: " << temp;
-		k = nhap_ki_tu1(temp);
+		k = nhap_ki_tu(temp,1);
 		if (k == -1) // ESC
 			break;
 		x.vitri = temp;
@@ -1092,7 +1097,7 @@ int muonsach(TREE& t, LIST_DS& l)
 	{
 		gotoXY(1, 10); cout << "                                  ";
 		gotoXY(1, 10); cout << "Nhap Ma Sach Can Muon: ";
-		k1 = nhap_ki_tu1(ma_sach);
+		k1 = nhap_ki_tu(ma_sach,1);
 		if (k1 == -1) // ESC
 			return -2;
 		ma_dau_sach = tach_ma_sach(ma_sach);
@@ -1176,7 +1181,7 @@ int trasach(TREE& t, LIST_DS& l)
 				cout << "                                  ";
 				gotoXY(1, 10);
 				cout << "NHAP MA SACH CAN TRA: ";
-				k1 = nhap_ki_tu1(ma_sach);
+				k1 = nhap_ki_tu(ma_sach,1);
 				if (k1 == -1) // ESC
 					return -2;
 				NODE_DMS* k = tim_kiem_sach(l, ma_sach); // lưu vị trí của sách trả về trong danh sách qua mã sách
