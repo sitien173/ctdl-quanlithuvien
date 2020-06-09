@@ -1,7 +1,7 @@
-5
-123978,Anh Hung Ban Phim,112,Fabigas,2020,Sach Truu Tuong,1
+8
+123978,Anh Hung Ban Phim,112,Fabigas,2020,Sach Truu Tuong,4
 100
-123978-1,1,Ngan 1
+123978-1,0,Ngan 1
 123978-2,0,Ngan 1
 123978-3,0,Ngan 1
 123978-4,0,Ngan 1
@@ -101,7 +101,7 @@
 123978-98,0,Ngan 4
 123978-99,0,Ngan 5
 123978-100,0,Ngan 6
-12452,Conan,124,Sfaf,2001,Truyen,2
+12452,Conan,124,Sfaf,2001,Truyen,0
 50
 12452-1,0,Ngan 2
 12452-2,0,Ngan 2
@@ -153,7 +153,7 @@
 12452-48,0,Ngan 2
 12452-49,0,Ngan 2
 12452-50,0,Ngan 2
-909124,Doremi,124,Freijg,2003,Truyen Hai,2
+909124,Doremi,124,Freijg,2003,Truyen Hai,0
 80
 909124-1,0,Ngan 1
 909124-2,0,Ngan 1
@@ -239,5 +239,41 @@
 2
 1123412-1,0,Ngan 1
 1123412-2,0,Ngan 2
-2147483647,Doremon,-2147483648,Fjaskfka,-2147483648,Truyen,0
+2147483647,Doremon,3,Fjaskfka,2019,Truyen,0
 0
+123,Doremi,1123,Nguyen Nhat Anh,2020,Truyen,0
+20
+123-1,0,Ngan 1
+123-2,0,Ngan 1
+123-3,0,Ngan 1
+123-4,0,Ngan 1
+123-5,0,Ngan 1
+123-6,0,Ngan 1
+123-7,0,Ngan 1
+123-8,0,Ngan 1
+123-9,0,Ngan 1
+123-10,0,Ngan 1
+123-11,0,Ngan 1
+123-12,0,Ngan 1
+123-13,0,Ngan 1
+123-14,0,Ngan 1
+123-15,0,Ngan 1
+123-16,0,Ngan 1
+123-17,0,Ngan 1
+123-18,0,Ngan 1
+123-19,0,Ngan 1
+123-20,0,Ngan 1
+123333,Sad,2,Ngo Si Tien,2020,Truyen,0
+0
+12333,Anh Hung Ban Phim 2,11,A,2019,Truyen,0
+10
+12333-1,0,Ngan 2
+12333-2,0,Ngan 2
+12333-3,0,Ngan 2
+12333-4,0,Ngan 2
+12333-5,0,Ngan 2
+12333-6,0,Ngan 2
+12333-7,0,Ngan 2
+12333-8,0,Ngan 2
+12333-9,0,Ngan 2
+12333-10,0,Ngan 2

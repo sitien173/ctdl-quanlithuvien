@@ -2,12 +2,32 @@
 #include "ctdl.h"
 #include "lib.h"
 
-TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia);
-void sap_xep_theo_theloai_dausach(LIST_DS& l);
+TREE TIM_KIEM_DG_MA(TREE& t, int ma_doc_gia);
+void SX_THELOAI_DS(LIST_DS& l);
 int SoluongDG(TREE t);
 int Kiem_tra_phim(char c);
 int tinh_so_ngay(Date n1);
 
+enum TRANGTHAI { UP, DOWN, LEFT, RIGHT, ENTER, ESC };
+// hàm có chức năng bắt phim vừa nhập để điều khiển menu
+TRANGTHAI key(char c)
+{
+	if (c == -32)
+		c = _getch();
+
+	if (c == 72)
+		return UP;
+	if (c == 80)
+		return DOWN;
+	if (c == 77)
+		return RIGHT;
+	if (c == 75)
+		return LEFT;
+	if (c == 27)
+		return ESC;
+	if (c == 13)
+		return ENTER;
+}
 void chuan_hoa_chu(string& str)
 {
 	// xử lí khoảng trắng đầu
@@ -150,29 +170,11 @@ string so_sang_chuoi(int number)
 int chuoi_sang_so(string x)
 {
 	string temp = x;
-	for (int i = 0; i < temp.length(); i++)
-	{
-		// chuyển chữ hoa về chữ thường
-		if (temp[0] >= 65 && temp[0] <= 90)
-		{
-			temp[i] += 32;
-		}
-	}
-	int n = temp.length(); // chieu dai cua string
-	int num = 0; //bien num dung de luu cac gia tri sau khi tach chuoi
-	int temp1 = 0; // dùng để kiểm tra chuyển hết chuỗi có về hết số được ko
-	for (int i = n - 1; i >= 0; --i)
-	{
-		if (temp[i] >= '0' && temp[i] <= '9') // neu tung phan tu la 0->9 thi xet tiep
-		{
-			temp1++;
-			num += (int)(temp[i] - '0') * pow(10, n - 1 - i);
-		}
-	}
-	if (temp1 == n) // chuoi chuyen ve so duoc het
-		return num;
-	else // chuoi chuyen khong het
-		return -1;
+	chuan_hoa_chu(temp);
+	int n = atoi(temp.c_str());
+	if (n != 0)
+		return n;
+	return -1;
 }
 
 // ************************NHAP***************************
@@ -209,8 +211,10 @@ int Kiem_tra_phim(char c)
 } // phím chức năng rt 1, số rt 2, Không thuộc cả 2 rt 0
 int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
+	string str="";
+	if(n>=0)
+	str= so_sang_chuoi(n);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	string str = so_sang_chuoi(n);
 	bool KT = false;
 	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
@@ -279,7 +283,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	cout << endl;
 	n = atoi(str.c_str()); // chuyen doi chuoi sang so
 }
-//flag =0 nhap toan ki tu, flag=1 nhap ki tu va so, flag =2 nhap gioitinh
+//flag =0 nhap toan ki tu, flag=1 nhap ki tu va so, flag =2 nhap gioitinh,flag=3 nhap ki tu la so
 int nhap_ki_tu(string& str,int flag)
 {
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
@@ -305,11 +309,20 @@ int nhap_ki_tu(string& str,int flag)
 				BaoLoi("PHIM NHAP KHONG HOP LE");
 				break;
 			}
+			if (flag == 3)
+			{
+				if (Kiem_Tra_Du_Lieu(c) == false) // nếu nhập kí tự là chữ
+				{
+					BaoLoi("CHI DUOC NHAP SO");
+					break;
+				}
+			}
 			if (k == 2 && (flag==0 || flag==2)) // nếu nhập kí tự là số
 			{
 				BaoLoi("KHONG DUOC NHAP SO");
 				break;
 			}
+			
 
 			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
 			{
@@ -351,7 +364,7 @@ int nhap_ki_tu(string& str,int flag)
 			}
 			else if(flag==0 || flag==1)
 				KT = true;
-			else // flag=2 nhap gioi tinh
+			else if(flag==2)// flag=2 nhap gioi tinh
 			{
 				if (dem1 != 0)
 				{
@@ -371,6 +384,8 @@ int nhap_ki_tu(string& str,int flag)
 					}
 				}
 			}
+			else
+				KT = true;
 
 		}
 	} while (KT == false);

@@ -37,13 +37,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="DOCGIA.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="DAUSACH.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="MADOCGIA.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="DOCGIA.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

@@ -1,17 +1,17 @@
 ﻿#pragma once
 #include "xulyde.h"
-void them_node_vao_cay(TREE& t, docgia x);
-NODE_DMS* tao_node_sach(danhmucsach& x);
-void them_sach_vao_ds(LIST_DMS& l, NODE_DMS* p);
-void them_vao_ds_dausach(LIST_DS& l, dausach data);
-void khoi_tao_sach(LIST_DMS& l);
-int tim_kiem_dau_sach_theo_ma(LIST_DS l, string ma);
-TREE tim_kiem_docgia_ma(TREE& t, int ma_doc_gia);
-void khoi_tao_muontra(LIST_MT& l);
-void them_vao_ds_muontra(LIST_MT& l, NODE_MT* p);
-NODE_MT* tao_node_muontra(muontra x);
+void THEM_DG_VAO_CAY(TREE& t, docgia x);
+NODE_DMS* TAO_NODE_SACH(danhmucsach& x);
+void AddTail_DMS(LIST_DMS& l, NODE_DMS* p);
+void ADDTail_DS(LIST_DS& l, dausach data);
+void Init_DMS(LIST_DMS& l);
+int TIM_KIEM_MA(LIST_DS l, string ma);
+TREE TIM_KIEM_DG_MA(TREE& t, int ma_doc_gia);
+void Init_MT(LIST_MT& l);
+void AddTail_MT(LIST_MT& l, NODE_MT* p);
+NODE_MT* TAO_NODE_MT(muontra x);
 int SoluongDG(TREE t);
-void chuyen_cay_sang_mang(TREE t, docgia* arr, int& i);
+void CAY_SANG_MANG(TREE t, docgia* arr, int& i);
 
 
 void GhiFileDG(TREE t)
@@ -19,7 +19,7 @@ void GhiFileDG(TREE t)
 	int n = SoluongDG(t);
 	docgia *arr = new docgia[n];
 	int index = 0;
-	chuyen_cay_sang_mang(t, arr, index);
+	CAY_SANG_MANG(t, arr, index);
 	for (int j = 0; j < n-1; j++)
 	{
 		int temp = rand() % (n-1) + 1;
@@ -72,27 +72,20 @@ void LoadtuFile_DSDG(TREE& t)
 		f.ignore();
 		f >> s.tongsosach;
 		f.ignore();
-		them_node_vao_cay(t, s);
-		TREE p = tim_kiem_docgia_ma(t, s.mathe);
-		khoi_tao_muontra(p->data.mt);
+		THEM_DG_VAO_CAY(t, s);
+		TREE p = TIM_KIEM_DG_MA(t, s.mathe);
+		Init_MT(p->data.mt);
 		for (int i = 0; i < s.tongsosach; i++)
 		{
 			getline(f, x.masach, ',');
-			f >> x.trangthai;
-			f.ignore();
-			f >> x.ngaymuon.ngay;
-			f.ignore();
-			f >> x.ngaymuon.thang;
-			f.ignore();
-			f >> x.ngaymuon.nam;
-			f.ignore();
-			f >> x.ngaytra.ngay;
-			f.ignore();
-			f >> x.ngaytra.thang;
-			f.ignore();
-			f >> x.ngaytra.nam;
-			f.ignore();
-			them_vao_ds_muontra(p->data.mt, tao_node_muontra(x));
+			f >> x.trangthai;      f.ignore();
+			f >> x.ngaymuon.ngay;  f.ignore();
+			f >> x.ngaymuon.thang; f.ignore();
+			f >> x.ngaymuon.nam;   f.ignore();
+			f >> x.ngaytra.ngay;   f.ignore();
+			f >> x.ngaytra.thang;  f.ignore();
+			f >> x.ngaytra.nam;    f.ignore();
+			AddTail_MT(p->data.mt, TAO_NODE_MT(x));
 		}
 	}
 	f.close();
@@ -147,16 +140,16 @@ void LoadFileDS(LIST_DS& l)
 		f.ignore();
 		f >> data.soluongsach;
 		f.ignore();
-		them_vao_ds_dausach(l, data);
-		int vitri = tim_kiem_dau_sach_theo_ma(l, data.ISBN);
-		khoi_tao_sach(l.ds_dausach[vitri]->dms);
+		ADDTail_DS(l, data);
+		int vitri = TIM_KIEM_MA(l, data.ISBN);
+		Init_DMS(l.ds_dausach[vitri]->dms);
 		for (int i = 0; i < data.soluongsach; i++)
 		{
 			getline(f, x.masach, ',');
 			f >> x.trangthai;
 			f.ignore();
 			getline(f, x.vitri);
-			them_sach_vao_ds(l.ds_dausach[vitri]->dms, tao_node_sach(x));
+			AddTail_DMS(l.ds_dausach[vitri]->dms, TAO_NODE_SACH(x));
 		}
 	}
 	f.close();
