@@ -242,7 +242,7 @@
 2147483647,Doremon,3,Fjaskfka,2019,Truyen,0
 0
 123,Doremi,1123,Nguyen Nhat Anh,2020,Truyen,0
-27
+37
 123-1,0,Ngan 1
 123-2,0,Ngan 1
 123-3,0,Ngan 1
@@ -270,6 +270,16 @@
 123-25,0,Ngan 2
 123-26,0,Ngan 2
 123-27,0,Ngan 2
+123-28,0,Ngan 2
+123-29,0,Ngan 2
+123-30,0,Ngan 2
+123-31,0,Ngan 2
+123-32,0,Ngan 2
+123-33,0,Ngan 2
+123-34,0,Ngan 2
+123-35,0,Ngan 2
+123-36,0,Ngan 2
+123-37,0,Ngan 2
 123333,Sad,2,Ngo Si Tien,2020,Truyen,0
 0
 12333,Anh Hung Ban Phim 2,11,A,2019,Truyen,0

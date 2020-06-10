@@ -638,6 +638,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 			}
 			case ESC:
 			{
+				delete[] arr;
 				return -2;
 			}
 			case ENTER:
@@ -695,7 +696,10 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		goto BD;
 	}	
 	else
+	{
+		delete[] arr;
 		return -1;
+	}
 }
 
 // tìm kiếm đầu sách theo mã đầu sách nêu có trả về vị trí <> -1
