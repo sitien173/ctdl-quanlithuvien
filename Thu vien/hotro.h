@@ -626,7 +626,7 @@ void ButtonESC(int hoanhdo, int tungdo)
 	gotoXY(hoanhdo, tungdo + 3); TextColor(79); cout << "   ESC  ";
 	gotoXY(x, y);
 }
-void xoa_hien_thi_ButtonESC(int hoanhdo, int tungdo)
+void xoa_hien_thi_1_Button(int hoanhdo, int tungdo)
 {
 	int x = whereX(), y = whereY();
 	gotoXY(hoanhdo, tungdo); TextColor(7); cout << "        ";
@@ -635,10 +635,12 @@ void xoa_hien_thi_ButtonESC(int hoanhdo, int tungdo)
 	gotoXY(hoanhdo, tungdo + 3); TextColor(7); cout << "        ";
 	gotoXY(x, y);
 }
+
 void xoa_hien_thi_button()
 {
 	int x = whereX(), y = whereY();
 	TextColor(7);
+
 	gotoXY(boxx + boxs - 5, boxy + 15);  cout << "        ";
 	gotoXY(boxx + boxs - 5, boxy + 16);  cout << "        ";
 	gotoXY(boxx + boxs - 5, boxy + 17);  cout << "        ";
@@ -703,16 +705,10 @@ void xoa_hien_thi_huong_dan()
 	gotoXY(75, 5);
 	cout << "                                    ";
 
-	gotoXY(66, 8);  cout << "        ";
-	gotoXY(66, 9);  cout << "        ";
-	gotoXY(66, 10);  cout << "        ";
-	gotoXY(66, 11); cout << "        ";
+	xoa_hien_thi_1_Button(66, 8);
 	gotoXY(75, 10); cout << "                               ";
 
-	gotoXY(66, 14); cout << "        ";
-	gotoXY(66, 15); cout << "        ";
-	gotoXY(66, 16); cout << "        ";
-	gotoXY(66, 17); cout << "        ";
+	xoa_hien_thi_1_Button(66, 14);
 	gotoXY(75, 16); cout << "                                   ";
 	gotoXY(x, y);
 }

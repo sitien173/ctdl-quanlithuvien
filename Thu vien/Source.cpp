@@ -358,17 +358,16 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				goto menu_DS;
 			}
 			// hieu chinh dau sach
-			if (chon == 4 )
+			if (chon == 4)
 			{
-			int i=HIEU_CHINH_DS(l);
-				// sửa không thành công
-			if (i == -2) // ESC
-				break;
-			else if(i==1)
-			{
-			 BaoLoi("HIEU CHINH THANH CONG");
-			 break;
-			}
+				int i = HIEU_CHINH_DS(l);
+				if (i == -2) // ESC
+					goto menu_DS;
+				else if (i == 1)
+				{
+					BaoLoi("HIEU CHINH THANH CONG");
+					break;
+				}
 				goto menu_DS;
 			}
 			// thêm sách
@@ -389,7 +388,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 						break;
 					}
 				} while (1);
-				goto menu_chinh;
+				goto menu_DS;
 			}
 			// Thoat
 			if (chon == 6) 

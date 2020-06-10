@@ -676,7 +676,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 							ButtonESC(140, 42);
 							gotoXY(141, 44);
 							c = _getch();
-							xoa_hien_thi_ButtonESC(140, 42);
+							xoa_hien_thi_1_Button(140, 42);
 							if (c == -32) c = _getch();
 							if (c == 27)
 								goto BD;
@@ -691,7 +691,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		ButtonESC(140, 42);
 		gotoXY(141, 44);
 		_getch();
-		xoa_hien_thi_ButtonESC(140, 42);
+		xoa_hien_thi_1_Button(140, 42);
 		goto BD;
 	}	
 	else
