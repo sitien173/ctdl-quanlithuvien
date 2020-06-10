@@ -592,58 +592,109 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 // tim kiếm đầu sách theo tên đầu sách nếu có xuất ra đầu sách <> -1 , ESC rt -2
 int TIM_KIEM_TEN(LIST_DS l, string temp)
 {
-	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách hay ko
+BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách hay ko
 	xoa_hien_thi_dausach();
+	int j = 0;
+	int tungdo = 1;
+	dausach* arr = new dausach[l.sl]; // mảng chứa  các đầu sách tìm thấy. dùng đê xuất sách
 	for (int i = 0; i < l.sl; i++)
 	{
-		int tungdo1 = 3;
 		// nếu tìm thấy temp là chuỗi con của tên đầu sách
 		if (l.ds_dausach[i]->tensach.find(temp) != string::npos)
 		{
-			xoa_hien_thi_dausach();
-			XUAT_THONGTIN_DS(*l.ds_dausach[i], 1);
+			XUAT_THONGTIN_DS(*l.ds_dausach[i], tungdo++);
 			kt++;
-			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; )
-			{
-				if (tungdo1 < 40)
-				{
-
-					XUAT_THONG_TIN_SACH(l.ds_dausach[i]->tensach, p->data, tungdo1++);
-					p = p->pNext;
-				}
-				else if (tungdo1 >= 40)
-				{
-					ButtonNext();
-					char c = _getch();
-					if (c == -32) c = _getch();
-					if (c == 77)
-					{
-						xoa_hien_thi_dausach();
-						xoa_hien_thi_sach();
-						XUAT_THONGTIN_DS(*l.ds_dausach[i], 1);
-						for (int j = 3; j < 40; j++)
-						{
-
-							XUAT_THONG_TIN_SACH(l.ds_dausach[i]->tensach, p->data, j);
-							p = p->pNext;
-							if (p == l.ds_dausach[i]->dms.pTail)
-							{
-								XUAT_THONG_TIN_SACH(l.ds_dausach[i]->tensach, p->data, ++j);
-								c = _getch();
-								if (c == -32) c = _getch();
-								if (c == 27) return -2;
-								else if (c == 77)
-									break;
-							}
-						}
-						break;
-					}
-					else return -2;
-				}
-			}
+			arr[j++] = *l.ds_dausach[i]; // lưu đầu sách được tìm thấy
 		}
 	}
-	if (kt == 0)
+	if (kt != 0)
+	{
+		int k = 1;
+		bool check = false;
+		while (check == false)
+		{
+			gotoXY(170, k);
+			char c = _getch();
+			TRANGTHAI tt = key(c);
+			switch (tt)
+			{
+			case UP:
+			case LEFT:
+			{
+				if (k == 1)
+					k = j;
+				else
+					k--;
+				break;
+			}
+			case DOWN:
+			case RIGHT:
+			{
+				if (k == j)
+					k = 1;
+				else
+					k++;
+				break;
+			}
+			case ESC:
+			{
+				return -2;
+			}
+			case ENTER:
+			{
+				check = true;
+				break;
+			}
+			}
+		}
+		int tungdo1 = 1;
+		int j1 = 0;
+		xoa_hien_thi_dausach();
+		for (NODE_DMS* p = arr[k - 1].dms.pHead; p != NULL; )
+		{
+			if (tungdo1 < 40)
+			{
+				XUAT_THONG_TIN_SACH(arr[k - 1].tensach, p->data, tungdo1++);
+				p = p->pNext;
+			}
+			else if (tungdo1 >= 40)
+			{
+				ButtonNext();
+				char c = _getch();
+				if (c == -32) c = _getch();
+				if (c == 77)
+				{
+					xoa_hien_thi_sach();
+					for (j1 = 0; j1 < 40; j1++)
+					{
+						XUAT_THONG_TIN_SACH(arr[k - 1].tensach, p->data, j1 + 1);
+						p = p->pNext;
+						if (p == arr[k - 1].dms.pTail)
+						{
+							xoa_hienthi_buttonNext();
+							XUAT_THONG_TIN_SACH(arr[k - 1].tensach, p->data, ++j1);
+							ButtonESC(140, 42);
+							gotoXY(141, 44);
+							c = _getch();
+							xoa_hien_thi_ButtonESC(140, 42);
+							if (c == -32) c = _getch();
+							if (c == 27)
+								goto BD;
+							else 
+								goto BD;
+						}
+					}
+				}
+				else if (c == 27) goto BD;
+			}
+		}
+		ButtonESC(140, 42);
+		gotoXY(141, 44);
+		_getch();
+		xoa_hien_thi_ButtonESC(140, 42);
+		goto BD;
+	}	
+	else
 		return -1;
 }
 
@@ -783,6 +834,8 @@ int NHAP_THONGTIN_SACH(LIST_DS& l)
 	}
 	else
 		Init_DMS(l.ds_dausach[i]->dms);
+	xoa_hien_thi_dausach();
+	Box_NhapSach();
 	for (int j = 0; j < n; j++)
 	{
 		if (q == 0)
@@ -790,8 +843,10 @@ int NHAP_THONGTIN_SACH(LIST_DS& l)
 		else
 			x.masach = l.ds_dausach[i]->ISBN + "-" + so_sang_chuoi(q + j + 1);
 
-		cout << "Ma Sach: " << x.masach << endl;
-		cout << "Them Vao Vi Tri: " << temp;
+		gotoXY(boxx + 12, boxy + 2);
+		cout << x.masach  ;
+		gotoXY(boxx + 11, boxy + 4);
+		cout << temp;
 		k = nhap_ki_tu(temp,1);
 		if (k == -1) // ESC
 			break;
@@ -823,13 +878,13 @@ void XUAT_THONG_TIN_SACH(string ten_sach, danhmucsach a, int tungdo)
 	int x = whereX();
 	int y = whereY();
 	TextColor(15);
-	gotoXY(40, 2);
+	gotoXY(40, 0);
 	cout << "Ma Sach";
-	gotoXY(55, 2);
+	gotoXY(55, 0);
 	cout << "Ten Sach";
-	gotoXY(95, 2);
+	gotoXY(95, 0);
 	cout << "Trang Thai";
-	gotoXY(110, 2);
+	gotoXY(110, 0);
 	cout << "Vi Tri";
 	gotoXY(40, tungdo);
 	cout << a.masach;

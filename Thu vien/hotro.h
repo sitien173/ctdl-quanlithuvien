@@ -626,6 +626,15 @@ void ButtonESC(int hoanhdo, int tungdo)
 	gotoXY(hoanhdo, tungdo + 3); TextColor(79); cout << "   ESC  ";
 	gotoXY(x, y);
 }
+void xoa_hien_thi_ButtonESC(int hoanhdo, int tungdo)
+{
+	int x = whereX(), y = whereY();
+	gotoXY(hoanhdo, tungdo); TextColor(7); cout << "        ";
+	gotoXY(hoanhdo, tungdo + 1); TextColor(7); cout << "        ";
+	gotoXY(hoanhdo, tungdo + 2); TextColor(7); cout << "        ";
+	gotoXY(hoanhdo, tungdo + 3); TextColor(7); cout << "        ";
+	gotoXY(x, y);
+}
 void xoa_hien_thi_button()
 {
 	int x = whereX(), y = whereY();
@@ -634,6 +643,11 @@ void xoa_hien_thi_button()
 	gotoXY(boxx + boxs - 5, boxy + 16);  cout << "        ";
 	gotoXY(boxx + boxs - 5, boxy + 17);  cout << "        ";
 	gotoXY(boxx + boxs - 5, boxy + 18);  cout << "        ";
+
+	gotoXY(boxx + boxs - 45, boxy + 15);  cout << "        ";
+	gotoXY(boxx + boxs - 45, boxy + 16);  cout << "        ";
+	gotoXY(boxx + boxs - 45, boxy + 17);  cout << "        ";
+	gotoXY(boxx + boxs - 45, boxy + 18);  cout << "        ";
 
 	gotoXY(boxx, boxy + 15);  cout << "        ";
 	gotoXY(boxx, boxy + 16);  cout << "        ";
@@ -769,4 +783,35 @@ void Box_NhapDS()
 	gotoXY(boxx, boxy + 13); cout << char(200);
 	for (int i = 1; i < boxs + 1; i++) cout << char(205);
 	cout << char(188);
+}
+void Box_NhapSach()
+{
+	int boxtemp = boxs-40;
+	ButtonEnter(boxx + boxtemp - 5, boxy + 15);
+	ButtonESC(boxx, boxy + 15);
+	TextColor(15);
+	gotoXY(boxx, boxy); cout << char(201);
+	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
+	cout << char(187);
+	gotoXY(boxx, boxy + 1); cout << char(186);
+	gotoXY(boxx + boxtemp + 1, boxy + 1); cout << char(186);
+	gotoXY(boxx, boxy + 2); cout << char(186) << " MA SACH: ";
+	gotoXY(boxx + boxtemp + 1, boxy + 2); cout << char(186);
+	gotoXY(boxx, boxy + 3); cout << char(186);
+	gotoXY(boxx + boxtemp + 1, boxy + 3); cout << char(186);
+	gotoXY(boxx, boxy + 4); cout << char(186) << " VI TRI: ";
+	gotoXY(boxx + boxtemp + 1, boxy + 4); cout << char(186);
+	gotoXY(boxx, boxy + 5); cout << char(186) ;
+	gotoXY(boxx + boxtemp + 1, boxy + 5); cout << char(186);
+	gotoXY(boxx, boxy + 6); cout << char(200);
+	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
+	cout << char(188);
+}
+void hidecursor()
+{
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO info;
+	info.dwSize = 100;
+	info.bVisible = FALSE;
+	SetConsoleCursorInfo(consoleHandle, &info);
 }

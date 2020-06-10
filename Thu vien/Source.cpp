@@ -8,7 +8,7 @@ char thaotac[][50] =
 				    "TIM SACH DOC GIA DANG MUON ",
 				    "DANH SACH DOC GIA QUA HAN  ",
 				    "TOP 10 SACH MUON NHIEU NHAT",
-					"THOAT CHUONG TRINH         "};
+					"THOAT  CHUONG TRINH         "};
 
 int menu_dong(char thaotac[][50],int n) // n là số lượng item
 {
