@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "xulyde.h"
-void THEM_DG_VAO_CAY(TREE& t, docgia x);
+void Add_DG_VAO_CAY(TREE& t, docgia x);
 NODE_DMS* TAO_NODE_SACH(danhmucsach& x);
 void AddTail_DMS(LIST_DMS& l, NODE_DMS* p);
 void ADDTail_DS(LIST_DS& l, dausach data);
@@ -72,7 +72,7 @@ void LoadtuFile_DSDG(TREE& t)
 		f.ignore();
 		f >> s.tongsosach;
 		f.ignore();
-		THEM_DG_VAO_CAY(t, s);
+		Add_DG_VAO_CAY(t, s);
 		TREE p = TIM_KIEM_DG_MA(t, s.mathe);
 		Init_MT(p->data.mt);
 		for (int i = 0; i < s.tongsosach; i++)

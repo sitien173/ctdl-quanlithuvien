@@ -7,6 +7,7 @@ void SX_THELOAI_DS(LIST_DS& l);
 int SoluongDG(TREE t);
 int Kiem_tra_phim(char c);
 int tinh_so_ngay(Date n1);
+int TIM_KIEM_MA(LIST_DS l, string ma);
 
 enum TRANGTHAI { UP, DOWN, LEFT, RIGHT, ENTER, ESC };
 // hàm có chức năng bắt phim vừa nhập để điều khiển menu
@@ -466,7 +467,7 @@ void giaiphong_dausach(LIST_DS& l)
 			delete p;
 		}
 		l.ds_dausach[i]->dms.pTail = NULL;
-		delete l.ds_dausach[l.sl - 1];
+		delete l.ds_dausach[i];
 		l.sl--;
 	}
 }
@@ -567,6 +568,8 @@ void xoa_hien_thi_dausach()
 		cout << "						";
 		gotoXY(155, i);
 		cout << "						";
+		gotoXY(175, i);
+		cout << "                    ";
 	}
 	gotoXY(x, y);
 }
@@ -803,11 +806,17 @@ void Box_NhapSach()
 	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
 	cout << char(188);
 }
-void hidecursor()
+int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
 {
-	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO info;
-	info.dwSize = 100;
-	info.bVisible = FALSE;
-	SetConsoleCursorInfo(consoleHandle, &info);
+	int i = TIM_KIEM_MA(l, ISBN);
+	int n = 0;
+	if (i != -1)
+	{
+		for (node_danhmucsach* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
+		{
+			if (p->data.trangthai == 0)
+				n++;
+		}
+	}
+	return n;
 }

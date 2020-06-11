@@ -104,6 +104,7 @@ struct quahan
 	string ten;
 	string phai;
 	string ma_sach;
+	Date ngay_muon;
 	int so_ngay_quahan;
 	
 };

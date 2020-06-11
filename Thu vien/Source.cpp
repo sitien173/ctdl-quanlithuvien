@@ -8,7 +8,7 @@ char thaotac[][50] =
 				    "TIM SACH DOC GIA DANG MUON ",
 				    "DANH SACH DOC GIA QUA HAN  ",
 				    "TOP 10 SACH MUON NHIEU NHAT",
-					"THOAT  CHUONG TRINH         "};
+					"THOAT  CHUONG TRINH        "};
 
 int menu_dong(char thaotac[][50],int n) // n là số lượng item
 {
@@ -96,21 +96,38 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 			};
 menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu độc giả
 			// thêm độc giả
-			if (chon == 1 ) // enter 
+			if (chon == 1) // enter 
 			{
-				int i = THEM_DG(t);
-				if (i == -2) // ESC 
-					goto menu_DG;
+				docgia x;
+				ifstream filein("MADOCGIA.txt");
+				ofstream filetemp("Temp.txt");
+				filein >> x.mathe;
+				int i = NHAP_THONGTIN_DG(x);
+				// ESC
+				if (i == -2)  goto menu_DG;
 				else
 				{
+					Add_DG_VAO_CAY(t, x);
+					int temp;
+					while (filein >> temp)
+					{
+						if (temp != x.mathe)
+							filetemp << temp << endl;
+					}
+					filein.close();
+					filetemp.close();
+					remove("MADOCGIA.txt");
+					rename("Temp.txt", "MADOCGIA.txt");
 					BaoLoi("THEM THANH CONG");
-					goto menu_DG;
+					GhiFileDG(t);
 				}
-			} 
+			}
 			// xuất danh sách độc giả
 			if (chon == 2)
 			{
-menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN","THOAT" };
+menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
+										"XUAT THEO HO TEN    ",
+										"      THOAT         " };
 				int chon_1 = menu_dong(menu_xuat, 3); // chọn thao tác menu xuất
 				if (chon_1 == 1)
 				{
@@ -135,9 +152,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					for (int i = 0; i < n;i++)
 					{
 						if (i < 40)
-						{
 							Xuat_Thong_Tin_Doc_Gia(arr[i], i + 1);
-						}
 						else
 						{
 							ButtonNext();
@@ -147,9 +162,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 							{
 								xoa_hien_thi_doc_gia();
 								for (int j = i; j < n; j++)
-								{
 									Xuat_Thong_Tin_Doc_Gia(arr[j], ++tungdo);
-								}
 								break;
 							}
 							else if (next == ESC)
@@ -165,9 +178,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					goto menu_xuat;
 				}
 				else
-				{
 					goto menu_DG;
-				}
 			}
 			// TIM KIEM DOC GIA
 			if (chon == 3 ) 
@@ -181,9 +192,9 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 				{
 					string temp="";
 					gotoXY(1, 10);
-					cout << "                                           ";
+					cout << "                                      ";
 					gotoXY(1, 10);
-					cout << "Nhap Doc Gia(Ten Hoac MA): ";
+					cout << "Nhap DG(Ten Hoac MA): ";
 					k1 = nhap_ki_tu(temp,1);
 					if (k1 == -1) // ESC
 						break;
@@ -230,7 +241,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					XUAT_DS_DG(t, tungdo);
 					tungdo = 0;
 					int key=0;
-					gotoXY(1, 10); cout << "                       ";
+					gotoXY(1, 10); cout << "                        ";
 					gotoXY(1, 10); cout << "Nhap Ma Doc Gia: ";
 					k1 = nhap_so_nguyen(key);
 					if (k1 == -1) // nhập ESC
@@ -239,7 +250,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 					if (p == NULL)
 					{
 						BaoLoi("MA DOC GIA KHONG DUNG");
-						key = 0;
 						continue;
 					}
 					else
@@ -250,8 +260,12 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 							BaoLoi("DOC GIA DANG MUON SACH KHONG THE XOA");
 							continue;
 						}
-						XOA_DG(t, key);
-						break;
+						else
+						{
+							XOA_DG(t, key);
+							GhiFileDG(t);
+							break;
+						}
 					}
 				} while (1);
 				goto menu_DG;
@@ -261,7 +275,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 			{
 				// in danh sách độc giả
 				if (t != NULL)
-					XUAT_DS_DG(t, tungdo);
+				XUAT_DS_DG(t, tungdo);
 				tungdo = 0;
 				int i = HIEU_CHINH_DG(t);
 				if (i == -2) // ESC
@@ -269,6 +283,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA","XUAT THEO HO TEN",
 				else // i=1
 				{
 					BaoLoi("HIEU CHINH THANH CONG");
+					GhiFileDG(t);
 					break;
 				}
 			}
@@ -300,6 +315,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					{
 						ADDTail_DS(l, data);
 						BaoLoi("THEM THANH CONG");
+						GhiFileDS(l);
 						break;
 					}
 				} while (1);
@@ -366,6 +382,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				else if (i == 1)
 				{
 					BaoLoi("HIEU CHINH THANH CONG");
+					GhiFileDS(l);
 					break;
 				}
 				goto menu_DS;
@@ -375,7 +392,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			{
 				XUAT_DS_DAUSACH(l); // in ra các đầu sách đang có
 				do {
-					int i = NHAP_THONGTIN_SACH(l);
+					int i = THEM_SACH(l);
 					if (i == -2) // ESC
 					{
 						break;
@@ -385,6 +402,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					else // =1 thêm thành công
 					{
 						BaoLoi("THEM THANH CONG");
+						GhiFileDS(l);
 						break;
 					}
 				} while (1);
@@ -402,7 +420,11 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			if (i == -2) // ESC
 				goto menu_chinh;
 			else if (i == 1)
+			{
 				BaoLoi("MUON THANH CONG");
+				GhiFileDG(t);
+				GhiFileDS(l);
+			}
 			break;
 		}
 		// TRẢ SÁCH
@@ -418,6 +440,8 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				else
 				{
 					BaoLoi("TRA THANH CONG");
+					GhiFileDG(t);
+					GhiFileDS(l);
 					break;
 				}
 			} while (1);
@@ -491,6 +515,8 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 										dms->data.trangthai = 2; // cap nhat trang thai sach da mat
 										p->data.trangthaithe = 0; // khoa the doc gia
 										BaoLoi("CAP NHAT SACH THANH CONG");
+										GhiFileDG(t);
+										GhiFileDS(l);
 										break;
 									}
 								}
@@ -561,8 +587,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 		}
 		default:
 		{
-			GhiFileDG(t);
-			GhiFileDS(l);
 			giaiphong_cay(t);
 			giaiphong_dausach(l);
 			return;
