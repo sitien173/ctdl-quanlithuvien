@@ -593,8 +593,10 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		bool check = false;
 		while (check == false)
 		{
-			gotoXY(56+l.ds_dausach[k]->tensach.length(), k);
+			gotoXY(55, k);
+			ToMau(55, k, arr[k - 1].tensach, 14);
 			char c = _getch();
+			ToMau(55, k, arr[k - 1].tensach, 15);
 			TRANGTHAI tt = key(c);
 			switch (tt)
 			{
@@ -867,7 +869,7 @@ void XUAT_THONG_TIN_SACH(string ten_sach, danhmucsach a, int tungdo)
 	TextColor(15);
 	gotoXY(40, 0);
 	cout << "Ma Sach";
-	gotoXY(55, 0);
+	gotoXY(60, 0);
 	cout << "Ten Sach";
 	gotoXY(95, 0);
 	cout << "Trang Thai";
@@ -875,7 +877,7 @@ void XUAT_THONG_TIN_SACH(string ten_sach, danhmucsach a, int tungdo)
 	cout << "Vi Tri";
 	gotoXY(40, tungdo);
 	cout << a.masach;
-	gotoXY(55, tungdo);
+	gotoXY(60, tungdo);
 	cout << ten_sach;
 	gotoXY(95, tungdo);
 	cout << a.trangthai;
