@@ -12,6 +12,7 @@ char thaotac[][50] =
 
 int menu_dong(char thaotac[][50],int n) // n là số lượng item
 {
+	control_cursor(false);
 	int tt=0; // biến chỉ ra đang ở thao tác nào
 	int mau[10];
 	for (int i = 0; i < n; i++)
@@ -53,6 +54,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		}
 		case ESC:
 		{
+
 			return tt = 27;
 		}
 		case ENTER:

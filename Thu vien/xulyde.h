@@ -176,6 +176,7 @@ void XUAT_DS_DG(TREE t, int& i)
 			else
 			{
 				ButtonNext();
+				control_cursor(false);
 				char c = _getch();
 				if (c == -32)
 					c = _getch();
@@ -544,7 +545,9 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 	for (int i = 0; i < l.sl; i++)
 	{
 		if (i < 40)
+		{
 			XUAT_THONGTIN_DS(l, *l.ds_dausach[i], i + 1);
+		}
 		else
 		{
 			ButtonNext();
@@ -595,6 +598,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		{
 			gotoXY(55, k);
 			ToMau(55, k, arr[k - 1].tensach, 14);
+			control_cursor(false);
 			char c = _getch();
 			ToMau(55, k, arr[k - 1].tensach, 15);
 			TRANGTHAI tt = key(c);
@@ -1223,14 +1227,15 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 				}
 				if (check == true)
 				{
+					control_cursor(false);
 					int k = 1;
 					bool check = false;
 					while (check == false)
 					{
-						ToMau(45, k, arr[k - 1].masach, 14);
+						ToMau(45, k, arr[k-1].masach, 14); 
 						gotoXY(59, k);
-						ToMau(45, k, arr[k - 1].masach, 15);
 						char c = _getch();
+						ToMau(45, k, arr[k - 1].masach, 15);
 						TRANGTHAI tt = key(c);
 						switch (tt)
 						{

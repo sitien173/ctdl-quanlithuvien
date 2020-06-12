@@ -80,8 +80,8 @@ void resizeConsole(int width, int height)
 
 void ToMau(int x, int y, string a, int color)
 {
-	gotoXY(x, y);
 	TextColor(color);
+	gotoXY(x, y);
 	cout << a;
 	TextColor(7);
 }

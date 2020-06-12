@@ -8,6 +8,7 @@ int SoluongDG(TREE t);
 int Kiem_tra_phim(char c);
 int tinh_so_ngay(Date n1);
 int TIM_KIEM_MA(LIST_DS l, string ma);
+void control_cursor(bool x);
 
 enum TRANGTHAI { UP, DOWN, LEFT, RIGHT, ENTER, ESC };
 // hàm có chức năng bắt phim vừa nhập để điều khiển menu
@@ -124,6 +125,7 @@ void xoa_hienthi_box_baoloi()
 	TextColor(7);
 }
 void BaoLoi(string s) {
+	control_cursor(false);
 	int n = s.length();
 	int x = whereX(), y = whereY();
 	Box_BaoLoi();
@@ -137,6 +139,7 @@ void BaoLoi(string s) {
 		cout << " ";
 	}
 	xoa_hienthi_box_baoloi();
+	control_cursor(true);
 	gotoXY(x, y);
 	TextColor(7);
 }
@@ -212,6 +215,7 @@ int Kiem_tra_phim(char c)
 } // phím chức năng rt 1, số rt 2, Không thuộc cả 2 rt 0
 int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
+	control_cursor(true);
 	string str="";
 	if(n>=0)
 	str= so_sang_chuoi(n);
@@ -228,6 +232,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 		{
 			if (c == 27)
 			{
+				control_cursor(false);
 				return -1;
 			}
 			if (Kiem_Tra_Du_Lieu(c) == false) // nếu nhập kí tự là chữ
@@ -283,10 +288,12 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	} while (KT == false);
 	cout << endl;
 	n = atoi(str.c_str()); // chuyen doi chuoi sang so
+	control_cursor(false);
 }
 //flag =0 nhap toan ki tu, flag=1 nhap ki tu va so, flag =2 nhap gioitinh,flag=3 nhap ki tu la so
 int nhap_ki_tu(string& str,int flag)
 {
+	control_cursor(true);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;;
 	int length = str.length(); // biến cho con trỏ dịch đến cuối
@@ -302,6 +309,7 @@ int nhap_ki_tu(string& str,int flag)
 		{
 			if (c == 27)
 			{
+				control_cursor(false);
 				return -1;
 			}
 			int k = Kiem_tra_phim(c);
@@ -392,6 +400,7 @@ int nhap_ki_tu(string& str,int flag)
 	} while (KT == false);
 	cout << endl;
 	chuan_hoa_chu(str);
+	control_cursor(false);
 } 
 
 
@@ -819,4 +828,13 @@ int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
 		}
 	}
 	return n;
+}
+// x=true hien co tro chuot x=false tat con tro chuot
+void control_cursor(bool x)
+{
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO info;
+	info.dwSize = 100;
+	info.bVisible = x;
+	SetConsoleCursorInfo(consoleHandle, &info);
 }
