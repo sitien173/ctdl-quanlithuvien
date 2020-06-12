@@ -217,7 +217,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	str= so_sang_chuoi(n);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;
-	int length = str.length(); // biến cho con trỏ dịch đến cuối
+	int length = str.length()-1; // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{

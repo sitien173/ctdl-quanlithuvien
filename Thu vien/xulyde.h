@@ -38,7 +38,7 @@ int SoluongDG(TREE t);// đếm số đọc giả trong cây
 //========================================== Đau Sach ==================================================
 
 int NHAP_DS(LIST_DS& l, dausach& data);// thêm đầu sách nếu thêm thành công rt 1 <> ESC rt -2
-void XUAT_THONGTIN_DS(LIST_DS l,dausach& a, int tungdo);// in ra 1 đầu sách
+void XUAT_THONGTIN_DS(LIST_DS l, dausach& a, int tungdo);// in ra 1 đầu sách
 void XUAT_DS_DAUSACH(LIST_DS& l);// in danh sach theo the loai
 void ADDTail_DS(LIST_DS& l, dausach data);// Thêm đầu sách vào danh sách đầu sách để quản lí
 void SX_THELOAI_DS(LIST_DS& l);// sắp xếp đầu sách theo thể loại
@@ -106,7 +106,7 @@ int NHAP_THONGTIN_DG(docgia& x)
 // them 1 node vao cay theo ma doc gia 
 void Add_DG_VAO_CAY(TREE& t, docgia x)
 {
-	if(t)
+	if (t)
 	{
 		if (x.mathe < t->data.mathe)
 			Add_DG_VAO_CAY(t->pLeft, x);
@@ -172,7 +172,7 @@ void XUAT_DS_DG(TREE t, int& i)
 			t = Stack[top--]; // pop Stack
 			if (i <= 40)
 				Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
-			
+
 			else
 			{
 				ButtonNext();
@@ -270,12 +270,12 @@ void XOA_DG(TREE& t, int x)
 		{
 			if (t->data.tongsosach > 0)
 			{
-				 int temp=DEM_SACH_DG_MUON(t);
-				 if (temp > 0)
-				 {
-					 BaoLoi("DOC GIA DANG CON SACH MUON.KHONG THE XOA");
-					 return;
-				 }
+				int temp = DEM_SACH_DG_MUON(t);
+				if (temp > 0)
+				{
+					BaoLoi("DOC GIA DANG CON SACH MUON.KHONG THE XOA");
+					return;
+				}
 			}
 			NODE_DG* p = t;
 			// xóa node có 1 con hoặc không có con nào
@@ -362,21 +362,21 @@ int HIEU_CHINH_DG(TREE& t)
 		x.ho = p->data.ho;
 		gotoXY(boxx + 11, boxy + 4);
 		cout << x.ho;
-		k = nhap_ki_tu(x.ho,0);
+		k = nhap_ki_tu(x.ho, 0);
 		if (k == -1) // ESC
 			return -2;
 
 		x.ten = p->data.ten;
 		gotoXY(boxx + 12, boxy + 6);
 		cout << x.ten;
-		k = nhap_ki_tu(x.ten,0);
+		k = nhap_ki_tu(x.ten, 0);
 		if (k == -1) // ESC
 			return -2;
 
 		x.phai = p->data.phai;
 		gotoXY(boxx + 13, boxy + 8);
 		cout << x.phai;
-		k = nhap_ki_tu(x.phai,2);
+		k = nhap_ki_tu(x.phai, 2);
 		if (k == -1) // ESC
 			return -2;
 
@@ -429,7 +429,7 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 	while (1)
 	{
 		gotoXY(boxx + 8, boxy + 2);
-		k = nhap_ki_tu(data.ISBN,3);
+		k = nhap_ki_tu(data.ISBN, 3);
 		if (k == -1) // ESC
 			return -2;
 		if (TIM_KIEM_MA(l, data.ISBN) != -1)
@@ -441,7 +441,7 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 			continue;
 		}
 		gotoXY(boxx + 12, boxy + 4);
-		k = nhap_ki_tu(data.tensach,1);
+		k = nhap_ki_tu(data.tensach, 1);
 		if (k == -1) // ESC
 			return -2;
 		data.sotrang = 0;
@@ -450,7 +450,7 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 		if (data.sotrang == -1) // ESC
 			return -2;
 		gotoXY(boxx + 11, boxy + 8);
-		k = nhap_ki_tu(data.tacgia,0);
+		k = nhap_ki_tu(data.tacgia, 0);
 		if (k == -1) // ESC
 			return -2;
 		data.namxuatban = 0;
@@ -459,7 +459,7 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 		if (k == -1) // ESC
 			return -2;
 		gotoXY(boxx + 12, boxy + 12);
-		k = nhap_ki_tu(data.theloai,0);
+		k = nhap_ki_tu(data.theloai, 0);
 		if (k == -1) // ESC
 			return -2;
 		data.soluongmuon = 0;
@@ -469,7 +469,7 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 }
 
 // in ra 1 đầu sách
-void XUAT_THONGTIN_DS(LIST_DS l,dausach& a, int tungdo)
+void XUAT_THONGTIN_DS(LIST_DS l, dausach& a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
@@ -544,7 +544,7 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 	for (int i = 0; i < l.sl; i++)
 	{
 		if (i < 40)
-			XUAT_THONGTIN_DS(l,*l.ds_dausach[i], i + 1);
+			XUAT_THONGTIN_DS(l, *l.ds_dausach[i], i + 1);
 		else
 		{
 			ButtonNext();
@@ -556,7 +556,7 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 				xoa_hien_thi_dausach();
 				for (int j = i, tungdo = 1; tungdo < 40 && j < l.sl; j++, tungdo++)
 				{
-					XUAT_THONGTIN_DS(l,*l.ds_dausach[j], tungdo);
+					XUAT_THONGTIN_DS(l, *l.ds_dausach[j], tungdo);
 					i = j;
 				}
 			}
@@ -663,7 +663,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 							if (c == -32) c = _getch();
 							if (c == 27)
 								goto BD;
-							else 
+							else
 								goto BD;
 						}
 					}
@@ -679,7 +679,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		_getch();
 		xoa_hien_thi_1_Button(140, 42);
 		goto BD;
-	}	
+	}
 	else
 	{
 		delete[] arr;
@@ -710,7 +710,7 @@ int HIEU_CHINH_DS(LIST_DS& l)
 		cout << "                             ";
 		gotoXY(1, 10);
 		cout << "Nhap ISBN: ";
-		k = nhap_ki_tu(ma_dau_sach,3);
+		k = nhap_ki_tu(ma_dau_sach, 3);
 		if (k == -1) // ESC
 		{
 			return -2;
@@ -732,7 +732,7 @@ int HIEU_CHINH_DS(LIST_DS& l)
 		data.tensach = l.ds_dausach[i]->tensach;
 		gotoXY(boxx + 12, boxy + 4);
 		cout << data.tensach;
-		k = nhap_ki_tu(data.tensach,1);
+		k = nhap_ki_tu(data.tensach, 1);
 		if (k == -1) // ESC
 			return -2;
 
@@ -746,7 +746,7 @@ int HIEU_CHINH_DS(LIST_DS& l)
 		data.tacgia = l.ds_dausach[i]->tacgia;
 		gotoXY(boxx + 11, boxy + 8);
 		cout << data.tacgia;
-		k = nhap_ki_tu(data.tacgia,0);
+		k = nhap_ki_tu(data.tacgia, 0);
 		if (k == -1) // ESC
 			return -2;
 
@@ -760,7 +760,7 @@ int HIEU_CHINH_DS(LIST_DS& l)
 		data.theloai = l.ds_dausach[i]->theloai;
 		gotoXY(boxx + 12, boxy + 12);
 		cout << data.theloai;
-		k = nhap_ki_tu(data.theloai,0);
+		k = nhap_ki_tu(data.theloai, 0);
 		if (k == -1) // ESC
 			return -2;
 
@@ -790,9 +790,9 @@ NODE_DMS* TAO_NODE_SACH(danhmucsach& x)
 int THEM_SACH(LIST_DS& l)
 {
 	int k = 0;
-	string ma_dau_sach="";
+	string ma_dau_sach = "";
 	cout << "\nNHAP ISBN: ";
-	k = nhap_ki_tu(ma_dau_sach,3);
+	k = nhap_ki_tu(ma_dau_sach, 3);
 	if (k == -1) // ESC
 		return -2;
 	int i = TIM_KIEM_MA(l, ma_dau_sach);
@@ -806,9 +806,9 @@ int THEM_SACH(LIST_DS& l)
 	k = nhap_so_nguyen(n);
 	if (k == -1) // ESC
 		return -2;
-	string temp="";
+	string temp = "";
 	cout << "Them Vao Vi Tri: ";
-	k = nhap_ki_tu(temp,1);
+	k = nhap_ki_tu(temp, 1);
 	if (k == -1) // ESC
 		return -2;
 	danhmucsach x;
@@ -833,10 +833,10 @@ int THEM_SACH(LIST_DS& l)
 			x.masach = l.ds_dausach[i]->ISBN + "-" + so_sang_chuoi(q + j + 1);
 
 		gotoXY(boxx + 12, boxy + 2);
-		cout << x.masach  ;
+		cout << x.masach;
 		gotoXY(boxx + 11, boxy + 4);
 		cout << temp;
-		k = nhap_ki_tu(temp,1);
+		k = nhap_ki_tu(temp, 1);
 		if (k == -1) // ESC
 			break;
 		x.vitri = temp;
@@ -1067,7 +1067,7 @@ int DEM_SACH_DG_MUON(TREE t)
 	int so_sach_muon = 0;
 	for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
 	{
-		if (p->data.trangthai == 0 || p->data.trangthai==2 ) // sách chưa trả
+		if (p->data.trangthai == 0 || p->data.trangthai == 2) // sách chưa trả
 			so_sach_muon++;
 	}
 	return so_sach_muon;
@@ -1132,7 +1132,7 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 	{
 		gotoXY(1, 10); cout << "                                  ";
 		gotoXY(1, 10); cout << "Nhap Ma Sach Can Muon: ";
-		k1 = nhap_ki_tu(ma_sach,1);
+		k1 = nhap_ki_tu(ma_sach, 1);
 		if (k1 == -1) // ESC
 			return -2;
 		ma_dau_sach = tach_ma_sach(ma_sach);
@@ -1147,7 +1147,7 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 		{
 			for (k = l.ds_dausach[i]->dms.pHead; k != NULL; k = k->pNext)
 			{
-				if (k->data.masach == ma_sach && k->data.trangthai==0)
+				if (k->data.masach == ma_sach && k->data.trangthai == 0)
 				{
 					check = true; // danh dau tim thay sach
 					k->data.trangthai = 1; // cap nhat sach co nguoi muon
@@ -1175,15 +1175,14 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 }
 // trả sách thành công tr 1 <> -1 ; ESC rt -2
 int TRA_SACH(TREE& t, LIST_DS& l)
-{
-	int k1 = 0;
-	int tungdo = 0;
-	int ma = 0;
+{	
 	TREE p = NULL;
 	do
 	{
+		int tungdo = 0;
+		int ma = 0;
+		int k1 = 0;
 		XUAT_DS_DG(t, tungdo);
-		tungdo = 0;
 		gotoXY(1, 10);
 		cout << "                             ";
 		gotoXY(1, 10);
@@ -1194,69 +1193,112 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 
 		p = TIM_KIEM_DG_MA(t, ma);
 		xoa_hien_thi_doc_gia();
-
 		if (p == NULL)
 		{
 			BaoLoi("MA DOC GIA KHONG DUNG");
-			ma = 0;
 			continue;
 		}
 		else
 		{
-			if (XUAT_SACH_MUON(p, l) == 0) // độc giả không có sách mượn
-			{
-				BaoLoi("DOC GIA KHONG CO SACH MUON");
-				return -1;
-			}
-			string ma_sach="";
 			do
 			{
-				gotoXY(1, 10);
-				cout << "                                  ";
-				gotoXY(1, 10);
-				cout << "NHAP MA SACH CAN TRA: ";
-				k1 = nhap_ki_tu(ma_sach,1);
-				if (k1 == -1) // ESC
-					return -2;
-				NODE_DMS* k = TIM_KIEM_SACH(l, ma_sach); // lưu vị trí của sách trả về trong danh sách qua mã sách
-				if (k == NULL)
+				int n = DEM_SACH_DG_MUON(p);
+				muontra* arr = new muontra[n];
+				int j = 0;
+				bool check = false; // check xem doc gia co muon sach hay khong
+				for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
 				{
-					BaoLoi("MA SACH KHONG DUNG");
-					ma_sach = "";
-					continue;
+					if (q->data.trangthai == 0 || q->data.trangthai == 2)
+					{
+						check = true;
+						NODE_DMS* dms = TIM_KIEM_SACH(l, q->data.masach);
+						string temp = tach_ma_sach(dms->data.masach);
+						int i = TIM_KIEM_MA(l, temp);
+						if (i != -1)
+						{
+							XUAT_THONG_TIN_MT(q->data, l.ds_dausach[i]->tensach, j + 1);
+							arr[j++] = q->data;
+						}
+					}
+				}
+				if (check == true)
+				{
+					int k = 1;
+					bool check = false;
+					while (check == false)
+					{
+						ToMau(45, k, arr[k - 1].masach, 14);
+						gotoXY(59, k);
+						ToMau(45, k, arr[k - 1].masach, 15);
+						char c = _getch();
+						TRANGTHAI tt = key(c);
+						switch (tt)
+						{
+						case UP:
+						case LEFT:
+						{
+							if (k == 1)
+								k = j;
+							else
+								k--;
+							break;
+						}
+						case DOWN:
+						case RIGHT:
+						{
+							if (k == j)
+								k = 1;
+							else
+								k++;
+							break;
+						}
+						case ESC:
+						{
+							delete[] arr;
+							return -2;
+						}
+						case ENTER:
+						{
+							check = true;
+							break;
+						}
+						}
+					}
+					int dem = 0; // bien kiem tra so sach doc gia da lam mat =0 mo the
+					Date n1;
+					thoi_gian_thuc(n1);
+					NODE_DMS* dms1 = TIM_KIEM_SACH(l, arr[k - 1].masach);
+					for (NODE_MT* MT = p->data.mt.pHead; MT != NULL; MT = MT->pNext)
+					{
+						if (MT->data.masach == dms1->data.masach)
+						{
+							dms1->data.trangthai = 0; // cap nhat sach co the muon
+							MT->data.trangthai = 1; // cap nhat lai doc gia da tra sach
+							MT->data.ngaytra = n1;
+						}
+						if (MT->data.trangthai == 2) dem++;
+					}
+					if (dem != 0) // còn sách làm mất -> khóa thẻ
+						p->data.trangthaithe = 0;
+					else
+						p->data.trangthaithe = 1; // mở thẻ
+					BaoLoi("TRA SACH THANH CONG");
+					delete[] arr;
+					xoa_hien_thi_dausach();
+					GhiFileDG(t);
+					GhiFileDS(l);
 				}
 				else
 				{
-					Date n1;
-					NODE_MT* q = NULL;
-					int dem = 0; // biến kiểm tra số sách độc giả đã làm mất =0 mở thẻ
-					for (q = p->data.mt.pHead; q != NULL; q = q->pNext)
-					{
-						if (q->data.masach == ma_sach)
-						{
-							k->data.trangthai = 0;// cập nhật lại sách cho mượn được 
-							q->data.trangthai = 1; // cập nhật lại đọc giả đã trả sách
-							thoi_gian_thuc(n1); // lấy thời gian hệ thống
-							q->data.ngaytra.ngay = n1.ngay;
-							q->data.ngaytra.thang = n1.thang;
-							q->data.ngaytra.nam = n1.nam;
-						}
-						if (q->data.trangthai == 2) dem++;
-					}
-					// nếu đếm !=0 . còn sách làm mất. Khóa thẻ
-					if (dem != 0)
-						p->data.trangthaithe = 0;
-					// ngược lại mở thẻ
-					else
-						p->data.trangthaithe = 1;
+					BaoLoi("DOC GIA KHONG MUON SACH");
+					ma = 0;
+					break;
 				}
-				break;
-			} while (1);
-			break;
-		}
-	} while (1);
 
-	return 1;
+			} while (1);
+		}
+	}while (1);
+return 1;
 }
 // ========================================= Qua Han =============================
 
@@ -1264,16 +1306,16 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 bool Dem_SN_QUAHAN(TREE p)
 {
 	int n = 0;
-	if(p->data.tongsosach >0)
-	for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
-	{
-		if (q->data.trangthai == 0) // dang muon sach
+	if (p->data.tongsosach > 0)
+		for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
 		{
-			n = tinh_so_ngay(q->data.ngaymuon);
-			if (n >= 7)
-				return true;
+			if (q->data.trangthai == 0) // dang muon sach
+			{
+				n = tinh_so_ngay(q->data.ngaymuon);
+				if (n >= 7)
+					return true;
+			}
 		}
-	}
 	return false;
 }
 // in ra danh sách các độc giả quá hạn
@@ -1296,14 +1338,17 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 			t = Stack[top--];
 			for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
 			{
-				n++;
-				l.ds_quahan[n - 1].ma_doc_gia = t->data.mathe;
-				l.ds_quahan[n - 1].ho = t->data.ho;
-				l.ds_quahan[n - 1].ten = t->data.ten;
-				l.ds_quahan[n - 1].phai = t->data.phai;
-				l.ds_quahan[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
-				l.ds_quahan[n - 1].ma_sach = p->data.masach;
-				l.ds_quahan[n - 1].ngay_muon = p->data.ngaymuon;
+				if (p->data.trangthai == 0 || p->data.trangthai == 2)
+				{
+					n++;
+					l.ds_quahan[n - 1].ma_doc_gia = t->data.mathe;
+					l.ds_quahan[n - 1].ho = t->data.ho;
+					l.ds_quahan[n - 1].ten = t->data.ten;
+					l.ds_quahan[n - 1].phai = t->data.phai;
+					l.ds_quahan[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
+					l.ds_quahan[n - 1].ma_sach = p->data.masach;
+					l.ds_quahan[n - 1].ngay_muon = p->data.ngaymuon;
+				}
 			}
 			t = t->pRight;
 		}
@@ -1325,7 +1370,7 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 			}
 		}
 	}
-	bool check = false; 
+	bool check = false;
 	// xuat ds qua han theo thu tu giam dan
 	for (int k = 0; k < l.sl; k++)
 	{
@@ -1389,6 +1434,6 @@ void top10sach(LIST_DS l)
 	}
 	for (int k = 0; k < l.sl && k < 10; k++)
 	{
-		XUAT_THONGTIN_DS(l,*l.ds_dausach[k], k + 1);
+		XUAT_THONGTIN_DS(l, *l.ds_dausach[k], k + 1);
 	}
 }
