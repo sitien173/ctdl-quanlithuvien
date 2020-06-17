@@ -139,11 +139,13 @@ void BaoLoi(string s) {
 		cout << " ";
 	}
 	xoa_hienthi_box_baoloi();
-	control_cursor(true);
 	gotoXY(x, y);
 	TextColor(7);
 }
-
+void ButtonPrev()
+{
+	gotoXY(100, 42); cout << "<-";
+}
 void ButtonNext()
 {
 	gotoXY(110, 42); cout << "->";
@@ -207,21 +209,20 @@ int Kiem_tra_phim(char c)
 	if (GetKeyState(VK_SHIFT) & 0x8000)
 		return 1;
 	for (int i = 0; i < 32; i++)
-	{
 		if (c == arr[i])
 			return 1;
-	}
+	
 	return 0;
 } // phím chức năng rt 1, số rt 2, Không thuộc cả 2 rt 0
 int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
 	control_cursor(true);
 	string str="";
-	if(n>=0)
 	str= so_sang_chuoi(n);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;
-	int length = str.length()-1; // biến cho con trỏ dịch đến cuối
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
+	if(n<=0)  length = str.length() -1 ;
 	char c;
 	do
 	{
@@ -554,7 +555,7 @@ void xoa_hienthi_buttonNext()
 {
 	int x = whereX();
 	int y = whereY();
-	gotoXY(110, 42); cout << "        ";
+	gotoXY(110, 42); cout << "       ";
 	gotoXY(x, y);
 }
 void xoa_hien_thi_dausach()
@@ -815,6 +816,7 @@ void Box_NhapSach()
 	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
 	cout << char(188);
 }
+
 int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
 {
 	int i = TIM_KIEM_MA(l, ISBN);
@@ -837,4 +839,51 @@ void control_cursor(bool x)
 	info.dwSize = 100;
 	info.bVisible = x;
 	SetConsoleCursorInfo(consoleHandle, &info);
+}
+/// TEST
+void Box_NHAP(string x)
+{
+	int tungdo = 15;
+	int boxtemp = 50;
+	TextColor(252);
+	gotoXY(boxx+20, tungdo); cout << char(201);
+	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
+	cout << char(187);
+	TextColor(252);
+	gotoXY(boxx+20, tungdo + 1); cout << "                                                    ";
+	gotoXY(boxx+20, tungdo + 1); cout << char(186);
+	gotoXY(boxx +20+ boxtemp + 1, tungdo + 1);  cout << char(186);
+	gotoXY(boxx+20, tungdo + 2); cout << "                                                    ";
+	gotoXY(boxx+20, tungdo + 2); cout << char(186); TextColor(249); cout << x << ":";
+	TextColor(252);
+	gotoXY(boxx +20+ boxtemp + 1, tungdo + 2); cout << char(186);
+	gotoXY(boxx+20, tungdo + 3); cout << "                                                    ";
+	gotoXY(boxx+20, tungdo + 3); cout << char(186);
+	gotoXY(boxx +20+ boxtemp + 1, tungdo + 3); cout << char(186);
+	gotoXY(boxx+20, tungdo + 4); cout << char(200);
+	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
+	cout << char(188);
+	TextColor(7);
+}
+void Xoa_hien_thi_Box_NHAP()
+{
+	int tungdo = 15;
+	int boxtemp = 50;
+	TextColor(7);
+	gotoXY(boxx + 20, tungdo); cout << " ";
+	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
+	cout << " ";
+	TextColor(7);
+	gotoXY(boxx + 20, tungdo + 1); cout << "                                                    ";
+	gotoXY(boxx + 20, tungdo + 1); cout << " ";
+	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 1);  cout << " ";
+	gotoXY(boxx + 20, tungdo + 2); cout << "                                                    ";
+	gotoXY(boxx + 20, tungdo + 2); cout << "                                                    ";
+	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 2); cout << " ";
+	gotoXY(boxx + 20, tungdo + 3); cout << "                                                    ";
+	gotoXY(boxx + 20, tungdo + 3); cout << " ";
+	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 3); cout << " ";
+	gotoXY(boxx + 20, tungdo + 4); cout << " ";
+	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
+	cout << " ";
 }

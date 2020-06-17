@@ -193,13 +193,13 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 				do
 				{
 					string temp="";
-					gotoXY(1, 10);
-					cout << "                                      ";
-					gotoXY(1, 10);
-					cout << "Nhap DG(Ten Hoac MA): ";
+					Box_NHAP("NHAP DG(TEN HOAC MA)");
+					gotoXY(boxx + 20+22, 17);
 					k1 = nhap_ki_tu(temp,1);
+					Xoa_hien_thi_Box_NHAP();
 					if (k1 == -1) // ESC
 						break;
+					
 					// chuyển đổi chuỗi về số
 					int i = chuoi_sang_so(temp);
 					// nếu temp là kí tự
@@ -243,9 +243,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					XUAT_DS_DG(t, tungdo);
 					tungdo = 0;
 					int key=0;
-					gotoXY(1, 10); cout << "                        ";
-					gotoXY(1, 10); cout << "Nhap Ma Doc Gia: ";
+					Box_NHAP("MA DG");
+					gotoXY(boxx + 20 + 7, 17);
 					k1 = nhap_so_nguyen(key);
+					Xoa_hien_thi_Box_NHAP();
 					if (k1 == -1) // nhập ESC
 						break; 
 					TREE p = TIM_KIEM_DG_MA(t, key);
@@ -275,19 +276,35 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 			// Hiệu chỉnh 
 			if (chon == 5 ) 
 			{
-				// in danh sách độc giả
-				if (t != NULL)
-				XUAT_DS_DG(t, tungdo);
-				tungdo = 0;
-				int i = HIEU_CHINH_DG(t);
-				if (i == -2) // ESC
-				goto menu_DG;
-				else // i=1
+				int mathe;
+				int k = 0;
+				do
 				{
-					BaoLoi("HIEU CHINH THANH CONG");
-					GhiFileDG(t);
-					break;
-				}
+					xoa_hien_thi_doc_gia();
+					mathe = 0;
+					if (t != NULL)
+						XUAT_DS_DG(t, tungdo);
+					tungdo = 0;
+
+					Box_NHAP("MA DG");
+					gotoXY(boxx + 20 + 7, 17);
+					k = nhap_so_nguyen(mathe);
+					Xoa_hien_thi_Box_NHAP();
+					if (k == -1) // ESC
+						break;
+					TREE p = TIM_KIEM_DG_MA(t, mathe);
+					if (p == NULL) {
+						BaoLoi("MA DOC GIA KHONG TON TAI");
+						continue;
+					}
+					xoa_hien_thi_doc_gia();
+					int i=HIEU_CHINH_DG(p);
+					if (i == 1)
+					{
+						BaoLoi("HIEU CHINH THANH CONG");
+						break;
+					}
+				} while (1);
 			}
 			// thoát || ESC
 			if (chon == 6 || chon == 27)
@@ -335,17 +352,16 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			if (chon == 3 ) 
 			{
 				int k1 = 0;
-				string ten_sach="";
-				string temp = "";
 				int i = 0;
 				do
 				{
+					string ten_sach = "";
+					string temp = "";
 					XUAT_DS_DAUSACH(l);
-					gotoXY(1, 11);
-					cout << "                                 ";
-					gotoXY(1, 10);
-					cout << "NHAP TEN HOAC MA SACH CAN TIM:\n ";
+					Box_NHAP("NHAP TEN(MA) SACH");
+					gotoXY(boxx +40, 17);
 					k1 = nhap_ki_tu(ten_sach,1);
+					Xoa_hien_thi_Box_NHAP();
 					if (k1 == -1) // ESC;
 						break;
 					temp = tach_ma_sach(ten_sach);
