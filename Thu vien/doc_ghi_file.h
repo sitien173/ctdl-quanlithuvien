@@ -5,7 +5,7 @@ NODE_DMS* TAO_NODE_SACH(danhmucsach& x);
 void AddTail_DMS(LIST_DMS& l, NODE_DMS* p);
 void ADDTail_DS(LIST_DS& l, dausach data);
 void Init_DMS(LIST_DMS& l);
-int TIM_KIEM_MA(LIST_DS l, string ma);
+int TIM_KIEM_DS_THEO_MA(LIST_DS l, string ma);
 TREE TIM_KIEM_DG_MA(TREE& t, int ma_doc_gia);
 void Init_MT(LIST_MT& l);
 void AddTail_MT(LIST_MT& l, NODE_MT* p);
@@ -141,7 +141,7 @@ void LoadFileDS(LIST_DS& l)
 		f >> data.soluongsach;
 		f.ignore();
 		ADDTail_DS(l, data);
-		int vitri = TIM_KIEM_MA(l, data.ISBN);
+		int vitri = TIM_KIEM_DS_THEO_MA(l, data.ISBN);
 		Init_DMS(l.ds_dausach[vitri]->dms);
 		for (int i = 0; i < data.soluongsach; i++)
 		{

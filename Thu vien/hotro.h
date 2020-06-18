@@ -7,7 +7,7 @@ void SX_THELOAI_DS(LIST_DS& l);
 int SoluongDG(TREE t);
 int Kiem_tra_phim(char c);
 int tinh_so_ngay(Date n1);
-int TIM_KIEM_MA(LIST_DS l, string ma);
+int TIM_KIEM_DS_THEO_MA(LIST_DS l, string ma);
 void control_cursor(bool x);
 
 enum TRANGTHAI { UP, DOWN, LEFT, RIGHT, ENTER, ESC };
@@ -757,6 +757,38 @@ void Box_NhapDG()
 	for (int i = 1; i < boxs + 1; i++) cout << char(205);
 	cout << char(188);
 }
+void xoa_hien_thi_Box_NhapDG()
+{
+	int x = whereX(), y = whereY();
+	TextColor(15);
+	gotoXY(boxx, boxy); cout << " ";
+	for (int i = 1; i < boxs + 1; i++) cout << " ";
+	cout << " ";
+	gotoXY(boxx, boxy + 1); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 1); cout << " ";
+	gotoXY(boxx, boxy + 2); cout  << "                                      ";
+	gotoXY(boxx + boxs + 1, boxy + 2); cout << " ";
+	gotoXY(boxx, boxy + 3); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 3); cout << " ";
+	gotoXY(boxx, boxy + 4); cout << "                                      ";
+	gotoXY(boxx + boxs + 1, boxy + 4); cout << " ";
+	gotoXY(boxx, boxy + 5); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 5); cout << " ";
+	gotoXY(boxx, boxy + 6); cout << "                                      ";
+	gotoXY(boxx + boxs + 1, boxy + 6); cout << " ";
+	gotoXY(boxx, boxy + 7); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 7); cout << " ";
+	gotoXY(boxx, boxy + 8); cout << "                                      ";
+	gotoXY(boxx + boxs + 1, boxy + 8); cout << " ";
+	gotoXY(boxx, boxy + 9); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 9); cout << " ";
+	gotoXY(boxx, boxy + 10); cout << "                                      ";
+	gotoXY(boxx + boxs + 1, boxy + 10); cout << " ";
+	gotoXY(boxx, boxy + 11); cout << " ";
+	for (int i = 1; i < boxs + 1; i++) cout << char(205);
+	cout << " ";
+	gotoXY(x, y);
+}
 void Box_NhapDS()
 {
 	ButtonEnter(boxx + boxs - 5, boxy + 15);
@@ -793,6 +825,42 @@ void Box_NhapDS()
 	for (int i = 1; i < boxs + 1; i++) cout << char(205);
 	cout << char(188);
 }
+void xoa_hien_thi_Box_NhapDS()
+{
+	int x = whereX(), y = whereY();
+	TextColor(15);
+	gotoXY(boxx, boxy); cout << " ";
+	for (int i = 1; i < boxs + 1; i++) cout << " ";
+	cout << " ";
+	gotoXY(boxx, boxy + 1); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 1); cout << " ";
+	gotoXY(boxx, boxy + 2); cout << "                                            ";
+	gotoXY(boxx + boxs + 1, boxy + 2); cout << " ";
+	gotoXY(boxx, boxy + 3); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 3); cout << " ";
+	gotoXY(boxx, boxy + 4); cout << "                                            ";
+	gotoXY(boxx + boxs + 1, boxy + 4); cout << " ";
+	gotoXY(boxx, boxy + 5); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 5); cout << " ";
+	gotoXY(boxx, boxy + 6); cout << "                                            ";
+	gotoXY(boxx + boxs + 1, boxy + 6); cout << " ";
+	gotoXY(boxx, boxy + 7); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 7); cout << " ";
+	gotoXY(boxx, boxy + 8); cout << "                                            ";
+	gotoXY(boxx + boxs + 1, boxy + 8); cout << " ";
+	gotoXY(boxx, boxy + 9); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 9); cout << " ";
+	gotoXY(boxx, boxy + 10); cout << "                                            ";
+	gotoXY(boxx + boxs + 1, boxy + 10); cout << " ";
+	gotoXY(boxx, boxy + 11); cout << " ";
+	gotoXY(boxx + boxs + 1, boxy + 11); cout << " ";
+	gotoXY(boxx, boxy + 12); cout << "                                            ";
+	gotoXY(boxx + boxs + 1, boxy + 12); cout << " ";
+	gotoXY(boxx, boxy + 13); cout << " ";
+	for (int i = 1; i < boxs + 1; i++) cout << " ";
+	cout << " ";
+	gotoXY(x, y);
+}
 void Box_NhapSach()
 {
 	int boxtemp = boxs-40;
@@ -816,18 +884,42 @@ void Box_NhapSach()
 	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
 	cout << char(188);
 }
+void xoa_hien_thi_Box_NhapSach()
+{
+	int x = whereX(), y = whereY();
+	int boxtemp = boxs - 40;
+	xoa_hien_thi_1_Button(boxx + boxtemp - 5, boxy + 15);
+	xoa_hien_thi_1_Button(boxx, boxy + 15);
+	TextColor(15);
+	gotoXY(boxx, boxy); cout << " ";
+	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
+	cout << " ";
+	gotoXY(boxx, boxy + 1); cout << " ";
+	gotoXY(boxx + boxtemp + 1, boxy + 1); cout << " ";
+	gotoXY(boxx, boxy + 2); cout << "            ";
+	gotoXY(boxx + boxtemp + 1, boxy + 2); cout << " ";
+	gotoXY(boxx, boxy + 3); cout << " ";
+	gotoXY(boxx + boxtemp + 1, boxy + 3); cout << " ";
+	gotoXY(boxx, boxy + 4); cout << "          ";
+	gotoXY(boxx + boxtemp + 1, boxy + 4); cout << " ";
+	gotoXY(boxx, boxy + 5); cout << " ";
+	gotoXY(boxx + boxtemp + 1, boxy + 5); cout << " ";
+	gotoXY(boxx, boxy + 6); cout << " ";
+	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
+	cout << " ";
+	gotoXY(x, y);
+}
 
 int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
 {
-	int i = TIM_KIEM_MA(l, ISBN);
+	int i = TIM_KIEM_DS_THEO_MA(l, ISBN);
+	if (l.ds_dausach[i]->soluongsach == 0) return 0;
 	int n = 0;
 	if (i != -1)
 	{
 		for (node_danhmucsach* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
-		{
 			if (p->data.trangthai == 0)
 				n++;
-		}
 	}
 	return n;
 }
@@ -840,7 +932,7 @@ void control_cursor(bool x)
 	info.bVisible = x;
 	SetConsoleCursorInfo(consoleHandle, &info);
 }
-/// TEST
+// Boxx + 20 Boxy =15
 void Box_NHAP(string x)
 {
 	int tungdo = 15;
@@ -854,7 +946,8 @@ void Box_NHAP(string x)
 	gotoXY(boxx+20, tungdo + 1); cout << char(186);
 	gotoXY(boxx +20+ boxtemp + 1, tungdo + 1);  cout << char(186);
 	gotoXY(boxx+20, tungdo + 2); cout << "                                                    ";
-	gotoXY(boxx+20, tungdo + 2); cout << char(186); TextColor(249); cout << x << ":";
+	gotoXY(boxx+20, tungdo + 2); cout << char(186); TextColor(249); cout << x << ": ";
+	int x1 = whereX(), y1 = whereY();
 	TextColor(252);
 	gotoXY(boxx +20+ boxtemp + 1, tungdo + 2); cout << char(186);
 	gotoXY(boxx+20, tungdo + 3); cout << "                                                    ";
@@ -863,10 +956,13 @@ void Box_NHAP(string x)
 	gotoXY(boxx+20, tungdo + 4); cout << char(200);
 	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
 	cout << char(188);
-	TextColor(7);
+	TextColor(15);
+	gotoXY(x1, y1);
 }
 void Xoa_hien_thi_Box_NHAP()
 {
+	int x = whereX();
+	int y = whereY();
 	int tungdo = 15;
 	int boxtemp = 50;
 	TextColor(7);
@@ -886,4 +982,5 @@ void Xoa_hien_thi_Box_NHAP()
 	gotoXY(boxx + 20, tungdo + 4); cout << " ";
 	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
 	cout << " ";
+	gotoXY(x, y);
 }
