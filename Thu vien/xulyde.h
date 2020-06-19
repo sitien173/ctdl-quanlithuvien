@@ -158,45 +158,52 @@ void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo)
 //duyet theo LNR in ra ma the tang dan
 void XUAT_DS_DG(TREE t, int& i)
 {
-	TREE Stack[STACKSIZE];
-	int top = -1;
-	do
+	int n = SoluongDG(t);
+	int t_sotrang = (n - 1) / 40 + 1;
+	int* arr = new int[n];
+	int index = 0; // chỉ số của mảng
+	lay_mathe_sang_mang(t, arr, n, index);
+	int tungdo = 1;
+	TREE p = NULL;
+	for (int i = 0; i < t_sotrang; i++)
 	{
-		while (t != NULL)
+		for (int j = i * 40; j < (40 * i) + 40 && j < n; j++)
 		{
-			Stack[++top] = t; // push vào Stack
-			t = t->pLeft;
+			p = TIM_KIEM_DG_MA(t, arr[j]);
+			Xuat_Thong_Tin_Doc_Gia(p->data, tungdo++);
 		}
-		if (top != -1)
+		
+		gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
+		ButtonNext();
+		ButtonPrev();
+		char c = _getch();
+		if (c == -32)
+			c = _getch();
+		if (c == 77)
 		{
-			t = Stack[top--]; // pop Stack
-			if (i <= 40)
-				Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
-
+			xoa_hien_thi_doc_gia();
+			tungdo = 1;
+			if (i == t_sotrang - 1)
+				i = -1;
+		}
+		else if (c == 75)
+		{
+			xoa_hien_thi_doc_gia();
+			tungdo = 1;
+			if (i == 0)
+				i = t_sotrang - 2;
 			else
 			{
-				ButtonNext();
-				control_cursor(false);
-				char c = _getch();
-				if (c == -32)
-					c = _getch();
-				if (c == 27) // ESC
-				{
-					xoa_hienthi_buttonNext();
-					return;
-				}
-				else if (c == 77)
-				{
-					i = 0;
-					xoa_hien_thi_doc_gia();
-					Xuat_Thong_Tin_Doc_Gia(t->data, ++i);
-				}
+				i -= 2;
+				continue;
 			}
-			t = t->pRight;
 		}
-		else
-			break;
-	} while (1);
+		else 
+		{
+			delete[] arr;
+			return;
+		}
+	}
 }
 
 // duyệt cây copy dữ liệu vào mảng
@@ -432,7 +439,7 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 		data.sotrang = 0;
 		gotoXY(boxx + 12, boxy + 6);
 		k = nhap_so_nguyen(data.sotrang);
-		if (data.sotrang == -1) // ESC
+		if (k == -1) // ESC
 			return -2;
 		gotoXY(boxx + 11, boxy + 8);
 		k = nhap_ki_tu(data.tacgia, 0);
@@ -919,12 +926,10 @@ void NHAP_THONGTIN_MT(muontra& x)
 {
 	// phiếu mượn trả chỉ cần nhập mã sách . ngày mượn sẽ được cập nhật từ hệ thống thời gian thực, trạng thái sẽ mặc định = 0 nghĩa là sách đó đang mượn
 	thoi_gian_thuc(x.ngaymuon);
-	cout << "Ngay muon:" << x.ngaymuon.ngay << "/" << x.ngaymuon.thang << "/" << x.ngaymuon.nam << endl;
 	x.ngaytra.ngay = 0;
 	x.ngaytra.thang = 0;
 	x.ngaytra.nam = 0;
 	x.trangthai = 0; // trạng thái mặc định =0 độc giả đang mượn cuốn sách
-	cout << "Trang thai: " << x.trangthai << endl;
 }
 
 // in thong tin của 1 phiếu mượn trả
@@ -1029,6 +1034,7 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 	{
 		ma_doc_gia = 0;
 		XUAT_DS_DG(t, tungdo);
+		gotoXY(99, 42); cout << "                    ";
 		tungdo = 0;
 		Box_NHAP("NHAP MA DG");
 		k1 = nhap_so_nguyen(ma_doc_gia);
@@ -1060,11 +1066,14 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 	string ma_dau_sach;
 	bool check = false; // kiem tra co tim thay ma sach hay ko
 	int i = 0;
+	gotoXY(99, 42); cout << "                         "; 
 	do
 	{
+		XUAT_SACH_MUON(p, l);
 		ma_sach = "";
 		Box_NHAP("NHAP MA SACH");
 		k1 = nhap_ki_tu(ma_sach, 1);
+		xoa_hien_thi_dausach();
 		Xoa_hien_thi_Box_NHAP();
 		if (k1 == -1) // ESC
 			return -2;
@@ -1079,11 +1088,18 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 		{
 			for (k = l.ds_dausach[i]->dms.pHead; k != NULL; k = k->pNext)
 			{
-				if (k->data.masach == ma_sach && k->data.trangthai == 0)
+				if (k->data.masach == ma_sach)
 				{
-					check = true; // danh dau tim thay sach
-					k->data.trangthai = 1; // cap nhat sach co nguoi muon
-					break;
+					if (k->data.trangthai == 0)
+					{
+						check = true; // danh dau tim thay sach
+						k->data.trangthai = 1; // cap nhat sach co nguoi muon
+						break;
+					}
+					else if (k->data.trangthai == 1)
+						BaoLoi("SACH DA CO NGUOI MUON");
+					else if (k->data.trangthai == 2)
+						BaoLoi("SACH DA THANH LI");
 				}
 			}
 			if (check == true)
@@ -1252,11 +1268,7 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 	int y = whereY();
 	int n = 0;
 	int n1 = SoluongDG(t);
-	TREE *Stack = new node_docgia*[n1];
-	for (int i = 0; i < n1; i++)
-		Stack[i] = new node_docgia;
-	
-
+	TREE Stack[STACKSIZE];
 	int top = -1;
 	do
 	{
@@ -1344,9 +1356,6 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 	}
 	if (check == false)
 		BaoLoi("DANH SACH TRONG");
-	for (int i = 0; i < n1; i++)
-		delete Stack[i];
-	delete[] Stack;
 }
 
 // =================== 10 sách có lượt mượn nhiều nhất ====================

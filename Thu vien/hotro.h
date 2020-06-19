@@ -141,6 +141,7 @@ void BaoLoi(string s) {
 	xoa_hienthi_box_baoloi();
 	gotoXY(x, y);
 	TextColor(7);
+	control_cursor(true);
 }
 void ButtonPrev()
 {
@@ -218,11 +219,11 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
 	control_cursor(true);
 	string str="";
-	str= so_sang_chuoi(n);
+	str = so_sang_chuoi(n);
+	bool kt = false;
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;
-	int length = str.length(); // biến cho con trỏ dịch đến cuối
-	if(n<=0)  length = str.length() -1 ;
+	int length=str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
@@ -231,6 +232,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 			c = _getch();
 		while (int(c) != 13)
 		{
+			kt = true;
 			if (c == 27)
 			{
 				control_cursor(false);
@@ -274,7 +276,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 				else
 					dem1++;
 			}
-			if (length == 0 || (dem >= 2 && dem1 == 0))
+			if (length == 0 || (dem >= 2 && dem1 == 0) || kt==false)
 			{
 				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
@@ -785,7 +787,7 @@ void xoa_hien_thi_Box_NhapDG()
 	gotoXY(boxx, boxy + 10); cout << "                                      ";
 	gotoXY(boxx + boxs + 1, boxy + 10); cout << " ";
 	gotoXY(boxx, boxy + 11); cout << " ";
-	for (int i = 1; i < boxs + 1; i++) cout << char(205);
+	for (int i = 1; i < boxs + 1; i++) cout << " ";
 	cout << " ";
 	gotoXY(x, y);
 }
@@ -983,4 +985,14 @@ void Xoa_hien_thi_Box_NHAP()
 	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
 	cout << " ";
 	gotoXY(x, y);
+}
+// duyệt LNR theo ma the tang dan
+void lay_mathe_sang_mang(TREE t, int* arr, int n,int& index)
+{
+	if (t)
+	{
+		lay_mathe_sang_mang(t->pLeft, arr, n, index);
+		arr[index++] = t->data.mathe;
+		lay_mathe_sang_mang(t->pRight, arr, n, index);
+	}
 }

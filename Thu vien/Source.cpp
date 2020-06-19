@@ -131,8 +131,8 @@ menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu đ
 			if (chon == 2)
 			{
 menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
-										"XUAT THEO HO TEN    ",
-										"      THOAT         " };
+										  "XUAT THEO HO TEN    ",
+										  "THOAT               " };
 				int chon_1 = menu_dong(menu_xuat, 3); // chọn thao tác menu xuất
 				if (chon_1 == 1)
 				{
@@ -154,28 +154,35 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					CAY_SANG_MANG(t, arr,tungdo);
 					tungdo = 0;
 					SX_DG_TEN(arr, n);
-					for (int i = 0; i < n;i++)
+					int t_sotrang = (n - 1) / 40 + 1;
+					for (int i = 0; i < t_sotrang; i++)
 					{
-						if (i < 40)
-							Xuat_Thong_Tin_Doc_Gia(arr[i], i + 1);
-						else
+						for (int j = i * 40; j < (i * 40) + 40 && j < n; j++)
 						{
-							ButtonNext();
-							char c = _getch();
-							TRANGTHAI next = key(c);
-							if (next == RIGHT)
-							{
-								xoa_hien_thi_doc_gia();
-								for (int j = i; j < n; j++)
-									Xuat_Thong_Tin_Doc_Gia(arr[j], ++tungdo);
-								break;
-							}
-							else if (next == ESC)
-							{
-								xoa_hienthi_buttonNext();
-								break;
-							}
+							Xuat_Thong_Tin_Doc_Gia(arr[j], ++tungdo);
 						}
+						gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
+						ButtonNext();
+						ButtonPrev();
+						char c = _getch();
+						if (c == -32) c = _getch();
+						xoa_hien_thi_doc_gia();
+						tungdo = 0;
+						if (c == 77)
+						{
+							if (i == t_sotrang - 1)
+								i = -1;
+						}
+						else if (c == 75)
+						{
+							if (i == 0)
+								i = t_sotrang - 2;
+							else 
+								i -= 2;
+							
+						}
+						else
+							break;
 					}
 					tungdo = 0;
 					delete[] arr;
@@ -428,6 +435,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					BaoLoi("MUON THANH CONG");
 					GhiFileDG(t);
 					GhiFileDS(l);
+					
 				}
 			}
 		}
@@ -569,7 +577,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			} while (1);
 			break;
 		}
-		// Danh sách sách động giả đang mượn
+		// Danh sách sách độc giả đang mượn
 		case 6:
 		{
 			int k1 = 0;//check ESC cua ham nhap
@@ -638,6 +646,6 @@ int main()
 	system("mode con COLS=700");
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); // full screen
 	srand(time(NULL));
-	menu_xuli();	
+	menu_xuli();
 	return 0;
 }
