@@ -55,7 +55,7 @@ void GhiFileDG(TREE t)
 }
 
 void LoadtuFile_DSDG(TREE& t)
-{
+{ 
 	ifstream f("DOCGIA.txt", ios::in);
 	muontra x;
 	docgia s;

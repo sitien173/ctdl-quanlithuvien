@@ -513,19 +513,15 @@ void ADDTail_DS(LIST_DS& l, dausach data)
 // sắp xếp đầu sách theo thể loại
 void SX_THELOAI_DS(LIST_DS& l)
 {
+	//sap xep theo the loai
 	for (int i = 0; i < l.sl - 1; i++)
-	{
 		for (int j = i + 1; j < l.sl; j++)
-		{
-			if (l.ds_dausach[i]->theloai[0] > l.ds_dausach[j]->theloai[0])
-			{
-				if (l.ds_dausach[i]->tensach[0] > l.ds_dausach[j]->tensach[0])
-				{
-					swap(l.ds_dausach[i], l.ds_dausach[j]);
-				}
+			if (l.ds_dausach[i]->theloai > l.ds_dausach[j]->theloai)
+			{	
+				dausach* temp = l.ds_dausach[i];
+				l.ds_dausach[i] = l.ds_dausach[j];
+				l.ds_dausach[j] = temp;
 			}
-		}
-	}
 }
 
 // in danh sach theo the loai
@@ -1113,6 +1109,7 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 	p->data.tongsosach++;
 	NHAP_THONGTIN_MT(x);
 	AddTail_MT(p->data.mt, TAO_NODE_MT(x));
+	BaoLoi("MUON THANH CONG");
 	return 1;
 }
 // trả sách thành công tr 1 <> -1 ; ESC rt -2
@@ -1172,7 +1169,7 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 					while (check == false)
 					{
 						ToMau(45, k, arr[k - 1].masach, 14);
-						gotoXY(59, k);
+						gotoXY(59, k); 
 						char c = _getch();
 						ToMau(45, k, arr[k - 1].masach, 15);
 						TRANGTHAI tt = key(c);

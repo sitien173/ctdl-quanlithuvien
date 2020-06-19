@@ -432,7 +432,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					goto menu_chinh;
 				else if (i == 1)
 				{
-					BaoLoi("MUON THANH CONG");
 					GhiFileDG(t);
 					GhiFileDS(l);
 					

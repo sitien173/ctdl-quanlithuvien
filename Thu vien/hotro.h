@@ -472,13 +472,15 @@ void giaiphong_dausach(LIST_DS& l)
 	for (int i = 0; i < l.sl; i++)
 	{
 		NODE_DMS* p = NULL;
-		while (l.ds_dausach[i]->dms.pHead != NULL)
-		{
-			p = l.ds_dausach[i]->dms.pHead;
-			l.ds_dausach[i]->dms.pHead = p->pNext;
-			delete p;
-		}
-		l.ds_dausach[i]->dms.pTail = NULL;
+		
+			while (l.ds_dausach[i]->dms.pHead != NULL)
+			{
+				p = l.ds_dausach[i]->dms.pHead;
+				l.ds_dausach[i]->dms.pHead = l.ds_dausach[i]->dms.pHead->pNext;
+				delete p;
+			}
+			l.ds_dausach[i]->dms.pTail = NULL;
+		
 		delete l.ds_dausach[i];
 		l.sl--;
 	}

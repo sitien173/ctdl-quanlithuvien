@@ -1,13 +1,47 @@
-15
-32377,Hoang Phuong,Tam,Nu,1
+61
+14435,Hoang Nhat,Truong,Nam,1
+0
+40665,Nguyen Thuy,Tien,Nu,1
+0
+106,Pham Thuy,Linh,Nu,1
+0
+47501,Nguyen Hai,Van,Nam,1
+3
+978331121-1,1,11/6/2020,11/6/2020
+97812241-1,1,11/6/2020,11/6/2020
+97812241-2,1,11/6/2020,11/6/2020
+95293,Nguyen Tu,Anh,Nu,1
+0
+87517,Huynh Minh,Nguyet,Nu,1
+0
+54813,Nguyen Van,Binh,Nam,1
+0
+93167,Nguyen Thi,Nhung,Nu,1
 0
 95417,Nguyen Ba,Uoc,Nam,1
 0
-82355,Ngo,Tuan,Nam,1
+47389,Pham Diem,Quynh,Nu,1
 0
-51133,Ngo Si,Tien,Nam,1
+76101,Phan Thi My,Ha,Nu,1
 0
-48203,Tran Nhat,Anh,Nam,1
+36303,Nguyen Tran Gia,Han,Nu,1
+0
+48047,Nguyen Duc,Tam,Nam,1
+1
+123978-5,0,18/6/2020,0/0/0
+104,Le Hoang Kim,Ngan,Nu,1
+0
+79879,Nguyen Duy,Thai,Nam,1
+0
+80367,Le Thanh,Tam,Nu,1
+0
+22585,Nguyen Nhat,Long,Nam,1
+0
+9742,Bui Xuan,Khanh,Nam,1
+0
+85011,Vo Thi My,Linh,Nu,1
+0
+71801,Dang Thai,Binh,Nam,1
 0
 94,Le Pho,Vy,Nam,1
 6
@@ -17,13 +51,57 @@
 978331121-2,1,13/6/2019,18/6/2020
 123978-15,0,18/6/2020,0/0/0
 123978-32,0,18/6/2020,0/0/0
-22585,Nguyen Nhat,Long,Nam,1
+89645,Tran Thao,Vy,Nu,1
+0
+5471,Tran Thi Hoang,Anh,Nu,1
+0
+51503,Nguyen Ngoc,Ha,Nu,1
+0
+85897,Nguyen Thanh,Luan,Nam,1
+0
+67753,Cao Anh,Minh,Nam,1
+2
+123978-10,0,19/6/2020,0/0/0
+123978-22,0,19/6/2020,0/0/0
+56747,Dang Dinh,Linh,Nam,1
+0
+75829,Nguyen Dang,The,Nam,1
+0
+82355,Ngo,Tuan,Nam,1
+0
+80257,Hoang Tu,Thien,Nam,1
+0
+48477,Do Phuoc Dat,Huy,Nam,1
+0
+81285,Dao Nhat,Long,Nam,1
+0
+22191,Nguyen Khanh,Thu,Nu,1
 0
 91127,Cao Anh,Minh,Nam,1
 0
-54813,Nguyen Van,Binh,Nam,1
+95373,Cao Huy,Hoang,Nam,1
 0
-67753,Cao Anh,Minh,Nam,1
+48939,Phan Dinh Hoang,Long,Nam,1
+0
+51133,Ngo Si,Tien,Nam,1
+0
+83403,Tran Thanh,Lam,Nam,1
+0
+75499,Ngo Minh Tien,Dung,Nam,1
+0
+989,Doan Ngoc,Uyen,Nu,1
+0
+32377,Hoang Phuong,Tam,Nu,1
+0
+12317,Hoang Tra,Thu,Nu,1
+0
+46475,Nguyen Thanh,Tam,Nu,1
+0
+64589,Le Quy,Duong,Nam,1
+0
+47997,Nguyen Tan,Tai,Nam,1
+0
+77733,Nguyen Tan,Hong,Nam,1
 0
 70,Le Qua,Loc,Nam,0
 6
@@ -33,16 +111,32 @@
 123978-3,2,18/6/2020,0/0/0
 123978-6,0,18/6/2020,0/0/0
 123978-2,0,18/6/2020,0/0/0
-48047,Nguyen Duc,Tam,Nam,1
-1
-123978-5,0,18/6/2020,0/0/0
+71363,Ngo Hoang Trung,Anh,Nam,1
+0
+56161,Ngo Minh,Thuan,Nam,1
+0
+56871,Nguyen Huy,Tuan,Nam,1
+0
+96597,Vu Minh,Hieu,Nam,1
+0
 81157,Pham Quoc,Vy,Nam,1
+0
+99743,Tran Nhat,Dong,Nam,1
+0
+18057,Dau Nhat,Vinh,Nam,1
+0
+48203,Tran Nhat,Anh,Nam,1
 0
 98,Ngo Minh,Dung,Nam,1
 1
 9783311257-1,1,11/6/2019,11/6/2020
-47501,Nguyen Hai,Van,Nam,1
-3
-978331121-1,1,11/6/2020,11/6/2020
-97812241-1,1,11/6/2020,11/6/2020
-97812241-2,1,11/6/2020,11/6/2020
+27530,Tran Thien,Y,Nu,1
+0
+144,Huynh Anh,Tuan,Nam,1
+0
+57911,Nguyen Duc,Huy,Nam,1
+0
+99655,Ngo Si,Tien,Nam,1
+0
+87027,Ngo Thi Hong,Linh,Nu,1
+0
