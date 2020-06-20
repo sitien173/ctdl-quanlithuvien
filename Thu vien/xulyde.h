@@ -160,19 +160,16 @@ void XUAT_DS_DG(TREE t, int& i)
 {
 	int n = SoluongDG(t);
 	int t_sotrang = (n - 1) / 40 + 1;
-	int* arr = new int[n];
-	int index = 0; // chỉ số của mảng
-	lay_mathe_sang_mang(t, arr, n, index);
+	docgia* arr = new docgia[n];
+	int index = 0;
+	CAY_SANG_MANG(t, arr, index);
 	int tungdo = 1;
-	TREE p = NULL;
 	for (int i = 0; i < t_sotrang; i++)
 	{
 		for (int j = i * 40; j < (40 * i) + 40 && j < n; j++)
-		{
-			p = TIM_KIEM_DG_MA(t, arr[j]);
-			Xuat_Thong_Tin_Doc_Gia(p->data, tungdo++);
-		}
-		
+			Xuat_Thong_Tin_Doc_Gia(arr[j], tungdo++);
+
+
 		gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
 		ButtonNext();
 		ButtonPrev();
@@ -198,12 +195,13 @@ void XUAT_DS_DG(TREE t, int& i)
 				continue;
 			}
 		}
-		else 
+		else
 		{
 			delete[] arr;
 			return;
 		}
 	}
+	delete[] arr;
 }
 
 // duyệt cây copy dữ liệu vào mảng
@@ -211,8 +209,8 @@ void CAY_SANG_MANG(TREE t, docgia* arr, int& i)
 {
 	if (t != NULL)
 	{
-		arr[i++] = t->data;
 		CAY_SANG_MANG(t->pLeft, arr, i);
+		arr[i++] = t->data;
 		CAY_SANG_MANG(t->pRight, arr, i);
 	}// nếu cây rỗng thoát hàm
 	else
@@ -346,43 +344,43 @@ void TIM_KIEM_DG_TEN(TREE t, string ch1, int& tungdo)
 // hiệu chỉnh thông tin độc giả thành công rt 1 <>  ESC rt -2
 int HIEU_CHINH_DG(TREE& p)
 {
-		docgia x;
-		int k = 0;
-		Box_NhapDG();
-		gotoXY(boxx + 10, boxy + 2);
-		cout << p->data.mathe;
+	docgia x;
+	int k = 0;
+	Box_NhapDG();
+	gotoXY(boxx + 10, boxy + 2);
+	cout << p->data.mathe;
 
-		x.ho = p->data.ho;
-		gotoXY(boxx + 11, boxy + 4);
-		cout << x.ho;
-		k = nhap_ki_tu(x.ho, 0);
-		if (k == -1) // ESC
-			return -2;
+	x.ho = p->data.ho;
+	gotoXY(boxx + 11, boxy + 4);
+	cout << x.ho;
+	k = nhap_ki_tu(x.ho, 0);
+	if (k == -1) // ESC
+		return -2;
 
-		x.ten = p->data.ten;
-		gotoXY(boxx + 12, boxy + 6);
-		cout << x.ten;
-		k = nhap_ki_tu(x.ten, 0);
-		if (k == -1) // ESC
-			return -2;
+	x.ten = p->data.ten;
+	gotoXY(boxx + 12, boxy + 6);
+	cout << x.ten;
+	k = nhap_ki_tu(x.ten, 0);
+	if (k == -1) // ESC
+		return -2;
 
-		x.phai = p->data.phai;
-		gotoXY(boxx + 13, boxy + 8);
-		cout << x.phai;
-		k = nhap_ki_tu(x.phai, 2);
-		if (k == -1) // ESC
-			return -2;
+	x.phai = p->data.phai;
+	gotoXY(boxx + 13, boxy + 8);
+	cout << x.phai;
+	k = nhap_ki_tu(x.phai, 2);
+	if (k == -1) // ESC
+		return -2;
 
-		x.trangthaithe = p->data.trangthaithe;
-		gotoXY(boxx + 18, boxy + 10);
-		cout << x.trangthaithe;
-		k = nhap_so_nguyen(x.trangthaithe);
-		if (k == -1) // ESC
-			return -2;
-		p->data.ho = x.ho;
-		p->data.ten = x.ten;
-		p->data.phai = x.phai;
-		p->data.trangthaithe = x.trangthaithe;
+	x.trangthaithe = p->data.trangthaithe;
+	gotoXY(boxx + 18, boxy + 10);
+	cout << x.trangthaithe;
+	k = nhap_so_nguyen(x.trangthaithe);
+	if (k == -1) // ESC
+		return -2;
+	p->data.ho = x.ho;
+	p->data.ten = x.ten;
+	p->data.phai = x.phai;
+	p->data.trangthaithe = x.trangthaithe;
 	return 1;
 }
 
@@ -513,15 +511,27 @@ void ADDTail_DS(LIST_DS& l, dausach data)
 // sắp xếp đầu sách theo thể loại
 void SX_THELOAI_DS(LIST_DS& l)
 {
+	dausach* temp = NULL;
 	//sap xep theo the loai
 	for (int i = 0; i < l.sl - 1; i++)
-		for (int j = i + 1; j < l.sl; j++)
+		for (int j = i + 1; j < l.sl ; j++)
+		{
 			if (l.ds_dausach[i]->theloai > l.ds_dausach[j]->theloai)
-			{	
-				dausach* temp = l.ds_dausach[i];
+			{
+				 temp = l.ds_dausach[i];
 				l.ds_dausach[i] = l.ds_dausach[j];
 				l.ds_dausach[j] = temp;
 			}
+			else if (l.ds_dausach[i]->theloai == l.ds_dausach[j]->theloai)
+			{
+				if (l.ds_dausach[i]->tensach > l.ds_dausach[j]->tensach)
+				{
+					temp = l.ds_dausach[i];
+					l.ds_dausach[i] = l.ds_dausach[j];
+					l.ds_dausach[j] = temp;
+				}
+			}
+		}
 }
 
 // in danh sach theo the loai
@@ -531,13 +541,14 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 	int so_trang = 1;
 	TextColor(15);
 	SX_THELOAI_DS(l);
-	for (int i = 0; i < tso_trang ; i++)
+	for (int i = 0; i < tso_trang; i++)
 	{
 		int tungdo = 1;
 		xoa_hien_thi_dausach();
-		for (int j = 40*i; j < (40*i)+40 && j <l.sl; j++)
-			XUAT_THONGTIN_DS(l, *l.ds_dausach[j],tungdo++);
-		
+		for (int j = 40 * i; j < (40 * i) + 40 && j < l.sl; j++)
+			XUAT_THONGTIN_DS(l, *l.ds_dausach[j], tungdo++);
+
+
 		gotoXY(105, 42); cout << i + 1 << "/" << tso_trang;
 		ButtonNext();
 		ButtonPrev();
@@ -549,7 +560,7 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 			if (i == tso_trang - 1)
 				i = -1;
 		}
-		 else if (c == 75)
+		else if (c == 75)
 		{
 			if (i == 0)
 				i = tso_trang - 2;
@@ -583,7 +594,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		if (vitri_timthay != string::npos)
 		{
 			XUAT_THONGTIN_DS(l, *l.ds_dausach[i], tungdo++);
-			ToMau(vitri_timthay+55, tungdo - 1,temp, 14);
+			ToMau(vitri_timthay + 55, tungdo - 1, temp, 14);
 			kt++;
 			arr[j++] = *l.ds_dausach[i]; // lưu đầu sách được tìm thấy
 		}
@@ -637,7 +648,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		xoa_hien_thi_dausach();
 		if (arr[k - 1].soluongsach == 0)
 			goto BD;
-		int tso_trang = (arr[k - 1].soluongsach -1)/40 + 1;
+		int tso_trang = (arr[k - 1].soluongsach - 1) / 40 + 1;
 		int so_trang = 1;
 		int tungdo1 = 1;
 		NODE_DMS* p = arr[k - 1].dms.pHead;
@@ -648,13 +659,13 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		{
 			q1 = q;
 			q = p1;
-			while(p!=NULL)
+			while (p != NULL)
 			{
 				xoa_hien_thi_sach();
 				p1 = p;
-				for (int j1 = 0; j1 < 40 && p!=NULL ; j1++)
+				for (int j1 = 0; j1 < 40 && p != NULL; j1++)
 				{
-					XUAT_THONG_TIN_SACH(arr[k - 1].tensach, p->data, j1+1);
+					XUAT_THONG_TIN_SACH(arr[k - 1].tensach, p->data, j1 + 1);
 					p = p->pNext;
 				}
 				gotoXY(105, 42); cout << i + 1 << "/" << tso_trang;
@@ -813,12 +824,13 @@ int THEM_SACH(LIST_DS& l)
 			return -1;
 		break;
 	} while (1);
-	string temp = "";
+	string vitri = "";
 	danhmucsach x;
 	// lược bỏ phần mã đầu sách
 	int q = 0;
 	if (l.ds_dausach[i]->soluongsach > 0)
 	{
+		vitri = l.ds_dausach[i]->dms.pTail->data.vitri; // lấy vị trí cuối cùng của sách đã tồn tại
 		string str;
 		int pos = l.ds_dausach[i]->dms.pTail->data.masach.find("-"); // lấy vị trí của kí tự - trong chuỗi
 		str = l.ds_dausach[i]->dms.pTail->data.masach.substr(pos + 1); //  lấy chuỗi con của l.ds_dausach[i]->dms.pTail->data.masach bắt đầu sau kí tự -
@@ -838,11 +850,11 @@ int THEM_SACH(LIST_DS& l)
 		gotoXY(boxx + 12, boxy + 2);
 		cout << x.masach;
 		gotoXY(boxx + 11, boxy + 4);
-		cout << temp;
-		k = nhap_ki_tu(temp, 1);
+		cout << vitri;
+		k = nhap_ki_tu(vitri, 1);
 		if (k == -1) // ESC
 			return -1;
-		x.vitri = temp;
+		x.vitri = vitri;
 		x.trangthai = 0; // mặc định sách có thể mượn được
 		AddTail_DMS(l.ds_dausach[i]->dms, TAO_NODE_SACH(x));
 		l.ds_dausach[i]->soluongsach++;
@@ -1062,7 +1074,7 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 	string ma_dau_sach;
 	bool check = false; // kiem tra co tim thay ma sach hay ko
 	int i = 0;
-	gotoXY(99, 42); cout << "                         "; 
+	gotoXY(99, 42); cout << "                         ";
 	do
 	{
 		XUAT_SACH_MUON(p, l);
@@ -1092,10 +1104,13 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 						k->data.trangthai = 1; // cap nhat sach co nguoi muon
 						break;
 					}
-					else if (k->data.trangthai == 1)
-						BaoLoi("SACH DA CO NGUOI MUON");
-					else if (k->data.trangthai == 2)
-						BaoLoi("SACH DA THANH LI");
+					else // trường hợp sách có trong thư viện nhưng độc giả chưa báo trả
+					{
+						TIM_DG_MUONSACH(t, ma_sach); // tìm trong độc giả xem ai đã mượn cuốn sách
+						check = true; // danh dau tim thay sach
+						k->data.trangthai = 1; // cap nhat sach co nguoi muon
+						break;
+					}
 				}
 			}
 			if (check == true)
@@ -1169,7 +1184,7 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 					while (check == false)
 					{
 						ToMau(45, k, arr[k - 1].masach, 14);
-						gotoXY(59, k); 
+						gotoXY(59, k);
 						char c = _getch();
 						ToMau(45, k, arr[k - 1].masach, 15);
 						TRANGTHAI tt = key(c);

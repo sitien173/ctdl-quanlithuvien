@@ -143,7 +143,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					}
 					XUAT_DS_DG(t,tungdo);
 					tungdo = 0;
-					_getch();
 					goto menu_xuat;
 				}
 				else if (chon_1 == 2)
@@ -186,7 +185,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					}
 					tungdo = 0;
 					delete[] arr;
-					_getch();
 					goto menu_xuat;
 				}
 				else
@@ -350,7 +348,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 			{
 				// in danh sách theo từng thể loại trong từng thể loại in  tăng dần theo tên
 				XUAT_DS_DAUSACH(l);
-				_getch();
 				goto menu_DS;
 			}
 			// tìm kiếm sach

@@ -472,7 +472,8 @@ void giaiphong_dausach(LIST_DS& l)
 	for (int i = 0; i < l.sl; i++)
 	{
 		NODE_DMS* p = NULL;
-		
+		if (l.ds_dausach[i]->soluongsach > 0)
+		{
 			while (l.ds_dausach[i]->dms.pHead != NULL)
 			{
 				p = l.ds_dausach[i]->dms.pHead;
@@ -480,7 +481,7 @@ void giaiphong_dausach(LIST_DS& l)
 				delete p;
 			}
 			l.ds_dausach[i]->dms.pTail = NULL;
-		
+		}
 		delete l.ds_dausach[i];
 		l.sl--;
 	}
@@ -988,13 +989,24 @@ void Xoa_hien_thi_Box_NHAP()
 	cout << " ";
 	gotoXY(x, y);
 }
-// duyệt LNR theo ma the tang dan
-void lay_mathe_sang_mang(TREE t, int* arr, int n,int& index)
+ // hàm có chức năng cập nhật lại độc giả đã trả sách trong trường hợp sách có ở thư viện nhưng đg chưa báo trả
+void CAPNHAT_DG_TRASACH(TREE t, string ma_sach)
 {
-	if (t)
+	if ( t!= NULL )
 	{
-		lay_mathe_sang_mang(t->pLeft, arr, n, index);
-		arr[index++] = t->data.mathe;
-		lay_mathe_sang_mang(t->pRight, arr, n, index);
+		if (t->data.tongsosach > 0)
+		{
+			for (NODE_MT* q = t->data.mt.pHead; q != NULL; q = q->pNext)
+			{
+				if (q->data.masach == ma_sach)
+					if (q->data.trangthai == 0)
+					{
+						q->data.trangthai = 1; // cap nhat doc gia da tra
+						return;
+					}
+			}
+		}
+		CAPNHAT_DG_TRASACH(t->pLeft, ma_sach);
+		CAPNHAT_DG_TRASACH(t->pRight, ma_sach);
 	}
 }
