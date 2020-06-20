@@ -81,7 +81,7 @@ int NHAP_THONGTIN_DG(docgia& x)
 	int k = 0; // check ESC nhap
 	x.trangthaithe = 1; // trạng thái lúc thêm độc giả auto =1. có thể mượn sách
 	gotoXY(boxx + 18, boxy + 10);
-	cout << x.trangthaithe;
+	cout << "HOAT DONG";
 	gotoXY(boxx + 10, boxy + 2);
 	cout << x.mathe;
 	x.ho = "";
@@ -514,11 +514,11 @@ void SX_THELOAI_DS(LIST_DS& l)
 	dausach* temp = NULL;
 	//sap xep theo the loai
 	for (int i = 0; i < l.sl - 1; i++)
-		for (int j = i + 1; j < l.sl ; j++)
+		for (int j = i + 1; j < l.sl; j++)
 		{
 			if (l.ds_dausach[i]->theloai > l.ds_dausach[j]->theloai)
 			{
-				 temp = l.ds_dausach[i];
+				temp = l.ds_dausach[i];
 				l.ds_dausach[i] = l.ds_dausach[j];
 				l.ds_dausach[j] = temp;
 			}
@@ -837,7 +837,7 @@ int THEM_SACH(LIST_DS& l)
 		q = chuoi_sang_so(str);
 	}
 	else
-	Init_DMS(l.ds_dausach[i]->dms);
+		Init_DMS(l.ds_dausach[i]->dms);
 	xoa_hien_thi_dausach();
 	Box_NhapSach();
 	for (int j = 0; j < n; j++)
@@ -1104,11 +1104,14 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 						k->data.trangthai = 1; // cap nhat sach co nguoi muon
 						break;
 					}
-					else // trường hợp sách có trong thư viện nhưng độc giả chưa báo trả
+					else if (k->data.trangthai == 1)
 					{
-						TIM_DG_MUONSACH(t, ma_sach); // tìm trong độc giả xem ai đã mượn cuốn sách
-						check = true; // danh dau tim thay sach
-						k->data.trangthai = 1; // cap nhat sach co nguoi muon
+						BaoLoi("SACH DA CO NGUOI MUON");
+						break;
+					}
+					else if (k->data.trangthai == 2)
+					{
+						BaoLoi("SACH DA THANH LI");
 						break;
 					}
 				}

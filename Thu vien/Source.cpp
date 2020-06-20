@@ -306,6 +306,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					if (i == 1)
 					{
 						BaoLoi("HIEU CHINH THANH CONG");
+						GhiFileDG(t);
 					}
 				} while (1);
 				goto menu_DG;

@@ -17,12 +17,12 @@ void CAY_SANG_MANG(TREE t, docgia* arr, int& i);
 void GhiFileDG(TREE t)
 {
 	int n = SoluongDG(t);
-	docgia *arr = new docgia[n];
+	docgia* arr = new docgia[n];
 	int index = 0;
 	CAY_SANG_MANG(t, arr, index);
-	for (int j = 0; j < n-1; j++)
+	for (int j = 0; j < n - 1; j++)
 	{
-		int temp = rand() % (n-1) + 1;
+		int temp = rand() % (n - 1) + 1;
 		hoandoi(arr[j], arr[temp]);
 	}
 	ofstream fileout("DOCGIA.txt");
@@ -39,14 +39,14 @@ void GhiFileDG(TREE t)
 		{
 			for (NODE_MT* p = arr[i].mt.pHead; p != NULL; p = p->pNext)
 			{
-					fileout << p->data.masach << ',';
-					fileout << p->data.trangthai << ',';
-					fileout << p->data.ngaymuon.ngay << '/';
-					fileout << p->data.ngaymuon.thang << '/';
-					fileout << p->data.ngaymuon.nam << ',';
-					fileout << p->data.ngaytra.ngay << '/';
-					fileout << p->data.ngaytra.thang << '/';
-					fileout << p->data.ngaytra.nam << endl;
+				fileout << p->data.masach << ',';
+				fileout << p->data.trangthai << ',';
+				fileout << p->data.ngaymuon.ngay << '/';
+				fileout << p->data.ngaymuon.thang << '/';
+				fileout << p->data.ngaymuon.nam << ',';
+				fileout << p->data.ngaytra.ngay << '/';
+				fileout << p->data.ngaytra.thang << '/';
+				fileout << p->data.ngaytra.nam << endl;
 			}
 		}
 	}

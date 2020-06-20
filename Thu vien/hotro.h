@@ -132,7 +132,10 @@ void BaoLoi(string s) {
 	TextColor(15);
 	gotoXY(boxx + 28, boxy + 42);
 	cout << s;
-	Sleep(1500);
+	Sleep(1200);
+	while (_kbhit()) // không nhận phím  khi đang ngủ
+		_getch();
+	
 	for (int i = 0; i < n; i++)
 	{
 		gotoXY(boxx + 28 + i, boxy + 42);
@@ -227,6 +230,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	char c;
 	do
 	{
+		if (n != 0) kt = true; // dùng để kiểm tra nếu có dữ liệu thì enter được.
 		c = _getch();
 		if (c == 0 || c == -32)
 			c = _getch();
