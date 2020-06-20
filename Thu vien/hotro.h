@@ -681,32 +681,47 @@ void xoa_hien_thi_button()
 }
 void huong_dan_su_dung()
 {
-	gotoXY(80, 2);
+	ifstream fo("input1.txt");
+	string s;
+	int i = 0;
+	int j = 1;
+	int x = 80;
+	while (!fo.eof())
+	{
+		getline(fo, s);
+		i = rand() % 15 + 1;
+		gotoXY(x, j++);
+		TextColor(i);
+		cout << s << endl;
+	}
+	fo.close();
+	
+	gotoXY(94, 20);
 	TextColor(15);
 	cout << "HUONG DAN SU DUNG";
-	gotoXY(70, 4);
+	gotoXY(82, 24);
 	cout << char(24);
-	gotoXY(70, 6);
+	gotoXY(82, 26);
 	cout << char(25);
-	gotoXY(68, 5);
+	gotoXY(80, 25);
 	cout << char(27);
-	gotoXY(72, 5);
+	gotoXY(84, 25);
 	cout << char(26);
-	gotoXY(75, 5);
+	gotoXY(86, 25);
 	TextColor(14);
 	cout << "Su Dung 4 Phim Mui Ten De Di Chuyen";
 
-	gotoXY(66, 8); TextColor(76); cout << "        ";
-	gotoXY(66, 9); TextColor(78); cout << "  CHON  ";
-	gotoXY(66, 10); TextColor(76); cout << "        ";
-	gotoXY(66, 11); TextColor(79); cout << "  Enter ";
-	gotoXY(75, 10); TextColor(14); cout << "Bam Phim Enter De Chon Thao Tac";
+	gotoXY(78, 28); TextColor(76); cout << "        ";
+	gotoXY(78, 29); TextColor(78); cout << "  CHON  ";
+	gotoXY(78, 30); TextColor(76); cout << "        ";
+	gotoXY(78, 31); TextColor(79); cout << "  Enter ";
+	gotoXY(87, 30); TextColor(14); cout << "Bam Phim Enter De Chon Thao Tac";
 
-	gotoXY(66, 14); TextColor(76); cout << "        ";
-	gotoXY(66, 15); TextColor(78); cout << "  THOAT ";
-	gotoXY(66, 16); TextColor(76); cout << "        ";
-	gotoXY(66, 17); TextColor(79); cout << "   ESC  ";
-	gotoXY(75, 16); TextColor(14); cout << "Bam Phim ESC De Quay Lai Hoac Thoat";
+	gotoXY(78, 34); TextColor(76); cout << "        ";
+	gotoXY(78, 35); TextColor(78); cout << "  THOAT ";
+	gotoXY(78, 36); TextColor(76); cout << "        ";
+	gotoXY(78, 37); TextColor(79); cout << "   ESC  ";
+	gotoXY(87, 36); TextColor(14); cout << "Bam Phim ESC De Quay Lai Hoac Thoat";
 	gotoXY(0, 0);
 }
 void xoa_hien_thi_huong_dan()
@@ -714,24 +729,12 @@ void xoa_hien_thi_huong_dan()
 	int x = whereX();
 	int y = whereY();
 	TextColor(7);
-	gotoXY(80, 2);
-	cout << "                  ";
-	gotoXY(70, 4);
-	cout << "   ";
-	gotoXY(70, 6);
-	cout << "   ";
-	gotoXY(68, 5);
-	cout << "   ";
-	gotoXY(72, 5);
-	cout << "   ";
-	gotoXY(75, 5);
-	cout << "                                    ";
-
-	xoa_hien_thi_1_Button(66, 8);
-	gotoXY(75, 10); cout << "                               ";
-
-	xoa_hien_thi_1_Button(66, 14);
-	gotoXY(75, 16); cout << "                                   ";
+	for (int i = 1; i <= 30; i++)
+	{
+		gotoXY(80, i); clrscr();
+	}
+	xoa_hien_thi_1_Button(78, 28);
+	xoa_hien_thi_1_Button(78, 34);
 	gotoXY(x, y);
 }
 void Box_NhapDG()

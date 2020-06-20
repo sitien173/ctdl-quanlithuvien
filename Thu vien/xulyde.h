@@ -169,7 +169,6 @@ void XUAT_DS_DG(TREE t, int& i)
 		for (int j = i * 40; j < (40 * i) + 40 && j < n; j++)
 			Xuat_Thong_Tin_Doc_Gia(arr[j], tungdo++);
 
-
 		gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
 		ButtonNext();
 		ButtonPrev();
@@ -1055,6 +1054,11 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 			continue;
 		}
 		xoa_hien_thi_doc_gia();
+		if (p->data.trangthaithe == 0) // thẻ bị khóa
+		{
+			BaoLoi("THE DOC GIA BI KHOA.TRA SACH DE TIEP TUC");
+			continue;
+		}
 		if (Dem_SN_QUAHAN(p) == true) // độc giả mượn sách quá hạn
 		{
 			BaoLoi("DOC GIA MUON SACH QUA HAN. KHONG THE MUON");
