@@ -106,7 +106,6 @@ struct quahan
 	string ma_sach;
 	Date ngay_muon;
 	int so_ngay_quahan;
-	
 };
 struct List_quahan
 {

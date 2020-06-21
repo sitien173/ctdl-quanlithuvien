@@ -1,7 +1,7 @@
 ﻿#include "xulyde.h"
 /* ĐỀ TÀI QUẢN LÍ THƯ VIỆN 2020
  SV THỰC HÀNH: NGÔ SĨ TIẾN - N18DCCN186
- SV THỰC HÀNH: ĐỖ PHƯỚC ĐẠT HUY - N18DCCN
+ SV THỰC HÀNH: ĐỖ PHƯỚC ĐẠT HUY - N18DCCN078
  GV: LƯU NGUYỄN KỲ THƯ
  */
 char thaotac[][50] =
@@ -91,8 +91,8 @@ void menu_xuli()
 menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chính
 		switch (tt)
 		{
-		// menu độc giả 
-		case 1: 
+			// menu độc giả 
+		case 1:
 		{
 			char menu_docgia[6][50] = { "THEM DOC GIA      ",
 										"XUAT DS DOC GIA   ",
@@ -101,8 +101,8 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 										"HIEU CHINH DOC GIA",
 										"THOAT             "
 			};
-menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu độc giả
-			// thêm độc giả
+		menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu độc giả
+					// thêm độc giả
 			if (chon == 1) // enter 
 			{
 				while (1)
@@ -134,90 +134,95 @@ menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu đ
 			// xuất danh sách độc giả
 			if (chon == 2)
 			{
-menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
-										  "XUAT THEO HO TEN    ",
-										  "THOAT               " };
-				int chon_1 = menu_dong(menu_xuat, 3); // chọn thao tác menu xuất
-				if (chon_1 == 1)
+			menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
+													  "XUAT THEO HO TEN    ",
+													  "THOAT               " };
+			int chon_1 = menu_dong(menu_xuat, 3); // chọn thao tác menu xuất
+			if (chon_1 == 1)
+			{
+				if (t == NULL)
 				{
-					if (t == NULL)
-					{
-						BaoLoi("DANH SACH TRONG");
-						goto menu_xuat;
-					}
-					XUAT_DS_DG(t,tungdo);
-					tungdo = 0;
+					BaoLoi("DANH SACH TRONG");
 					goto menu_xuat;
 				}
-				else if (chon_1 == 2)
+				XUAT_DS_DG(t, tungdo);
+				tungdo = 0;
+				goto menu_xuat;
+			}
+			else if (chon_1 == 2)
+			{
+				int n; // khai báo biến đếm số lượng độc giả trong cây
+				n = SoluongDG(t);
+				docgia* arr = new docgia[n];
+				CAY_SANG_MANG(t, arr, tungdo);
+				tungdo = 0;
+				SX_DG_TEN(arr, n);
+				int t_sotrang = (n - 1) / 40 + 1;
+				for (int i = 0; i < t_sotrang; i++)
 				{
-					int n; // khai báo biến đếm số lượng độc giả trong cây
-					n = SoluongDG(t);
-					docgia* arr = new docgia[n];
-					CAY_SANG_MANG(t, arr,tungdo);
-					tungdo = 0;
-					SX_DG_TEN(arr, n);
-					int t_sotrang = (n - 1) / 40 + 1;
-					for (int i = 0; i < t_sotrang; i++)
+					for (int j = i * 40; j < (i * 40) + 40 && j < n; j++)
 					{
-						for (int j = i * 40; j < (i * 40) + 40 && j < n; j++)
-						{
-							Xuat_Thong_Tin_Doc_Gia(arr[j], ++tungdo);
-						}
-						gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
-						ButtonNext();
-						ButtonPrev();
-						char c = _getch();
-						if (c == -32) c = _getch();
-						xoa_hien_thi_doc_gia();
-						tungdo = 0;
-						if (c == 77)
-						{
-							if (i == t_sotrang - 1)
-								i = -1;
-						}
-						else if (c == 75)
-						{
-							if (i == 0)
-								i = t_sotrang - 2;
-							else 
-								i -= 2;
-							
-						}
+						Xuat_Thong_Tin_Doc_Gia(arr[j], ++tungdo);
+					}
+					gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
+					ButtonNext();
+					ButtonPrev();
+					char c = _getch();
+					if (c == -32) c = _getch();
+					XOA_HIEN_THI();
+					tungdo = 0;
+					if (c == 77)
+					{
+						if (i == t_sotrang - 1)
+							i = -1;
+					}
+					else if (c == 75)
+					{
+						if (i == 0)
+							i = t_sotrang - 2;
 						else
-							break;
+							i -= 2;
+
 					}
-					tungdo = 0;
-					delete[] arr;
-					goto menu_xuat;
+					else
+						break;
 				}
-				else
-					goto menu_DG;
+				tungdo = 0;
+				delete[] arr;
+				goto menu_xuat;
+			}
+			else
+				goto menu_DG;
 			}
 			// TIM KIEM DOC GIA
-			if (chon == 3 ) 
+			if (chon == 3)
 			{
 				int k1 = 0;
 				do
 				{
-					xoa_hien_thi_doc_gia();
+					XOA_HIEN_THI();
 					if (t != NULL)
 						XUAT_DS_DG(t, tungdo);
 					tungdo = 0;
-					string temp="";
+					string temp = "";
 					Box_NHAP("NHAP DG(TEN HOAC MA)");
-					k1 = nhap_ki_tu(temp,1);
-					Xoa_hien_thi_Box_NHAP();	
+					k1 = nhap_ki_tu(temp, 1);
+					Xoa_hien_thi_Box_NHAP();
 					if (k1 == -1) // ESC
 						break;
-					
+
 					// chuyển đổi chuỗi về số
 					int i = chuoi_sang_so(temp);
 					// nếu temp là kí tự
 					if (i == -1)
 					{
 						tungdo = 1;
-						TIM_KIEM_DG_TEN(t, temp,tungdo);
+						TIM_KIEM_DG_TEN(t, temp, tungdo);
+						if (tungdo == 1) // không tìm thấy
+						{
+							BaoLoi("KHONG TIM THAY TEN DOC GIA");
+							continue;
+						}
 						_getch();
 						tungdo = 0;
 					}
@@ -233,7 +238,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 						else
 						{
 							// xóa hiển thị màn hình độc giả cũ
-							xoa_hien_thi_doc_gia();
+							XOA_HIEN_THI();
 							Xuat_Thong_Tin_Doc_Gia(p->data, ++tungdo);
 							tungdo = 0;
 							_getch();
@@ -243,21 +248,21 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 				goto menu_DG;
 			}
 			// xóa độc giả
-			if (chon == 4) 
+			if (chon == 4)
 			{
 				int k1 = 0; // check ESC cua ham nhap
 				do
 				{
-					xoa_hien_thi_doc_gia();
+					XOA_HIEN_THI();
 					if (t != NULL)
-					XUAT_DS_DG(t, tungdo);
+						XUAT_DS_DG(t, tungdo);
 					tungdo = 0;
-					int key=0;
+					int key = 0;
 					Box_NHAP("MA DG");
 					k1 = nhap_so_nguyen(key);
 					Xoa_hien_thi_Box_NHAP();
 					if (k1 == -1) // nhập ESC
-						break; 
+						break;
 					TREE p = TIM_KIEM_DG_MA(t, key);
 					if (p == NULL)
 					{
@@ -266,7 +271,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					}
 					else
 					{
-						int i=DEM_SACH_DG_MUON(p);
+						int i = DEM_SACH_DG_MUON(p);
 						if (i > 0)
 						{
 							BaoLoi("DOC GIA DANG MUON SACH KHONG THE XOA");
@@ -281,13 +286,13 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 				goto menu_DG;
 			}
 			// Hiệu chỉnh 
-			if (chon == 5 ) 
+			if (chon == 5)
 			{
 				int mathe;
 				int k = 0;
 				do
 				{
-					xoa_hien_thi_doc_gia();
+					XOA_HIEN_THI();
 					xoa_hien_thi_Box_NhapDG();
 					mathe = 0;
 					if (t != NULL)
@@ -304,8 +309,8 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 						BaoLoi("MA DOC GIA KHONG TON TAI");
 						continue;
 					}
-					xoa_hien_thi_doc_gia();
-					int i=HIEU_CHINH_DG(p);
+					XOA_HIEN_THI();
+					int i = HIEU_CHINH_DG(p);
 					if (i == 1)
 					{
 						BaoLoi("HIEU CHINH THANH CONG");
@@ -323,13 +328,13 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 		{
 			char menu_dausach[6][50] = { "THEM DAU SACH      ",
 										 "XUAT DAU SACH      ",
-									     "TIM KIEM SACH      ",
-									     "HIEU CHINH DAU SACH",
+										 "TIM KIEM SACH      ",
+										 "HIEU CHINH DAU SACH",
 										 "THEM SACH          ",
-									     "THOAT              " };
-menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu đầu sách
-			// Thêm đầu sách
-			if (chon == 1 ) // Thêm Đầu Sách
+										 "THOAT              " };
+		menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu đầu sách
+					// Thêm đầu sách
+			if (chon == 1) // Thêm Đầu Sách
 			{
 				do
 				{
@@ -354,7 +359,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				goto menu_DS;
 			}
 			// tìm kiếm sach
-			if (chon == 3 ) 
+			if (chon == 3)
 			{
 				int k1 = 0;
 				int i = 0;
@@ -366,7 +371,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					temp = "";
 					XUAT_DS_DAUSACH(l);
 					Box_NHAP("NHAP TEN(MA) SACH");
-					k1 = nhap_ki_tu(ten_sach,1);
+					k1 = nhap_ki_tu(ten_sach, 1);
 					Xoa_hien_thi_Box_NHAP();
 					if (k1 == -1) // ESC;
 						break;
@@ -374,7 +379,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					i = TIM_KIEM_DS_THEO_MA(l, temp);
 					if (i != -1) // tim thay sach
 					{
-						xoa_hien_thi_dausach();
+						XOA_HIEN_THI();
 						XUAT_THONGTIN_DS(l, *l.ds_dausach[i], 1);
 						_getch();
 						break;
@@ -382,7 +387,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					else // tim kiem theo ten
 					{
 						i = TIM_KIEM_DS_THEO_TEN(l, ten_sach);
-						if(i==-1)
+						if (i == -1)
 						{
 							BaoLoi("KHONG TIM THAY");
 							continue;
@@ -407,7 +412,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				}
 			}
 			// thêm sách
-			if (chon == 5 )
+			if (chon == 5)
 			{
 				do {
 					int i = THEM_SACH(l);
@@ -418,7 +423,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				goto menu_DS;
 			}
 			// Thoat
-			if (chon == 6) 
+			if (chon == 6)
 				goto menu_chinh;
 			break;
 		}
@@ -440,7 +445,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				int i = TRA_SACH(t, l);
 				if (i == -2) // ESC
 					break;
-				else if(i==1)
+				else if (i == 1)
 				{
 					BaoLoi("TRA THANH CONG");
 				}
@@ -467,7 +472,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 					break;
 
 				p = TIM_KIEM_DG_MA(t, ma);
-				xoa_hien_thi_doc_gia();
+				XOA_HIEN_THI();
 				if (p == NULL)
 				{
 					BaoLoi("MA DOC GIA KHONG DUNG");
@@ -477,15 +482,16 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				{
 					do
 					{
+						XOA_HIEN_THI();
 						int n = DEM_SACH_DG_MUON(p);
 						muontra* arr = new muontra[n];
 						int j = 0;
-						bool check = false; // check xem doc gia co muon sach hay khong
+						bool check1 = false; // check xem doc gia co muon sach hay khong
 						for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
 						{
 							if (q->data.trangthai == 0)
 							{
-								check = true;
+								check1 = true;
 								NODE_DMS* dms = TIM_KIEM_SACH(l, q->data.masach);
 								string temp = tach_ma_sach(dms->data.masach);
 								int i = TIM_KIEM_DS_THEO_MA(l, temp);
@@ -496,12 +502,12 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 								}
 							}
 						}
-						if (check == true)
+						if (check1 == true)
 						{
 							control_cursor(false);
 							int k = 1;
-							bool check = false;
-							while (check == false)
+							bool check2 = false;
+							while (check2==false)
 							{
 								ToMau(45, k, arr[k - 1].masach, 14);
 								gotoXY(59, k);
@@ -535,7 +541,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 								}
 								case ENTER:
 								{
-									check = true;
+									check2 = true;
 									break;
 								}
 								}
@@ -553,7 +559,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 							p->data.trangthaithe = 0; // khoa the doc gia
 							BaoLoi("CAP NHAT THANH CONG");
 							delete[] arr;
-							xoa_hien_thi_dausach();
 						}
 						else
 						{
@@ -588,7 +593,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				}
 				else
 				{
-					xoa_hien_thi_doc_gia();
+					XOA_HIEN_THI();
 					if (XUAT_SACH_MUON(p, l) == 0) // độc giả không mượn sách
 					{
 						BaoLoi("DOC GIA KHONG MUON SACH");
@@ -615,7 +620,15 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 		{
 			top10sach(l);
 			_getch();
-			goto menu_chinh;
+			break;
+		}
+		case 9:
+		{
+			GhiFileDG(t);
+			GhiFileDS(l);
+			giaiphong_cay(t);
+			giaiphong_dausach(l);
+			return;
 		}
 		default:
 		{
@@ -634,7 +647,7 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				giaiphong_dausach(l);
 				return;
 			}
-			else
+			else // quay lai
 				break;
 		}
 		}

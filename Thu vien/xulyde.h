@@ -179,14 +179,14 @@ void XUAT_DS_DG(TREE t, int& i)
 			c = _getch();
 		if (c == 77)
 		{
-			xoa_hien_thi_doc_gia();
+			XOA_HIEN_THI();
 			tungdo = 1;
 			if (i == t_sotrang - 1)
 				i = -1;
 		}
 		else if (c == 75)
 		{
-			xoa_hien_thi_doc_gia();
+			XOA_HIEN_THI();
 			tungdo = 1;
 			if (i == 0)
 				i = t_sotrang - 2;
@@ -332,7 +332,7 @@ void TIM_KIEM_DG_TEN(TREE t, string ch1, int& tungdo)
 		if (pos != string::npos)
 		{
 			if (tungdo == 1)
-				xoa_hien_thi_doc_gia();
+				XOA_HIEN_THI();
 			Xuat_Thong_Tin_Doc_Gia(t->data, tungdo);
 			ToMau(90 + pos, tungdo, ch1, 14);
 			tungdo++;
@@ -386,28 +386,18 @@ int HIEU_CHINH_DG(TREE& p)
 	return 1;
 }
 
+
 // đếm số đọc giả trong cây
 int SoluongDG(TREE t)
 {
-	int n = 0;
-	TREE Stack[STACKSIZE];
-	int top = -1;
-	do
+	int n = 1;
+	if (t)
 	{
-		while (t != NULL)
-		{
-			Stack[++top] = t;
-			t = t->pLeft;
-		}
-		if (top != -1)
-		{
-			t = Stack[top--];
-			n++;
-			t = t->pRight;
-		}
-		else break;
-	} while (1);
-	return n;
+		n += SoluongDG(t->pLeft);
+		n += SoluongDG(t->pRight);
+		return n;
+	}
+	else return 0;
 }
 
 // =========================================Dau sach==============================================
@@ -547,7 +537,7 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 	for (int i = 0; i < tso_trang; i++)
 	{
 		int tungdo = 1;
-		xoa_hien_thi_dausach();
+		XOA_HIEN_THI();
 		for (int j = 40 * i; j < (40 * i) + 40 && j < l.sl; j++)
 			XUAT_THONGTIN_DS(l, *l.ds_dausach[j], tungdo++);
 
@@ -589,7 +579,7 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 int TIM_KIEM_DS_THEO_TEN(LIST_DS l, string temp)
 {
 BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách hay ko
-	xoa_hien_thi_dausach();
+	XOA_HIEN_THI();
 	int j = 0;
 	int tungdo = 1;
 	int vitri_timthay = 0;
@@ -653,7 +643,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 			}
 			}
 		}
-		xoa_hien_thi_dausach();
+		XOA_HIEN_THI();
 		if (arr[k - 1].soluongsach == 0)
 		{
 			delete[] arr;
@@ -672,7 +662,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 			q = p1;
 			while (p != NULL)
 			{
-				xoa_hien_thi_sach();
+				XOA_HIEN_THI();
 				p1 = p;
 				for (int j1 = 0; j1 < 40 && p != NULL; j1++)
 				{
@@ -746,7 +736,7 @@ int HIEU_CHINH_DS(LIST_DS& l)
 			BaoLoi("MA SACH KHONG DUNG");
 			continue;
 		}
-		xoa_hien_thi_dausach();
+		XOA_HIEN_THI();
 		break;
 	} while (1);
 	Box_NhapDS();
@@ -853,7 +843,7 @@ int THEM_SACH(LIST_DS& l)
 	}
 	else
 		Init_DMS(l.ds_dausach[i]->dms);
-	xoa_hien_thi_dausach();
+	XOA_HIEN_THI();
 	Box_NhapSach();
 	for (int j = 0; j < n; j++)
 	{
@@ -1069,7 +1059,7 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 			BaoLoi("MA DOC GIA KHONG DUNG");
 			continue;
 		}
-		xoa_hien_thi_doc_gia();
+		XOA_HIEN_THI();
 		if (p->data.trangthaithe == 0) // thẻ bị khóa
 		{
 			BaoLoi("THE DOC GIA BI KHOA.TRA SACH DE TIEP TUC");
@@ -1101,7 +1091,7 @@ int MUON_SACH(TREE& t, LIST_DS& l)
 		ma_sach = "";
 		Box_NHAP("NHAP MA SACH");
 		k1 = nhap_ki_tu(ma_sach, 1);
-		xoa_hien_thi_dausach();
+		XOA_HIEN_THI();
 		Xoa_hien_thi_Box_NHAP();
 		if (k1 == -1) // ESC
 			return -2;
@@ -1175,7 +1165,7 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 			return -2;
 
 		p = TIM_KIEM_DG_MA(t, ma);
-		xoa_hien_thi_doc_gia();
+		XOA_HIEN_THI();
 		if (p == NULL)
 		{
 			BaoLoi("MA DOC GIA KHONG DUNG");
@@ -1268,7 +1258,7 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 						p->data.trangthaithe = 1; // mở thẻ
 					BaoLoi("TRA SACH THANH CONG");
 					delete[] arr;
-					xoa_hien_thi_dausach();
+					XOA_HIEN_THI();
 					GhiFileDG(t);
 					GhiFileDS(l);
 				}
@@ -1320,6 +1310,7 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 		if (top != -1)
 		{
 			t = Stack[top--];
+			if(t->data.tongsosach > 0)
 			for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
 			{
 				if (p->data.trangthai == 0 || p->data.trangthai == 2)

@@ -491,13 +491,6 @@ void giaiphong_dausach(LIST_DS& l)
 	}
 }
 
-
-// kiểm tra 1 chuỗi có kí tự nào là số không nếu có trả về true <> false
-
-
-
-
-
 // hoán đổi vị trí 2 độc giả
 void hoandoi(docgia& a, docgia& b)
 {
@@ -567,68 +560,17 @@ void xoa_hienthi_buttonNext()
 	gotoXY(110, 42); cout << "       ";
 	gotoXY(x, y);
 }
-void xoa_hien_thi_dausach()
+void XOA_HIEN_THI()
 {
 	int x = whereX();
 	int y = whereY();
-	for (int i = 0; i <= 40; i++)
-	{
-		int x = whereX();
-		int y = whereY();
-		gotoXY(40, i);
-		cout << "					    ";
-		gotoXY(55, i);
-		cout << "				       ";
-		gotoXY(95, i);
-		cout << "                      ";
-		gotoXY(105, i);
-		cout << "						";
-		gotoXY(145, i);
-		cout << "						";
-		gotoXY(155, i);
-		cout << "						";
-		gotoXY(175, i);
-		cout << "                    ";
-	}
-	gotoXY(x, y);
-}
-void xoa_hien_thi_sach()
-{
-	int x = whereX();
-	int y = whereY();
-	for (int i = 0; i <= 41; i++)
-	{
-		gotoXY(40, i);
-		cout << "                                  ";
-		gotoXY(55, i);
-		cout << "                                   ";
-		gotoXY(95, i);
-		cout << "                                   ";
-		gotoXY(110, i);
-		cout << "                                    ";
+	for (int i = 0; i <= 40; i++) {
+		ClearLine(40, i);
 	}
 	gotoXY(x, y);
 }
 
-void xoa_hien_thi_doc_gia()
-{
-	int x = whereX();
-	int y = whereY();
-	for (int i = 0; i <= 41; i++)
-	{
-		gotoXY(50, i);
-		cout << "                     ";
-		gotoXY(65, i);
-		cout << "                         ";
-		gotoXY(90, i);
-		cout << "                          ";
-		gotoXY(120, i);
-		cout << "                        ";
-		gotoXY(137, i);
-		cout << "                        ";
-	}
-	gotoXY(x, y);
-}
+
 void ButtonEnter(int hoanhdo, int tungdo)
 {
 	int x = whereX();
@@ -935,15 +877,7 @@ int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
 	}
 	return n;
 }
-// x=true hien co tro chuot x=false tat con tro chuot
-void control_cursor(bool x)
-{
-	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO info;
-	info.dwSize = 100;
-	info.bVisible = x;
-	SetConsoleCursorInfo(consoleHandle, &info);
-}
+
 // Boxx + 20 Boxy =15
 void Box_NHAP(string x)
 {
@@ -1024,10 +958,11 @@ int Xac_Nhan(int x, int y)
 	ifstream fi("end.txt");
 	string s;
 	int tungdo = 10;
+	int i;
 	while (!fi.eof())
 	{
 		getline(fi, s);
-		int i = rand() % 15 + 1;
+		i = rand() % 15 + 1;
 		TextColor(i);
 		gotoXY(10, tungdo++);
 		cout << s;

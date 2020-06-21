@@ -85,3 +85,24 @@ void ToMau(int x, int y, string a, int color)
 	cout << a;
 	TextColor(7);
 }
+// x=true hien co tro chuot x=false tat con tro chuot
+void control_cursor(bool x)
+{
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO info;
+	info.dwSize = 100;
+	info.bVisible = x;
+	SetConsoleCursorInfo(consoleHandle, &info);
+}
+void ClearLine(int x,int y)
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	int columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	for (int i = x; i <= columns; i++)
+	{
+		control_cursor(false);
+		gotoXY(i, y);
+		cout << " ";
+	}
+}
