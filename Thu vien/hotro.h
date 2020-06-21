@@ -135,7 +135,7 @@ void BaoLoi(string s) {
 	Sleep(1200);
 	while (_kbhit()) // không nhận phím  khi đang ngủ
 		_getch();
-	
+
 	for (int i = 0; i < n; i++)
 	{
 		gotoXY(boxx + 28 + i, boxy + 42);
@@ -207,7 +207,7 @@ int Kiem_tra_phim(char c)
 {
 	int arr[32] = { 72,75,77,80,81,73,44,46,59,39,47,93,91,92,61,82,83,79,71,-122,-123,68,67,66,65
 	,64,63,62,61,60,59,96 };
-	if (Kiem_Tra_Ki_Tu_So(c)==true) // so
+	if (Kiem_Tra_Ki_Tu_So(c) == true) // so
 		return 2;
 	// nhấn shift + key
 	if (GetKeyState(VK_SHIFT) & 0x8000)
@@ -215,18 +215,18 @@ int Kiem_tra_phim(char c)
 	for (int i = 0; i < 32; i++)
 		if (c == arr[i])
 			return 1;
-	
+
 	return 0;
 } // phím chức năng rt 1, số rt 2, Không thuộc cả 2 rt 0
 int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
 	control_cursor(true);
-	string str="";
+	string str = "";
 	str = so_sang_chuoi(n);
 	bool kt = false;
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;
-	int length=str.length(); // biến cho con trỏ dịch đến cuối
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
@@ -280,7 +280,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 				else
 					dem1++;
 			}
-			if (length == 0 || (dem >= 2 && dem1 == 0) || kt==false)
+			if (length == 0 || (dem >= 2 && dem1 == 0) || kt == false)
 			{
 				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
@@ -298,7 +298,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	control_cursor(false);
 }
 //flag =0 nhap toan ki tu, flag=1 nhap ki tu va so, flag =2 nhap gioitinh,flag=3 nhap ki tu la so
-int nhap_ki_tu(string& str,int flag)
+int nhap_ki_tu(string& str, int flag)
 {
 	control_cursor(true);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
@@ -333,12 +333,12 @@ int nhap_ki_tu(string& str,int flag)
 					break;
 				}
 			}
-			if (k == 2 && (flag==0 || flag==2)) // nếu nhập kí tự là số
+			if (k == 2 && (flag == 0 || flag == 2)) // nếu nhập kí tự là số
 			{
 				BaoLoi("KHONG DUOC NHAP SO");
 				break;
 			}
-			
+
 
 			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
 			{
@@ -378,9 +378,9 @@ int nhap_ki_tu(string& str,int flag)
 				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
 			}
-			else if(flag==0 || flag==1)
+			else if (flag == 0 || flag == 1)
 				KT = true;
-			else if(flag==2)// flag=2 nhap gioi tinh
+			else if (flag == 2)// flag=2 nhap gioi tinh
 			{
 				if (dem1 != 0)
 				{
@@ -408,7 +408,7 @@ int nhap_ki_tu(string& str,int flag)
 	cout << endl;
 	chuan_hoa_chu(str);
 	control_cursor(false);
-} 
+}
 
 
 
@@ -692,10 +692,10 @@ void huong_dan_su_dung()
 		i = rand() % 15 + 1;
 		gotoXY(x, j++);
 		TextColor(i);
-		cout << s << endl;
+		cout << s;
 	}
 	fo.close();
-	
+
 	gotoXY(94, 20);
 	TextColor(15);
 	cout << "HUONG DAN SU DUNG";
@@ -729,9 +729,9 @@ void xoa_hien_thi_huong_dan()
 	int x = whereX();
 	int y = whereY();
 	TextColor(7);
-	for (int i = 1; i <= 30; i++)
+	for (int i = 1; i <= 40; i++)
 	{
-		gotoXY(80, i); clrscr();
+		gotoXY(60, i); cout << "                                                                      ";
 	}
 	xoa_hien_thi_1_Button(78, 28);
 	xoa_hien_thi_1_Button(78, 34);
@@ -778,7 +778,7 @@ void xoa_hien_thi_Box_NhapDG()
 	cout << " ";
 	gotoXY(boxx, boxy + 1); cout << " ";
 	gotoXY(boxx + boxs + 1, boxy + 1); cout << " ";
-	gotoXY(boxx, boxy + 2); cout  << "                                      ";
+	gotoXY(boxx, boxy + 2); cout << "                                      ";
 	gotoXY(boxx + boxs + 1, boxy + 2); cout << " ";
 	gotoXY(boxx, boxy + 3); cout << " ";
 	gotoXY(boxx + boxs + 1, boxy + 3); cout << " ";
@@ -875,7 +875,7 @@ void xoa_hien_thi_Box_NhapDS()
 }
 void Box_NhapSach()
 {
-	int boxtemp = boxs-40;
+	int boxtemp = boxs - 40;
 	ButtonEnter(boxx + boxtemp - 5, boxy + 15);
 	ButtonESC(boxx, boxy + 15);
 	TextColor(15);
@@ -890,7 +890,7 @@ void Box_NhapSach()
 	gotoXY(boxx + boxtemp + 1, boxy + 3); cout << char(186);
 	gotoXY(boxx, boxy + 4); cout << char(186) << " VI TRI: ";
 	gotoXY(boxx + boxtemp + 1, boxy + 4); cout << char(186);
-	gotoXY(boxx, boxy + 5); cout << char(186) ;
+	gotoXY(boxx, boxy + 5); cout << char(186);
 	gotoXY(boxx + boxtemp + 1, boxy + 5); cout << char(186);
 	gotoXY(boxx, boxy + 6); cout << char(200);
 	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
@@ -950,22 +950,22 @@ void Box_NHAP(string x)
 	int tungdo = 15;
 	int boxtemp = 50;
 	TextColor(252);
-	gotoXY(boxx+20, tungdo); cout << char(201);
+	gotoXY(boxx + 20, tungdo); cout << char(201);
 	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
 	cout << char(187);
 	TextColor(252);
-	gotoXY(boxx+20, tungdo + 1); cout << "                                                    ";
-	gotoXY(boxx+20, tungdo + 1); cout << char(186);
-	gotoXY(boxx +20+ boxtemp + 1, tungdo + 1);  cout << char(186);
-	gotoXY(boxx+20, tungdo + 2); cout << "                                                    ";
-	gotoXY(boxx+20, tungdo + 2); cout << char(186); TextColor(249); cout << x << ": ";
+	gotoXY(boxx + 20, tungdo + 1); cout << "                                                    ";
+	gotoXY(boxx + 20, tungdo + 1); cout << char(186);
+	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 1);  cout << char(186);
+	gotoXY(boxx + 20, tungdo + 2); cout << "                                                    ";
+	gotoXY(boxx + 20, tungdo + 2); cout << char(186); TextColor(249); cout << x << ": ";
 	int x1 = whereX(), y1 = whereY();
 	TextColor(252);
-	gotoXY(boxx +20+ boxtemp + 1, tungdo + 2); cout << char(186);
-	gotoXY(boxx+20, tungdo + 3); cout << "                                                    ";
-	gotoXY(boxx+20, tungdo + 3); cout << char(186);
-	gotoXY(boxx +20+ boxtemp + 1, tungdo + 3); cout << char(186);
-	gotoXY(boxx+20, tungdo + 4); cout << char(200);
+	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 2); cout << char(186);
+	gotoXY(boxx + 20, tungdo + 3); cout << "                                                    ";
+	gotoXY(boxx + 20, tungdo + 3); cout << char(186);
+	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 3); cout << char(186);
+	gotoXY(boxx + 20, tungdo + 4); cout << char(200);
 	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
 	cout << char(188);
 	TextColor(15);
@@ -996,24 +996,132 @@ void Xoa_hien_thi_Box_NHAP()
 	cout << " ";
 	gotoXY(x, y);
 }
- // hàm có chức năng cập nhật lại độc giả đã trả sách trong trường hợp sách có ở thư viện nhưng đg chưa báo trả
-void CAPNHAT_DG_TRASACH(TREE t, string ma_sach)
+// rt true nếu độc giả đang mượn cuốn sách có đầu sách tương tự <> false
+bool KT_SACH_DG_MUON(TREE p, string ma_sach)
 {
-	if ( t!= NULL )
+	string s = tach_ma_sach(ma_sach);
+	string temp;
+	if (p->data.tongsosach > 0)
 	{
-		if (t->data.tongsosach > 0)
+		for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
 		{
-			for (NODE_MT* q = t->data.mt.pHead; q != NULL; q = q->pNext)
+			if (q->data.trangthai == 0) // đang mượn sách
 			{
-				if (q->data.masach == ma_sach)
-					if (q->data.trangthai == 0)
-					{
-						q->data.trangthai = 1; // cap nhat doc gia da tra
-						return;
-					}
+				temp = tach_ma_sach(q->data.masach);
+				if (temp == s) // đang mượn cuốn sách có đầu sách tương tự
+					return true;
 			}
 		}
-		CAPNHAT_DG_TRASACH(t->pLeft, ma_sach);
-		CAPNHAT_DG_TRASACH(t->pRight, ma_sach);
+	}
+	return false;
+}
+// co 1 <> khong -1 <> huy 0
+int Xac_Nhan(int x, int y)
+{
+	clrscr();
+	xoa_hien_thi_1_Button(78, 28);
+	xoa_hien_thi_1_Button(78, 34);
+	ifstream fi("end.txt");
+	string s;
+	int tungdo = 10;
+	while (!fi.eof())
+	{
+		getline(fi, s);
+		int i = rand() % 15 + 1;
+		TextColor(i);
+		gotoXY(10, tungdo++);
+		cout << s;
+	}
+	fi.close();
+	char c;
+	TextColor(15);
+	gotoXY(x + 18, y - 2); cout << "THOAT VA LUU FILE?";
+	gotoXY(x + 22, y);
+	cout << "CO";
+	gotoXY(x + 25, y);
+	cout << "KHONG";
+	gotoXY(x + 31, y);
+	cout << "HUY";
+
+
+	int kt;
+	while (true)
+	{
+		c = 15; // khởi tạo để lặp điều kiện. c!=13 là được
+		while (c != 13)
+		{
+			kt = 1;
+			TextColor(8);
+			gotoXY(x + 25, y);
+			cout << "KHONG";
+
+			TextColor(8);
+			gotoXY(x + 31, y);
+			cout << "HUY";
+
+			TextColor(12);
+			gotoXY(x + 22, y);
+			cout << "CO";
+			c = _getch();
+			if (c == -32) c = _getch();
+			if (c == 77)
+			{
+				kt = -1;
+				TextColor(8);
+				gotoXY(x + 22, y);
+				cout << "CO";
+
+				TextColor(8);
+				gotoXY(x + 31, y);
+				cout << "HUY";
+
+				TextColor(12);
+				gotoXY(x + 25, y);
+				cout << "KHONG";
+				c = _getch();
+				if (c == -32) c = _getch();
+				if (c == 77)
+				{
+					kt = 0;
+					TextColor(8);
+					gotoXY(x + 22, y);
+					cout << "CO";
+
+					TextColor(8);
+					gotoXY(x + 25, y);
+					cout << "KHONG";
+
+					TextColor(12);
+					gotoXY(x + 31, y);
+					cout << "HUY";
+					c = _getch();
+					if (c == -32) c = _getch();
+					if (c == 75)
+					{
+						kt = -1;
+						TextColor(8);
+						gotoXY(x + 22, y);
+						cout << "CO";
+
+						TextColor(8);
+						gotoXY(x + 31, y);
+						cout << "HUY";
+
+						TextColor(12);
+						gotoXY(x + 25, y);
+						cout << "KHONG";
+						c = _getch();
+						if (c == -32) c = _getch();
+					}
+				}
+			}
+
+		}
+		if (c == 13)
+		{
+			clrscr();
+			TextColor(15);
+			return kt;
+		}
 	}
 }

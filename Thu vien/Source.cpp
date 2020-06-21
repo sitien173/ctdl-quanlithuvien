@@ -1,4 +1,9 @@
 ﻿#include "xulyde.h"
+/* ĐỀ TÀI QUẢN LÍ THƯ VIỆN 2020
+ SV THỰC HÀNH: NGÔ SĨ TIẾN - N18DCCN186
+ SV THỰC HÀNH: ĐỖ PHƯỚC ĐẠT HUY - N18DCCN
+ GV: LƯU NGUYỄN KỲ THƯ
+ */
 char thaotac[][50] =
 {					"DOC GIA                    ",
 				    "DAU SACH                   ",
@@ -123,7 +128,6 @@ menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu đ
 						remove("MADOCGIA.txt");
 						rename("Temp.txt", "MADOCGIA.txt");
 						BaoLoi("THEM THANH CONG");
-						GhiFileDG(t);
 					}
 				}
 			}
@@ -271,7 +275,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 						else
 						{
 							XOA_DG(t, key);
-							GhiFileDG(t);
 						}
 					}
 				} while (1);
@@ -306,7 +309,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					if (i == 1)
 					{
 						BaoLoi("HIEU CHINH THANH CONG");
-						GhiFileDG(t);
 					}
 				} while (1);
 				goto menu_DG;
@@ -428,12 +430,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				int i = MUON_SACH(t, l);
 				if (i == -2) // ESC
 					goto menu_chinh;
-				else if (i == 1)
-				{
-					GhiFileDG(t);
-					GhiFileDS(l);
-					
-				}
 			}
 		}
 		// TRẢ SÁCH
@@ -447,8 +443,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 				else if(i==1)
 				{
 					BaoLoi("TRA THANH CONG");
-					GhiFileDG(t);
-					GhiFileDS(l);
 				}
 			}
 			goto menu_chinh;
@@ -560,15 +554,13 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 							BaoLoi("CAP NHAT THANH CONG");
 							delete[] arr;
 							xoa_hien_thi_dausach();
-							GhiFileDG(t);
-							GhiFileDS(l);
 						}
 						else
 						{
 							BaoLoi("DOC GIA KHONG MUON SACH");
+							control_cursor(false);
 							break;
 						}
-
 					} while (1);
 				}
 			} while (1);
@@ -616,7 +608,6 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 		case 7:
 		{
 			DS_QUAHAN(t, l1);
-			_getch();
 			goto menu_chinh;
 		}
 		// Top 10 Sách
@@ -628,9 +619,23 @@ menu_DS:	int chon = menu_dong(menu_dausach, 6); // chọn thao tác trong menu �
 		}
 		default:
 		{
-			giaiphong_cay(t);
-			giaiphong_dausach(l);
-			return;
+			int i = Xac_Nhan(boxx + 20, 17);
+			if (i == 1) // thoat va luu
+			{
+				GhiFileDG(t);
+				GhiFileDS(l);
+				giaiphong_cay(t);
+				giaiphong_dausach(l);
+				return;
+			}
+			else if (i == -1) // thoat va khong luu
+			{
+				giaiphong_cay(t);
+				giaiphong_dausach(l);
+				return;
+			}
+			else
+				break;
 		}
 		}
 	}

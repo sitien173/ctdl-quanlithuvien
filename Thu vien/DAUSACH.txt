@@ -1,7 +1,7 @@
 83
-1210074001,Bi Mat Dotcom,221,Russell Brunson,2000,Cong Nghe,0
+1210074001,Bi Mat Dotcom,221,Russell Brunson,2000,Cong Nghe,1
 50
-1210074001-1,0,Ngan 5
+1210074001-1,2,Ngan 5
 1210074001-2,0,Ngan 5
 1210074001-3,0,Ngan 5
 1210074001-4,0,Ngan 5
@@ -1205,10 +1205,10 @@
 0
 1242415121,Di Tim Le Song,212,Viktor Frankl,1946,Tieu Su,0
 0
-9783254125,7 Thoi Quen De Thanh Dat,221,Stephen R Covey,1998,Tieu Thuyet,5
+9783254125,7 Thoi Quen De Thanh Dat,221,Stephen R Covey,1998,Tieu Thuyet,9
 50
-9783254125-1,0,Ngan 1
-9783254125-2,0,Ngan 1
+9783254125-1,1,Ngan 1
+9783254125-2,2,Ngan 1
 9783254125-3,0,Ngan 1
 9783254125-4,0,Ngan 1
 9783254125-5,0,Ngan 1
@@ -1283,7 +1283,7 @@
 0
 9781596591,Doc Vi Bat Ki Ai,217,David J Lieberman,2007,Tu Luc,0
 0
-6042081063,Thep Da Toi The Day,220,Pavel Korchagin,1995,Tu Luc,0
+6042081063,Thep Da Toi The Day,220,Pavel Korchagin,1995,Tu Luc,2
 60
 6042081063-1,0,Ngan 3
 6042081063-2,0,Ngan 3
