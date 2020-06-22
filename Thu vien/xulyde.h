@@ -841,7 +841,7 @@ int THEM_SACH(LIST_DS& l)
 		str = l.ds_dausach[i]->dms.pTail->data.masach.substr(pos + 1); //  lấy chuỗi con của l.ds_dausach[i]->dms.pTail->data.masach bắt đầu sau kí tự -
 		q = chuoi_sang_so(str);
 	}
-	else
+	else // nếu đầu sách không có cuốn sách nào
 		Init_DMS(l.ds_dausach[i]->dms);
 	XOA_HIEN_THI();
 	Box_NhapSach();

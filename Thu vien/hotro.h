@@ -167,6 +167,7 @@ string tach_ma_sach(string a)
 			dem = i;
 	}
 	temp = a.substr(0, dem);
+
 	return temp;
 }
 
@@ -290,7 +291,6 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 				chuan_hoa_chu(str);
 				KT = true;
 			}
-
 		}
 	} while (KT == false);
 	cout << endl;
@@ -949,8 +949,7 @@ bool KT_SACH_DG_MUON(TREE p, string ma_sach)
 	}
 	return false;
 }
-// co 1 <> khong -1 <> huy 0
-int Xac_Nhan(int x, int y)
+void THOAT(int x, int y)
 {
 	clrscr();
 	xoa_hien_thi_1_Button(78, 28);
@@ -958,105 +957,14 @@ int Xac_Nhan(int x, int y)
 	ifstream fi("end.txt");
 	string s;
 	int tungdo = 10;
-	int i;
 	while (!fi.eof())
 	{
 		getline(fi, s);
-		i = rand() % 15 + 1;
-		TextColor(i);
-		gotoXY(10, tungdo++);
+		TextColor(10);
+		gotoXY(75, tungdo++);
 		cout << s;
 	}
+	TextColor(7);
 	fi.close();
-	char c;
-	TextColor(15);
-	gotoXY(x + 18, y - 2); cout << "THOAT VA LUU FILE?";
-	gotoXY(x + 22, y);
-	cout << "CO";
-	gotoXY(x + 25, y);
-	cout << "KHONG";
-	gotoXY(x + 31, y);
-	cout << "HUY";
-
-
-	int kt;
-	while (true)
-	{
-		c = 15; // khởi tạo để lặp điều kiện. c!=13 là được
-		while (c != 13)
-		{
-			kt = 1;
-			TextColor(8);
-			gotoXY(x + 25, y);
-			cout << "KHONG";
-
-			TextColor(8);
-			gotoXY(x + 31, y);
-			cout << "HUY";
-
-			TextColor(12);
-			gotoXY(x + 22, y);
-			cout << "CO";
-			c = _getch();
-			if (c == -32) c = _getch();
-			if (c == 77)
-			{
-				kt = -1;
-				TextColor(8);
-				gotoXY(x + 22, y);
-				cout << "CO";
-
-				TextColor(8);
-				gotoXY(x + 31, y);
-				cout << "HUY";
-
-				TextColor(12);
-				gotoXY(x + 25, y);
-				cout << "KHONG";
-				c = _getch();
-				if (c == -32) c = _getch();
-				if (c == 77)
-				{
-					kt = 0;
-					TextColor(8);
-					gotoXY(x + 22, y);
-					cout << "CO";
-
-					TextColor(8);
-					gotoXY(x + 25, y);
-					cout << "KHONG";
-
-					TextColor(12);
-					gotoXY(x + 31, y);
-					cout << "HUY";
-					c = _getch();
-					if (c == -32) c = _getch();
-					if (c == 75)
-					{
-						kt = -1;
-						TextColor(8);
-						gotoXY(x + 22, y);
-						cout << "CO";
-
-						TextColor(8);
-						gotoXY(x + 31, y);
-						cout << "HUY";
-
-						TextColor(12);
-						gotoXY(x + 25, y);
-						cout << "KHONG";
-						c = _getch();
-						if (c == -32) c = _getch();
-					}
-				}
-			}
-
-		}
-		if (c == 13)
-		{
-			clrscr();
-			TextColor(15);
-			return kt;
-		}
-	}
+	
 }

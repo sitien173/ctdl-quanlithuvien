@@ -5,20 +5,20 @@
  GV: LƯU NGUYỄN KỲ THƯ
  */
 char thaotac[][50] =
-{					"DOC GIA                    ",
-				    "DAU SACH                   ",
-				    "MUON SACH                  ",
+{ "DOC GIA                    ",
+					"DAU SACH                   ",
+					"MUON SACH                  ",
 					"TRA SACH                   ",
 					"LAM MAT SACH               ",
-				    "TIM SACH DOC GIA DANG MUON ",
-				    "DANH SACH DOC GIA QUA HAN  ",
-				    "TOP 10 SACH MUON NHIEU NHAT",
-					"THOAT  CHUONG TRINH        "};
+					"TIM SACH DOC GIA DANG MUON ",
+					"DANH SACH DOC GIA QUA HAN  ",
+					"TOP 10 SACH MUON NHIEU NHAT",
+					"THOAT  CHUONG TRINH        " };
 
-int menu_dong(char thaotac[][50],int n) // n là số lượng item
+int menu_dong(char thaotac[][50], int n) // n là số lượng item
 {
 	control_cursor(false);
-	int tt=0; // biến chỉ ra đang ở thao tác nào
+	int tt = 0; // biến chỉ ra đang ở thao tác nào
 	int mau[10];
 	for (int i = 0; i < n; i++)
 		mau[i] = 7;
@@ -33,7 +33,7 @@ int menu_dong(char thaotac[][50],int n) // n là số lượng item
 		for (int i = 0; i < n; i++)
 		{
 			TextColor(mau[i]); // đổi màu chữ cho chữ chuẩn bị in ra
-			cout  << char(4) << " " << thaotac[i] << " " << char(4) <<  endl;
+			cout << char(4) << " " << thaotac[i] << " " << char(4) << endl;
 		}
 		char z = _getch();
 		TRANGTHAI trangthai = key(z);
@@ -88,7 +88,7 @@ void menu_xuli()
 	{
 		clrscr();
 		int tungdo = 0;
-menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chính
+	menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chính
 		switch (tt)
 		{
 			// menu độc giả 
@@ -128,13 +128,14 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 						remove("MADOCGIA.txt");
 						rename("Temp.txt", "MADOCGIA.txt");
 						BaoLoi("THEM THANH CONG");
+						GhiFileDG(t);
 					}
 				}
 			}
 			// xuất danh sách độc giả
 			if (chon == 2)
 			{
-			menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
+menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 													  "XUAT THEO HO TEN    ",
 													  "THOAT               " };
 			int chon_1 = menu_dong(menu_xuat, 3); // chọn thao tác menu xuất
@@ -280,6 +281,7 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 						else
 						{
 							XOA_DG(t, key);
+							GhiFileDG(t);
 						}
 					}
 				} while (1);
@@ -314,6 +316,7 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 					if (i == 1)
 					{
 						BaoLoi("HIEU CHINH THANH CONG");
+						GhiFileDG(t);
 					}
 				} while (1);
 				goto menu_DG;
@@ -435,6 +438,8 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 				int i = MUON_SACH(t, l);
 				if (i == -2) // ESC
 					goto menu_chinh;
+				GhiFileDG(t);
+				GhiFileDS(l);
 			}
 		}
 		// TRẢ SÁCH
@@ -448,6 +453,8 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 				else if (i == 1)
 				{
 					BaoLoi("TRA THANH CONG");
+					GhiFileDG(t);
+					GhiFileDS(l);
 				}
 			}
 			goto menu_chinh;
@@ -507,7 +514,7 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 							control_cursor(false);
 							int k = 1;
 							bool check2 = false;
-							while (check2==false)
+							while (check2 == false)
 							{
 								ToMau(45, k, arr[k - 1].masach, 14);
 								gotoXY(59, k);
@@ -558,6 +565,8 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 							}
 							p->data.trangthaithe = 0; // khoa the doc gia
 							BaoLoi("CAP NHAT THANH CONG");
+							GhiFileDG(t);
+							GhiFileDS(l);
 							delete[] arr;
 						}
 						else
@@ -622,33 +631,14 @@ menu_chinh: 	int tt = menu_dong(thaotac, 9); // chọn thao tác với menu chí
 			_getch();
 			break;
 		}
-		case 9:
+		default:
 		{
 			GhiFileDG(t);
 			GhiFileDS(l);
 			giaiphong_cay(t);
 			giaiphong_dausach(l);
+			THOAT(boxx + 20, 17);
 			return;
-		}
-		default:
-		{
-			int i = Xac_Nhan(boxx + 20, 17);
-			if (i == 1) // thoat va luu
-			{
-				GhiFileDG(t);
-				GhiFileDS(l);
-				giaiphong_cay(t);
-				giaiphong_dausach(l);
-				return;
-			}
-			else if (i == -1) // thoat va khong luu
-			{
-				giaiphong_cay(t);
-				giaiphong_dausach(l);
-				return;
-			}
-			else // quay lai
-				break;
 		}
 		}
 	}
