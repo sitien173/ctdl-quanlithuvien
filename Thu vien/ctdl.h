@@ -107,10 +107,5 @@ struct quahan
 	Date ngay_muon;
 	int so_ngay_quahan;
 };
-struct List_quahan
-{
-	quahan ds_quahan[MAX]; // tối đa 1000 độc giả
-	int sl=0 ; // số lượng thực tế độc giả có trong danh sách quá hạn
-};
-typedef struct List_quahan LIST_QUAHAN;
+
 

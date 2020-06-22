@@ -13,31 +13,19 @@ NODE_MT* TAO_NODE_MT(muontra x);
 int SoluongDG(TREE t);
 void CAY_SANG_MANG(TREE t, docgia* arr, int& i);
 
-
-void GhiFileDG(TREE t)
+void Ghifile_1_DG(TREE q,ofstream& fileout)
 {
-	int n = SoluongDG(t);
-	docgia* arr = new docgia[n];
-	int index = 0;
-	CAY_SANG_MANG(t, arr, index);
-	for (int j = 0; j < n - 1; j++)
+	if (q)
 	{
-		int temp = rand() % (n - 1) + 1;
-		hoandoi(arr[j], arr[temp]);
-	}
-	ofstream fileout("DOCGIA.txt");
-	fileout << n << endl;
-	for (int i = 0; i < n; i++)
-	{
-		fileout << arr[i].mathe << ',';
-		fileout << arr[i].ho << ',';
-		fileout << arr[i].ten << ',';
-		fileout << arr[i].phai << ',';
-		fileout << arr[i].trangthaithe << endl;
-		fileout << arr[i].tongsosach << endl;
-		if (arr[i].tongsosach > 0)
+		fileout << q->data.mathe << ',';
+		fileout << q->data.ho << ',';
+		fileout << q->data.ten << ',';
+		fileout << q->data.phai << ',';
+		fileout << q->data.trangthaithe << endl;
+		fileout << q->data.tongsosach << endl;
+		if (q->data.tongsosach > 0)
 		{
-			for (NODE_MT* p = arr[i].mt.pHead; p != NULL; p = p->pNext)
+			for (NODE_MT* p = q->data.mt.pHead; p != NULL; p = p->pNext)
 			{
 				fileout << p->data.masach << ',';
 				fileout << p->data.trangthai << ',';
@@ -49,8 +37,16 @@ void GhiFileDG(TREE t)
 				fileout << p->data.ngaytra.nam << endl;
 			}
 		}
+		Ghifile_1_DG(q->pLeft,fileout);
+		Ghifile_1_DG(q->pRight, fileout);
 	}
-	delete[] arr;
+}
+void GHI_FILE_DS_DG(TREE t)
+{
+	ofstream fileout("DOCGIA.txt");
+	int n = SoluongDG(t);
+	fileout << n << endl;
+	Ghifile_1_DG(t, fileout);
 	fileout.close();
 }
 

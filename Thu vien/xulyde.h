@@ -66,7 +66,7 @@ int MUON_SACH(TREE& t, LIST_DS& l);// mượn thành công tr 1 <> -1 ; esc rt -
 int TRA_SACH(TREE& t, LIST_DS& l);// trả sách thành công tr 1 <> -1 ; ESC rt -2
 
 // =========================================== Qua Han ================================
-void DS_QUAHAN(TREE t, LIST_QUAHAN& l);// in ra danh sách các độc giả quá hạn
+void DS_QUAHAN(TREE t);// in ra danh sách các độc giả quá hạn
 bool Dem_SN_QUAHAN(TREE p);
 // =================== 10 sách có lượt mượn nhiều nhất ====================
 void top10sach(LIST_DS l);
@@ -1259,7 +1259,7 @@ int TRA_SACH(TREE& t, LIST_DS& l)
 					BaoLoi("TRA SACH THANH CONG");
 					delete[] arr;
 					XOA_HIEN_THI();
-					GhiFileDG(t);
+					GHI_FILE_DS_DG(t);
 					GhiFileDS(l);
 				}
 				else
@@ -1292,12 +1292,13 @@ bool Dem_SN_QUAHAN(TREE p)
 	return false;
 }
 // in ra danh sách các độc giả quá hạn
-void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
+void DS_QUAHAN(TREE t)
 {
 	int x = whereX();
 	int y = whereY();
 	int n = 0;
 	int n1 = SoluongDG(t);
+	quahan* arr = new quahan[n1];
 	TREE Stack[STACKSIZE];
 	int top = -1;
 	do
@@ -1316,13 +1317,13 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 				if (p->data.trangthai == 0 || p->data.trangthai == 2)
 				{
 					n++;
-					l.ds_quahan[n - 1].ma_doc_gia = t->data.mathe;
-					l.ds_quahan[n - 1].ho = t->data.ho;
-					l.ds_quahan[n - 1].ten = t->data.ten;
-					l.ds_quahan[n - 1].phai = t->data.phai;
-					l.ds_quahan[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
-					l.ds_quahan[n - 1].ma_sach = p->data.masach;
-					l.ds_quahan[n - 1].ngay_muon = p->data.ngaymuon;
+					arr[n - 1].ma_doc_gia = t->data.mathe;
+					arr[n - 1].ho = t->data.ho;
+					arr[n - 1].ten = t->data.ten;
+					arr[n - 1].phai = t->data.phai;
+					arr[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
+					arr[n - 1].ma_sach = p->data.masach;
+					arr[n - 1].ngay_muon = p->data.ngaymuon;
 				}
 			}
 			t = t->pRight;
@@ -1330,26 +1331,25 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 		else
 			break;
 	} while (1);
-	l.sl = n;
 	quahan temp;
 	// sap xep giam dan ds qua han
 	for (int i = 0; i < n - 1; i++)
 	{
 		for (int j = i + 1; j < n; j++)
 		{
-			if (l.ds_quahan[i].so_ngay_quahan < l.ds_quahan[j].so_ngay_quahan)
+			if (arr[i].so_ngay_quahan < arr[j].so_ngay_quahan)
 			{
-				temp = l.ds_quahan[i];
-				l.ds_quahan[i] = l.ds_quahan[j];
-				l.ds_quahan[j] = temp;
+				temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
 			}
 		}
 	}
 	bool check = false;
 	// xuat ds qua han theo thu tu giam dan
-	for (int k = 0; k < l.sl; k++)
+	for (int k = 0; k < n; k++)
 	{
-		if (l.ds_quahan[k].so_ngay_quahan >= 7)
+		if (arr[k].so_ngay_quahan >= 7)
 		{
 			check = true;
 			TextColor(15);
@@ -1368,19 +1368,19 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 			gotoXY(165, 0);
 			cout << "SO NGAY QH";
 			gotoXY(45, k + 1);
-			cout << l.ds_quahan[k].ma_doc_gia;
+			cout << arr[k].ma_doc_gia;
 			gotoXY(65, k + 1);
-			cout << l.ds_quahan[k].ho;
+			cout << arr[k].ho;
 			gotoXY(85, k + 1);
-			cout << l.ds_quahan[k].ten;
+			cout << arr[k].ten;
 			gotoXY(100, k + 1);
-			cout << l.ds_quahan[k].phai;
+			cout << arr[k].phai;
 			gotoXY(120, k + 1);
-			cout << l.ds_quahan[k].ma_sach;
+			cout << arr[k].ma_sach;
 			gotoXY(140, k + 1);
-			cout << l.ds_quahan[k].ngay_muon.ngay << "/" << l.ds_quahan[k].ngay_muon.thang << "/" << l.ds_quahan[k].ngay_muon.nam;
+			cout << arr[k].ngay_muon.ngay << "/" << arr[k].ngay_muon.thang << "/" << arr[k].ngay_muon.nam;
 			gotoXY(170, k + 1);
-			cout << l.ds_quahan[k].so_ngay_quahan;
+			cout << arr[k].so_ngay_quahan;
 			TextColor(7);
 			gotoXY(x, y);
 		}
@@ -1389,6 +1389,7 @@ void DS_QUAHAN(TREE t, LIST_QUAHAN& l)
 		BaoLoi("DANH SACH TRONG");
 	else
 		_getch();
+	delete[] arr;
 }
 
 // =================== 10 sách có lượt mượn nhiều nhất ====================

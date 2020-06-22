@@ -99,10 +99,10 @@ void ClearLine(int x,int y)
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 	int columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	for (int i = x; i <= columns; i++)
+	for (int i = x; i <= columns; i+=2)
 	{
 		control_cursor(false);
 		gotoXY(i, y);
-		cout << " ";
+		cout << "  ";
 	}
 }

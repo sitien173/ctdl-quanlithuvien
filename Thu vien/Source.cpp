@@ -78,7 +78,6 @@ void menu_xuli()
 {
 	TREE t;
 	LIST_DS l;
-	LIST_QUAHAN l1;
 
 	Init_TREE(t);
 	Init_DS(l);
@@ -128,7 +127,7 @@ void menu_xuli()
 						remove("MADOCGIA.txt");
 						rename("Temp.txt", "MADOCGIA.txt");
 						BaoLoi("THEM THANH CONG");
-						GhiFileDG(t);
+						GHI_FILE_DS_DG(t);
 					}
 				}
 			}
@@ -281,7 +280,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 						else
 						{
 							XOA_DG(t, key);
-							GhiFileDG(t);
+							GHI_FILE_DS_DG(t);
 						}
 					}
 				} while (1);
@@ -316,7 +315,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					if (i == 1)
 					{
 						BaoLoi("HIEU CHINH THANH CONG");
-						GhiFileDG(t);
+						GHI_FILE_DS_DG(t);
 					}
 				} while (1);
 				goto menu_DG;
@@ -438,7 +437,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 				int i = MUON_SACH(t, l);
 				if (i == -2) // ESC
 					goto menu_chinh;
-				GhiFileDG(t);
+				GHI_FILE_DS_DG(t);
 				GhiFileDS(l);
 			}
 		}
@@ -453,7 +452,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 				else if (i == 1)
 				{
 					BaoLoi("TRA THANH CONG");
-					GhiFileDG(t);
+					GHI_FILE_DS_DG(t);
 					GhiFileDS(l);
 				}
 			}
@@ -565,7 +564,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 							}
 							p->data.trangthaithe = 0; // khoa the doc gia
 							BaoLoi("CAP NHAT THANH CONG");
-							GhiFileDG(t);
+							GHI_FILE_DS_DG(t);
 							GhiFileDS(l);
 							delete[] arr;
 						}
@@ -621,7 +620,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 		// Danh sách độc giả quá hạn
 		case 7:
 		{
-			DS_QUAHAN(t, l1);
+			DS_QUAHAN(t);
 			goto menu_chinh;
 		}
 		// Top 10 Sách
@@ -633,11 +632,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 		}
 		default:
 		{
-			GhiFileDG(t);
+			GHI_FILE_DS_DG(t);
 			GhiFileDS(l);
 			giaiphong_cay(t);
 			giaiphong_dausach(l);
-			THOAT(boxx + 20, 17);
 			return;
 		}
 		}

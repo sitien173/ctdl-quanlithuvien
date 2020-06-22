@@ -949,22 +949,3 @@ bool KT_SACH_DG_MUON(TREE p, string ma_sach)
 	}
 	return false;
 }
-void THOAT(int x, int y)
-{
-	clrscr();
-	xoa_hien_thi_1_Button(78, 28);
-	xoa_hien_thi_1_Button(78, 34);
-	ifstream fi("end.txt");
-	string s;
-	int tungdo = 10;
-	while (!fi.eof())
-	{
-		getline(fi, s);
-		TextColor(10);
-		gotoXY(75, tungdo++);
-		cout << s;
-	}
-	TextColor(7);
-	fi.close();
-	
-}
