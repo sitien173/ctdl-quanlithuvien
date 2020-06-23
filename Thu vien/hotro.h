@@ -181,7 +181,6 @@ string so_sang_chuoi(int number)
 int chuoi_sang_so(string x)
 {
 	string temp = x;
-	chuan_hoa_chu(temp);
 	int n = atoi(temp.c_str());
 	if (n != 0)
 		return n;
@@ -218,26 +217,99 @@ int Kiem_tra_phim(char c)
 			return 1;
 
 	return 0;
-} // phím chức năng rt 1, số rt 2, Không thuộc cả 2 rt 0
-int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
-{
-	control_cursor(true);
-	string str = "";
-	str = so_sang_chuoi(n);
+} 
+// Nhập số nguyên chỉ nhận 0 và 1 <> ESC RT -1
+int nhap_so_nguyen1(int& n) {
+	string str=so_sang_chuoi(n);
+	int length = str.length();
 	bool kt = false;
-	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
-	bool KT = false;
-	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
-		if (n != 0) kt = true; // dùng để kiểm tra nếu có dữ liệu thì enter được.
 		c = _getch();
 		if (c == 0 || c == -32)
 			c = _getch();
 		while (int(c) != 13)
 		{
-			kt = true;
+			if (c == 27)
+			{
+				control_cursor(false);
+				return -1;
+			}
+			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
+			{
+
+				if (length > 0) // nếu như độ dài biến con trỏ dịch bằng 0 thì ko cho xóa tiếp
+				{
+					cout << "\b \b"; // khi bấm phím Backspace thì sẽ xóa từng kí tự của chuỗi kí tự hiện tại
+					length--;
+				}
+				if (str.length() != 0) // xóa kí tự cuối trong chuỗi string 
+				{
+					str.erase(str.begin() + (str.length() - 1));
+				}
+			}
+			else
+			{
+				cout << c;
+				length++; // cập nhật vụ trí con trỏ chỉ vị
+				str.push_back(c);
+			}
+			c = _getch();
+		}
+		if (c == 13)
+		{
+			int dem = 1;
+			int dem1 = 0;
+			for (int i = 0; i < length; i++)
+			{
+				if ((int)str[i] == 32)
+					dem++;
+				else
+					dem1++;
+			}
+			if (length == 0 || (dem >= 2 && dem1 == 0))
+			{
+				BaoLoi("KHONG DUOC DE TRONG");
+				continue;
+			}
+			int i = atoi(str.c_str());
+			if (i == 0 || i == 1)
+			{
+				kt = true;
+				n = i;
+			}
+			else
+			{
+				BaoLoi("TRANG THAI CHI NHAN 1 HOAC 0");
+				while (length > 0)
+				{
+					cout << "\b \b";
+					str.pop_back();
+					length--;
+				}
+			}
+			
+		}
+	} while (kt==false);
+}
+int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
+{
+	control_cursor(true);
+	string str = "";
+	str = so_sang_chuoi(n);
+	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
+	bool KT = false;
+	int length = str.length()-1; // biến cho con trỏ dịch đến cuối
+	if (str == "0") str = "";
+	char c;
+	do
+	{
+		c = _getch();
+		if (c == 0 || c == -32)
+			c = _getch();
+		while (int(c) != 13)
+		{
 			if (c == 27)
 			{
 				control_cursor(false);
@@ -281,13 +353,18 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 				else
 					dem1++;
 			}
-			if (length == 0 || (dem >= 2 && dem1 == 0) || kt == false)
+			if (length == 0 || (dem >= 2 && dem1 == 0) )
 			{
 				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
 			}
 			else
 			{
+				if (chuoi_sang_so(str) <= 0)
+				{
+					BaoLoi("SO NHAP VAO PHAI LON > 0");
+					continue;
+				}
 				chuan_hoa_chu(str);
 				KT = true;
 			}

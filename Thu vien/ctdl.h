@@ -85,7 +85,7 @@ struct docgia
 	string ten;
 	string phai;
 	int trangthaithe;
-	int tongsosach;
+	int tongsosach; 
 	LIST_MT mt; // con trỏ sẽ trỏ đến danh sách các cuốn đã và đang mượn
 };
 struct node_docgia

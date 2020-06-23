@@ -170,7 +170,7 @@ void XUAT_DS_DG(TREE t, int& i)
 		for (int j = i * 40; j < (40 * i) + 40 && j < n; j++)
 			Xuat_Thong_Tin_Doc_Gia(arr[j], tungdo++);
 
-		gotoXY(90, 44); cout << "PRESS ANY KEY TO CONTINUE";
+		gotoXY(95, 44); cout << "PRESS ANY KEY TO CONTINUE";
 		gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
 		ButtonNext();
 		ButtonPrev();
@@ -319,7 +319,8 @@ TREE TIM_KIEM_DG_MA(TREE& t, int ma_doc_gia)
 		else
 			return TIM_KIEM_DG_MA(t->pLeft, ma_doc_gia);
 	}
-	return NULL;
+	else
+		return NULL;
 }
 
 // tìm kiếm tên độc giả
@@ -376,7 +377,7 @@ int HIEU_CHINH_DG(TREE& p)
 	x.trangthaithe = p->data.trangthaithe;
 	gotoXY(boxx + 18, boxy + 10);
 	cout << x.trangthaithe;
-	k = nhap_so_nguyen(x.trangthaithe);
+	k = nhap_so_nguyen1(x.trangthaithe);
 	if (k == -1) // ESC
 		return -2;
 	p->data.ho = x.ho;
@@ -588,14 +589,14 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 	{
 		// nếu tìm thấy temp là chuỗi con của tên đầu sách
 		vitri_timthay = l.ds_dausach[i]->tensach.find(temp);
-		
-			if (vitri_timthay != string::npos && tungdo <=40)
-			{
-				XUAT_THONGTIN_DS(l, *l.ds_dausach[i], tungdo++);
-				ToMau(vitri_timthay + 55, tungdo - 1, temp, 14);
-				kt++;
-				arr[j++] = *l.ds_dausach[i]; // lưu đầu sách được tìm thấy
-			}
+
+		if (vitri_timthay != string::npos && tungdo <= 40)
+		{
+			XUAT_THONGTIN_DS(l, *l.ds_dausach[i], tungdo++);
+			ToMau(vitri_timthay + 55, tungdo - 1, temp, 14);
+			kt++;
+			arr[j++] = *l.ds_dausach[i]; // lưu đầu sách được tìm thấy
+		}
 	}
 	if (kt != 0)
 	{
@@ -836,9 +837,8 @@ int THEM_SACH(LIST_DS& l)
 	if (l.ds_dausach[i]->soluongsach > 0)
 	{
 		vitri = l.ds_dausach[i]->dms.pTail->data.vitri; // lấy vị trí cuối cùng của sách đã tồn tại
-		string str;
 		int pos = l.ds_dausach[i]->dms.pTail->data.masach.find("-"); // lấy vị trí của kí tự - trong chuỗi
-		str = l.ds_dausach[i]->dms.pTail->data.masach.substr(pos + 1); //  lấy chuỗi con của l.ds_dausach[i]->dms.pTail->data.masach bắt đầu sau kí tự -
+		string str = l.ds_dausach[i]->dms.pTail->data.masach.substr(pos + 1); //  lấy chuỗi con của l.ds_dausach[i]->dms.pTail->data.masach bắt đầu sau kí tự -
 		q = chuoi_sang_so(str);
 	}
 	else // nếu đầu sách không có cuốn sách nào
@@ -1299,7 +1299,7 @@ void DS_QUAHAN(TREE t)
 	int n = 0;
 	int n1 = SoluongDG(t);
 	quahan* arr = new quahan[n1];
-	TREE Stack[STACKSIZE];
+	TREE* Stack = new TREE[n1];
 	int top = -1;
 	do
 	{
@@ -1311,21 +1311,21 @@ void DS_QUAHAN(TREE t)
 		if (top != -1)
 		{
 			t = Stack[top--];
-			if(t->data.tongsosach > 0)
-			for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
-			{
-				if (p->data.trangthai == 0 || p->data.trangthai == 2)
+			if (t->data.tongsosach > 0)
+				for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
 				{
-					n++;
-					arr[n - 1].ma_doc_gia = t->data.mathe;
-					arr[n - 1].ho = t->data.ho;
-					arr[n - 1].ten = t->data.ten;
-					arr[n - 1].phai = t->data.phai;
-					arr[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
-					arr[n - 1].ma_sach = p->data.masach;
-					arr[n - 1].ngay_muon = p->data.ngaymuon;
+					if (p->data.trangthai == 0 || p->data.trangthai == 2)
+					{
+						n++;
+						arr[n - 1].ma_doc_gia = t->data.mathe;
+						arr[n - 1].ho = t->data.ho;
+						arr[n - 1].ten = t->data.ten;
+						arr[n - 1].phai = t->data.phai;
+						arr[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
+						arr[n - 1].ma_sach = p->data.masach;
+						arr[n - 1].ngay_muon = p->data.ngaymuon;
+					}
 				}
-			}
 			t = t->pRight;
 		}
 		else
@@ -1389,6 +1389,7 @@ void DS_QUAHAN(TREE t)
 		BaoLoi("DANH SACH TRONG");
 	else
 		_getch();
+	delete[] Stack;
 	delete[] arr;
 }
 
