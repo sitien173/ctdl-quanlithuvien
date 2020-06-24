@@ -170,8 +170,8 @@ void XUAT_DS_DG(TREE t, int& i)
 		for (int j = i * 40; j < (40 * i) + 40 && j < n; j++)
 			Xuat_Thong_Tin_Doc_Gia(arr[j], tungdo++);
 
-		gotoXY(95, 44); cout << "PRESS ANY KEY TO CONTINUE";
 		gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
+		chay_chu(85, 44, "PRESS ANY KEY TO CONTINUE");
 		ButtonNext();
 		ButtonPrev();
 		char c = _getch();
@@ -180,6 +180,7 @@ void XUAT_DS_DG(TREE t, int& i)
 		if (c == 77)
 		{
 			XOA_HIEN_THI();
+			ClearLine(90, 44);
 			tungdo = 1;
 			if (i == t_sotrang - 1)
 				i = -1;
@@ -187,6 +188,7 @@ void XUAT_DS_DG(TREE t, int& i)
 		else if (c == 75)
 		{
 			XOA_HIEN_THI();
+			ClearLine(90, 44);
 			tungdo = 1;
 			if (i == 0)
 				i = t_sotrang - 2;
@@ -198,7 +200,7 @@ void XUAT_DS_DG(TREE t, int& i)
 		}
 		else
 		{
-			gotoXY(90, 44); cout << "                                 ";
+			ClearLine(85, 44);
 			delete[] arr;
 			return;
 		}
@@ -387,7 +389,6 @@ int HIEU_CHINH_DG(TREE& p)
 	return 1;
 }
 
-
 // đếm số đọc giả trong cây
 int SoluongDG(TREE t)
 {
@@ -541,9 +542,8 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 		XOA_HIEN_THI();
 		for (int j = 40 * i; j < (40 * i) + 40 && j < l.sl; j++)
 			XUAT_THONGTIN_DS(l, *l.ds_dausach[j], tungdo++);
-
-		gotoXY(90, 44); cout << "PRESS ANY KEY TO CONTINUE";
 		gotoXY(105, 42); cout << i + 1 << "/" << tso_trang;
+		chay_chu(85, 44, "PRESS ANY KEY TO CONTINUE");
 		ButtonNext();
 		ButtonPrev();
 		char c = _getch();
@@ -551,11 +551,13 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 			c = _getch();
 		if (c == 77)
 		{
+			ClearLine(85, 44);
 			if (i == tso_trang - 1)
 				i = -1;
 		}
 		else if (c == 75)
 		{
+			ClearLine(85, 44);
 			if (i == 0)
 				i = tso_trang - 2;
 			else
@@ -566,7 +568,7 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 		}
 		else
 		{
-			gotoXY(90, 44); cout << "                                  ";
+			ClearLine(85, 44);
 			break;
 		}
 	}
@@ -886,7 +888,7 @@ void XUAT_THONG_TIN_SACH(string ten_sach, danhmucsach a, int tungdo)
 {
 	int x = whereX();
 	int y = whereY();
-	TextColor(15);
+	TextColor(14);
 	gotoXY(40, 0);
 	cout << "Ma Sach";
 	gotoXY(60, 0);
@@ -895,6 +897,7 @@ void XUAT_THONG_TIN_SACH(string ten_sach, danhmucsach a, int tungdo)
 	cout << "Trang Thai";
 	gotoXY(110, 0);
 	cout << "Vi Tri";
+	TextColor(15);
 	gotoXY(40, tungdo);
 	cout << a.masach;
 	gotoXY(60, tungdo);
@@ -911,14 +914,14 @@ void XUAT_THONG_TIN_SACH(string ten_sach, danhmucsach a, int tungdo)
 // tìm kiếm sách theo mã sách nếu có trả về  vị trí node trong ds <>  NULL
 NODE_DMS* TIM_KIEM_SACH(LIST_DS l, string ma_sach)
 {
-	for (int i = 0; i < l.sl; i++)
-	{
+	string isbn = tach_ma_sach(ma_sach);
+	int i = TIM_KIEM_DS_THEO_MA(l, isbn);
+	if(i!=-1)
 		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
 		{
 			if (p->data.masach == ma_sach)
 				return p;
 		}
-	}
 	return NULL;
 }
 
@@ -1299,7 +1302,7 @@ void DS_QUAHAN(TREE t)
 	int n = 0;
 	int n1 = SoluongDG(t);
 	quahan* arr = new quahan[n1];
-	TREE* Stack = new TREE[n1];
+	TREE Stack[STACKSIZE];
 	int top = -1;
 	do
 	{
@@ -1312,20 +1315,27 @@ void DS_QUAHAN(TREE t)
 		{
 			t = Stack[top--];
 			if (t->data.tongsosach > 0)
+			{
+				int temp = 0;
 				for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
 				{
 					if (p->data.trangthai == 0 || p->data.trangthai == 2)
 					{
-						n++;
-						arr[n - 1].ma_doc_gia = t->data.mathe;
-						arr[n - 1].ho = t->data.ho;
-						arr[n - 1].ten = t->data.ten;
-						arr[n - 1].phai = t->data.phai;
-						arr[n - 1].so_ngay_quahan = tinh_so_ngay(p->data.ngaymuon);
-						arr[n - 1].ma_sach = p->data.masach;
-						arr[n - 1].ngay_muon = p->data.ngaymuon;
+						temp = tinh_so_ngay(p->data.ngaymuon);
+						if (temp >= 7)
+						{
+							n++;
+							arr[n - 1].ma_doc_gia = t->data.mathe;
+							arr[n - 1].ho = t->data.ho;
+							arr[n - 1].ten = t->data.ten;
+							arr[n - 1].phai = t->data.phai;
+							arr[n - 1].so_ngay_quahan = temp;
+							arr[n - 1].ma_sach = p->data.masach;
+							arr[n - 1].ngay_muon = p->data.ngaymuon;
+						}
 					}
 				}
+			}
 			t = t->pRight;
 		}
 		else
@@ -1389,7 +1399,6 @@ void DS_QUAHAN(TREE t)
 		BaoLoi("DANH SACH TRONG");
 	else
 		_getch();
-	delete[] Stack;
 	delete[] arr;
 }
 

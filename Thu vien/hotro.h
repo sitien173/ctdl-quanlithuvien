@@ -217,13 +217,14 @@ int Kiem_tra_phim(char c)
 			return 1;
 
 	return 0;
-} 
+}
 // Nhập số nguyên chỉ nhận 0 và 1 <> ESC RT -1
 int nhap_so_nguyen1(int& n) {
-	string str=so_sang_chuoi(n);
+	string str = so_sang_chuoi(n);
 	int length = str.length();
 	bool kt = false;
 	char c;
+	control_cursor(true);
 	do
 	{
 		c = _getch();
@@ -235,6 +236,12 @@ int nhap_so_nguyen1(int& n) {
 			{
 				control_cursor(false);
 				return -1;
+			}
+			if (Kiem_Tra_Du_Lieu(c) == false) // nếu nhập kí tự là chữ
+			{
+				BaoLoi("CHI DUOC NHAP SO");
+				c = _getch();
+				continue;
 			}
 			if (int(c) == 8) // nếu ấn phím Backspace thì xóa 1 kí tự ở cuối
 			{
@@ -289,9 +296,10 @@ int nhap_so_nguyen1(int& n) {
 					length--;
 				}
 			}
-			
+
 		}
-	} while (kt==false);
+	} while (kt == false);
+	control_cursor(false);
 }
 int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 {
@@ -300,7 +308,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	str = so_sang_chuoi(n);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;
-	int length = str.length()-1; // biến cho con trỏ dịch đến cuối
+	int length = str.length() - 1; // biến cho con trỏ dịch đến cuối
 	if (str == "0") str = "";
 	char c;
 	do
@@ -353,7 +361,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 				else
 					dem1++;
 			}
-			if (length == 0 || (dem >= 2 && dem1 == 0) )
+			if (length == 0 || (dem >= 2 && dem1 == 0))
 			{
 				BaoLoi("KHONG DUOC DE TRONG");
 				KT = false;
@@ -1025,4 +1033,20 @@ bool KT_SACH_DG_MUON(TREE p, string ma_sach)
 		}
 	}
 	return false;
+}
+void chay_chu(int x, int y, const char* s)
+{
+	int x1 = whereX(), y1 = whereY();
+	int n = strlen(s);
+	for (int i = x; i <= x + n && !_kbhit(); i++)
+	{
+		gotoXY(i, y); cout << s;
+		Sleep(150);
+		gotoXY(i, y); cout << " ";
+		if (i == x + n) {
+			i = x;
+			ClearLine(i, y);
+		}
+	}
+	//gotoXY(x1, y1);
 }
