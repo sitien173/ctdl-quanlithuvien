@@ -203,16 +203,13 @@ bool Kiem_Tra_Ki_Tu_So(char c)
 		return true;
 	return false;
 }
+// ki tu so rt 2 <> ky tu dac biet rt 1 <> 0
 int Kiem_tra_phim(char c)
 {
-	int arr[32] = { 72,75,77,80,81,73,44,46,59,39,47,93,91,92,61,82,83,79,71,-122,-123,68,67,66,65
-	,64,63,62,61,60,59,96 };
+	int arr[23] = {44,46,47,39,59,91,93,92,61,33,64,35,36,37,94,38,40,42,41,95,96,126,9 };
 	if (Kiem_Tra_Ki_Tu_So(c) == true) // so
-		return 2;
-	// nhấn shift + key
-	if (GetKeyState(VK_SHIFT) & 0x8000)
-		return 1;
-	for (int i = 0; i < 32; i++)
+		return 2; 
+	for (int i = 0; i < 23; i++)
 		if (c == arr[i])
 			return 1;
 
@@ -228,10 +225,13 @@ int nhap_so_nguyen1(int& n) {
 	do
 	{
 		c = _getch();
-		if (c == 0 || c == -32)
-			c = _getch();
 		while (int(c) != 13)
 		{
+			if (c == 0 || c == -32)
+			{
+				BaoLoi("PHIM NHAP KHONG HOP LE");
+				break;
+			}
 			if (c == 27)
 			{
 				control_cursor(false);
@@ -258,9 +258,9 @@ int nhap_so_nguyen1(int& n) {
 			}
 			else
 			{
-				cout << c;
-				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
+				cout << c;
+				length++;
 			}
 			c = _getch();
 		}
@@ -308,16 +308,20 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	str = so_sang_chuoi(n);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;
-	int length = str.length() - 1; // biến cho con trỏ dịch đến cuối
+	
 	if (str == "0") str = "";
+	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
 	do
 	{
 		c = _getch();
-		if (c == 0 || c == -32)
-			c = _getch();
 		while (int(c) != 13)
 		{
+			if (c == 0 || c == -32)
+			{
+				BaoLoi("PHIM NHAP KHONG HOP LE");
+				break;
+			}
 			if (c == 27)
 			{
 				control_cursor(false);
@@ -344,9 +348,9 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 			}
 			else
 			{
-				cout << c;
-				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
+				cout << c;
+				length++;
 			}
 			c = _getch();
 		}
@@ -393,12 +397,13 @@ int nhap_ki_tu(string& str, int flag)
 	do
 	{
 		c = _getch();
-		if (c == 0 || c == -32)
-		{
-			c = _getch();
-		}
 		while (int(c) != 13)
 		{
+			if (c == 0 || c == -32)
+			{
+				BaoLoi("PHIM NHAP KHONG HOP LE");
+				break;
+			}
 			if (c == 27)
 			{
 				control_cursor(false);
@@ -441,10 +446,21 @@ int nhap_ki_tu(string& str, int flag)
 			else
 			{
 				TextColor(15);
-				cout << c;
-				length++; // cập nhật vụ trí con trỏ chỉ vị
 				str.push_back(c);
-			}
+					if (Kiem_Tra_Ki_Tu_So(c) == true) // nếu số in ra
+						cout << c;
+					else if (length == 0) { // là chữ
+						c = c - 32;
+						cout << c;
+					}
+					else if (str[length - 1] == 32) // trước nó là khoảng cách
+					{
+						c = c - 32;
+						cout << c;
+					}
+					else cout << c; 
+					length++;
+			}	
 			break;
 		}
 		if (c == 13)
@@ -504,21 +520,18 @@ int nhap_ki_tu(string& str, int flag)
 void tao_ma_doc_gia()
 {
 	int* arr = new int[MAX_MATHE + 1];
-	int i = 1;
-	for (i; i <= 100000; i++)
+	int i;
+	int j = 0;
+	for (int i = 1; i < MAX_MATHE + 1; i++)
 	{
 		arr[i] = i;
-	}
-	for (i = 1; i <= 100000; i += 2)
-	{
-		int j = rand() % 100000 + 1;
-		swap(arr[i], arr[j]);
+		j = rand() % i + 1; // random tu 1 -> i
+		swap(arr[i], arr[j]); // hoan doi 2 vi tri
 	}
 	ofstream fileout("MADOCGIA.txt");
-	for (i = 1; i <= 100000; i++)
-	{
+	for (i = 1; i < MAX_MATHE+1; i++)
 		fileout << arr[i] << endl;
-	}
+	
 	delete[] arr;
 	fileout.close();
 }
@@ -981,7 +994,7 @@ void Box_NHAP(string x)
 	int x1 = whereX(), y1 = whereY();
 	TextColor(252);
 	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 2); cout << char(186);
-	gotoXY(boxx + 20, tungdo + 3); cout << "                                                    ";
+	gotoXY(boxx + 20, tungdo + 3); TextColor(252); cout << "          ENTER:CHON        ESC:THOAT               "; 
 	gotoXY(boxx + 20, tungdo + 3); cout << char(186);
 	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 3); cout << char(186);
 	gotoXY(boxx + 20, tungdo + 4); cout << char(200);
@@ -1049,4 +1062,40 @@ void chay_chu(int x, int y, const char* s)
 		}
 	}
 	//gotoXY(x1, y1);
+}
+bool xac_nhan(int x,int y,const char* s,string temp)
+{
+	char c;
+	Box_NHAP(s + temp);
+	TextColor(249);
+	gotoXY(x + 25, y + 2);
+	cout << "CO";
+	gotoXY(x + 30, y + 2);
+	cout << "HUY";
+	while (1)
+	{
+		gotoXY(x + 25, y + 2); TextColor(252); cout << "CO";
+		gotoXY(x + 30, y + 2); TextColor(247); cout << "HUY";
+		c = _getch();
+		if (c == 13) {
+			Xoa_hien_thi_Box_NHAP();
+			return true;
+		}
+		else if (c == 27)
+		{
+			Xoa_hien_thi_Box_NHAP();
+			return false;
+		}
+		if (c == -32) c = _getch();
+		if (c == 77 || c==75)
+		{
+			gotoXY(x + 25, y + 2); TextColor(247); cout << "CO";
+			gotoXY(x + 30, y + 2); TextColor(252); cout << "HUY";
+			c = _getch(); if (c == -32) c = _getch();
+			if (c == 13 || c==27) {
+				Xoa_hien_thi_Box_NHAP();
+				return false;
+			}
+		}
+	}
 }

@@ -382,7 +382,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					if (i != -1) // tim thay sach
 					{
 						XOA_HIEN_THI();
-						XUAT_THONGTIN_DS(l, *l.ds_dausach[i], 1);
+						XUAT_THONGTIN_DS( *l.ds_dausach[i], 1);
 						_getch();
 						break;
 					}
@@ -432,14 +432,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 		// Mượn sách
 		case 3:
 		{
-			while (1)
-			{
-				int i = MUON_SACH(t, l);
-				if (i == -2) // ESC
-					goto menu_chinh;
-				GHI_FILE_DS_DG(t);
-				GhiFileDS(l);
-			}
+			MUON_SACH(t, l);
+			GHI_FILE_DS_DG(t);
+			GhiFileDS(l);
+			break;
 		}
 		// TRẢ SÁCH
 		case 4:
@@ -547,7 +543,10 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 								}
 								case ENTER:
 								{
-									check2 = true;
+									if (xac_nhan(80, 15, "XAC NHAN MAT SACH ", arr[k - 1].masach) == true)
+										check2 = true;
+									else check2 = false;
+	
 									break;
 								}
 								}
