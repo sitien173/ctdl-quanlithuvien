@@ -11,7 +11,7 @@ using namespace std;
 #define boxx 50 //Vi tri x bat dau cua box
 #define boxy 5 //Vi tri y bat dau cua box
 #define boxs 80 //Box size
-const int STACKSIZE = 500; // size Stack = 500
+#define STACKSIZE  500 // size Stack = 500
 //==============danh muc sach================
 struct danhmucsach {
 	string masach;
@@ -40,8 +40,8 @@ struct dausach
 	string tacgia;
 	int namxuatban;
 	string theloai;
-	int soluongsach; // số lượng sách độc giả đã và đang mượn
-	int soluongmuon; // biến lưu trữ số lần mượn sách của độc giả
+	int soluongsach; // số lượng sách thuộc đầu sách 
+	int soluongmuon; // biến lưu trữ số lần mượn sách của độc giả dùng để thống kê
 	LIST_DMS dms; // con trỏ trỏ đến các sách thuộc đầu sách tương ứng
 };
 struct list_dausach
@@ -84,8 +84,8 @@ struct docgia
 	string ho;
 	string ten;
 	string phai;
-	int trangthaithe;
-	int tongsosach; 
+	int trangthaithe; // =0 KHOA =1 HOATDONG
+	int tongsosach;  // tổng số cuốn sách độc giả đã và đang mượn 
 	LIST_MT mt; // con trỏ sẽ trỏ đến danh sách các cuốn đã và đang mượn
 };
 struct node_docgia

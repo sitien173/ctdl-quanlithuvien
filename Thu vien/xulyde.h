@@ -588,6 +588,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 	int j = 0;
 	int tungdo = 1;
 	int vitri_timthay = 0;
+	int sl_sach = 0; // số lượng sách còn ở thư viện
 	dausach* arr = new dausach[l.sl]; // mảng chứa  các đầu sách tìm thấy. dùng đê xuất sách
 	for (int i = 0; i < l.sl; i++)
 	{
@@ -597,6 +598,9 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		if (vitri_timthay != string::npos && tungdo <= 40)
 		{
 			XUAT_THONGTIN_DS(*l.ds_dausach[i], tungdo++);
+			sl_sach = Dem_Sach_CON_MUON_DUOC(l, l.ds_dausach[i]->ISBN);
+			gotoXY(180, 0); TextColor(14); cout << "SL CON";
+			gotoXY(180, tungdo - 1); TextColor(15); cout << sl_sach;
 			ToMau(vitri_timthay + 55, tungdo - 1, temp, 14);
 			kt++;
 			arr[j++] = *l.ds_dausach[i]; // lưu đầu sách được tìm thấy

@@ -1,5 +1,5 @@
 83
-1210074001,Bi Mat Dotcom,221,Russell Brunson,2000,Cong Nghe,1
+1210074001,Bi Mat Dotcom,221,Russell Brunson,20000,Cong Nghe,1
 57
 1210074001-1,0,Ngan 5
 1210074001-2,0,Ngan 5

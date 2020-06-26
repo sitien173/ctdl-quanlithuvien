@@ -3,7 +3,7 @@ D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(47,20): warning C401
 D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(60,20): warning C4018: '<': signed/unsigned mismatch
 D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(650,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(32): warning C4715: 'key': not all control paths return a value
-D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(303): warning C4715: 'nhap_so_nguyen1': not all control paths return a value
-D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(388): warning C4715: 'nhap_so_nguyen': not all control paths return a value
-D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(512): warning C4715: 'nhap_ki_tu': not all control paths return a value
+D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(304): warning C4715: 'nhap_so_nguyen1': not all control paths return a value
+D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(391): warning C4715: 'nhap_so_nguyen': not all control paths return a value
+D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(515): warning C4715: 'nhap_ki_tu': not all control paths return a value
   Thu vien.vcxproj -> D:\QUANLITHUVIEN - 1\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe

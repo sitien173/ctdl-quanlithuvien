@@ -258,6 +258,7 @@ int nhap_so_nguyen1(int& n) {
 			}
 			else
 			{
+				TextColor(15);
 				str.push_back(c);
 				cout << c;
 				length++;
@@ -348,9 +349,11 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 			}
 			else
 			{
+				TextColor(15);
 				str.push_back(c);
 				cout << c;
 				length++;
+				
 			}
 			c = _getch();
 		}
@@ -510,9 +513,6 @@ int nhap_ki_tu(string& str, int flag)
 	chuan_hoa_chu(str);
 	control_cursor(false);
 }
-
-
-
 
 
 // ========================tạo mã độc giả không trùng================
@@ -1061,7 +1061,7 @@ void chay_chu(int x, int y, const char* s)
 			ClearLine(i, y);
 		}
 	}
-	//gotoXY(x1, y1);
+	gotoXY(x1, y1);
 }
 bool xac_nhan(int x,int y,const char* s,string temp)
 {
