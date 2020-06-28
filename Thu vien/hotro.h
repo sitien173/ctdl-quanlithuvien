@@ -206,9 +206,9 @@ bool Kiem_Tra_Ki_Tu_So(char c)
 // ki tu so rt 2 <> ky tu dac biet rt 1 <> 0
 int Kiem_tra_phim(char c)
 {
-	int arr[23] = {44,46,47,39,59,91,93,92,61,33,64,35,36,37,94,38,40,42,41,95,96,126,9 };
+	int arr[23] = { 44,46,47,39,59,91,93,92,61,33,64,35,36,37,94,38,40,42,41,95,96,126,9 };
 	if (Kiem_Tra_Ki_Tu_So(c) == true) // so
-		return 2; 
+		return 2;
 	for (int i = 0; i < 23; i++)
 		if (c == arr[i])
 			return 1;
@@ -309,7 +309,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 	str = so_sang_chuoi(n);
 	// nếu nhập kí tự enter thì chuỗi hiểu đó là kí tự kết thúc chuỗi <=> length = 0, ko tính là 1 kí tự
 	bool KT = false;
-	
+
 	if (str == "0") str = "";
 	int length = str.length(); // biến cho con trỏ dịch đến cuối
 	char c;
@@ -353,7 +353,7 @@ int nhap_so_nguyen(int& n) // Hàm nhập dữ liệu toàn số .
 				str.push_back(c);
 				cout << c;
 				length++;
-				
+
 			}
 			c = _getch();
 		}
@@ -450,20 +450,20 @@ int nhap_ki_tu(string& str, int flag)
 			{
 				TextColor(15);
 				str.push_back(c);
-					if (Kiem_Tra_Ki_Tu_So(c) == true) // nếu số in ra
-						cout << c;
-					else if (length == 0) { // là chữ
-						c = c - 32;
-						cout << c;
-					}
-					else if (str[length - 1] == 32) // trước nó là khoảng cách
-					{
-						c = c - 32;
-						cout << c;
-					}
-					else cout << c; 
-					length++;
-			}	
+				if (Kiem_Tra_Ki_Tu_So(c) == true) // nếu số in ra
+					cout << c;
+				else if (length == 0) { // là chữ
+					c = c - 32;
+					cout << c;
+				}
+				else if (str[length - 1] == 32) // trước nó là khoảng cách
+				{
+					c = c - 32;
+					cout << c;
+				}
+				else cout << c;
+				length++;
+			}
 			break;
 		}
 		if (c == 13)
@@ -529,9 +529,9 @@ void tao_ma_doc_gia()
 		swap(arr[i], arr[j]); // hoan doi 2 vi tri
 	}
 	ofstream fileout("MADOCGIA.txt");
-	for (i = 1; i < MAX_MATHE+1; i++)
+	for (i = 1; i < MAX_MATHE + 1; i++)
 		fileout << arr[i] << endl;
-	
+
 	delete[] arr;
 	fileout.close();
 }
@@ -542,27 +542,24 @@ void giaiphong_cay(TREE& t)
 {
 	if (t != NULL)
 	{
-		if (t->data.tongsosach > 0)
+		NODE_MT* p = t->data.mt.pHead;
+		NODE_MT* q = NULL;
+		while (p != NULL)
 		{
-			NODE_MT* p = t->data.mt.pHead;
-			NODE_MT* q = NULL;
-			while (p != NULL)
+			t->data.mt.pHead = p->pNext;
+			if (p != t->data.mt.pTail)
 			{
-				t->data.mt.pHead = p->pNext;
-				if (p != t->data.mt.pTail)
-				{
-					p = p->pNext;
-					q = p->pPrev;
-					delete q;
-				}
-				else // p là node cuối mt
-				{
-					delete p;
-					break;
-				}
+				p = p->pNext;
+				q = p->pPrev;
+				delete q;
 			}
-			t->data.mt.pTail = NULL;
+			else // p là node cuối mt
+			{
+				delete p;
+				break;
+			}
 		}
+		t->data.mt.pTail = NULL;
 		giaiphong_cay(t->pLeft);
 		giaiphong_cay(t->pRight);
 		delete t;
@@ -574,16 +571,13 @@ void giaiphong_dausach(LIST_DS& l)
 	for (int i = 0; i < l.sl; i++)
 	{
 		NODE_DMS* p = NULL;
-		if (l.ds_dausach[i]->soluongsach > 0)
+		while (l.ds_dausach[i]->dms.pHead != NULL)
 		{
-			while (l.ds_dausach[i]->dms.pHead != NULL)
-			{
-				p = l.ds_dausach[i]->dms.pHead;
-				l.ds_dausach[i]->dms.pHead = l.ds_dausach[i]->dms.pHead->pNext;
-				delete p;
-			}
-			l.ds_dausach[i]->dms.pTail = NULL;
+			p = l.ds_dausach[i]->dms.pHead;
+			l.ds_dausach[i]->dms.pHead = l.ds_dausach[i]->dms.pHead->pNext;
+			delete p;
 		}
+		l.ds_dausach[i]->dms.pTail = NULL;
 		delete l.ds_dausach[i];
 		l.sl--;
 	}
@@ -965,7 +959,6 @@ void xoa_hien_thi_Box_NhapSach()
 int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
 {
 	int i = TIM_KIEM_DS_THEO_MA(l, ISBN);
-	if (l.ds_dausach[i]->soluongsach == 0) return 0;
 	int n = 0;
 	if (i != -1)
 	{
@@ -994,7 +987,7 @@ void Box_NHAP(string x)
 	int x1 = whereX(), y1 = whereY();
 	TextColor(252);
 	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 2); cout << char(186);
-	gotoXY(boxx + 20, tungdo + 3); TextColor(252); cout << "          ENTER:CHON        ESC:THOAT               "; 
+	gotoXY(boxx + 20, tungdo + 3); TextColor(252); cout << "          ENTER:CHON        ESC:THOAT               ";
 	gotoXY(boxx + 20, tungdo + 3); cout << char(186);
 	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 3); cout << char(186);
 	gotoXY(boxx + 20, tungdo + 4); cout << char(200);
@@ -1033,16 +1026,13 @@ bool KT_SACH_DG_MUON(TREE p, string ma_sach)
 {
 	string s = tach_ma_sach(ma_sach);
 	string temp;
-	if (p->data.tongsosach > 0)
+	for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
 	{
-		for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
+		if (q->data.trangthai == 0) // đang mượn sách
 		{
-			if (q->data.trangthai == 0) // đang mượn sách
-			{
-				temp = tach_ma_sach(q->data.masach);
-				if (temp == s) // đang mượn cuốn sách có đầu sách tương tự
-					return true;
-			}
+			temp = tach_ma_sach(q->data.masach);
+			if (temp == s) // đang mượn cuốn sách có đầu sách tương tự
+				return true;
 		}
 	}
 	return false;
@@ -1063,7 +1053,7 @@ void chay_chu(int x, int y, const char* s)
 	}
 	gotoXY(x1, y1);
 }
-bool xac_nhan(int x,int y,const char* s,string temp)
+bool xac_nhan(int x, int y, const char* s, string temp)
 {
 	char c;
 	Box_NHAP(s + temp);
@@ -1087,15 +1077,31 @@ bool xac_nhan(int x,int y,const char* s,string temp)
 			return false;
 		}
 		if (c == -32) c = _getch();
-		if (c == 77 || c==75)
+		if (c == 77 || c == 75)
 		{
 			gotoXY(x + 25, y + 2); TextColor(247); cout << "CO";
 			gotoXY(x + 30, y + 2); TextColor(252); cout << "HUY";
 			c = _getch(); if (c == -32) c = _getch();
-			if (c == 13 || c==27) {
+			if (c == 13 || c == 27) {
 				Xoa_hien_thi_Box_NHAP();
 				return false;
 			}
 		}
 	}
+}
+// đếm số lượng sách có thuộc 1 đầu sách
+int tong_so_sach(dausach x)
+{
+	int n = 0;
+	for (NODE_DMS* p = x.dms.pHead; p != NULL; p = p->pNext)
+		n++;
+	return n;
+}
+// số lượng sách độc giả đã và đang mượn
+int tong_so_sach_DG(docgia x)
+{
+	int n = 0;
+	for (NODE_MT* p = x.mt.pHead; p != NULL; p = p->pNext)
+		n++;
+	return n;
 }

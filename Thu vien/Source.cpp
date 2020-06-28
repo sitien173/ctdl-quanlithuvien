@@ -5,7 +5,7 @@
  GV: LƯU NGUYỄN KỲ THƯ
  */
 char thaotac[][50] =
-{ "DOC GIA                    ",
+{                   "DOC GIA                    ",
 					"DAU SACH                   ",
 					"MUON SACH                  ",
 					"TRA SACH                   ",
@@ -101,7 +101,7 @@ void menu_xuli()
 										"THOAT             "
 			};
 		menu_DG:	int chon = menu_dong(menu_docgia, 6); // chọn thao tác với menu độc giả
-					// thêm độc giả
+							// thêm độc giả
 			if (chon == 1) // enter 
 			{
 				while (1)
@@ -134,9 +134,9 @@ void menu_xuli()
 			// xuất danh sách độc giả
 			if (chon == 2)
 			{
-menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
-													  "XUAT THEO HO TEN    ",
-													  "THOAT               " };
+			menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
+																  "XUAT THEO HO TEN    ",
+																  "THOAT               " };
 			int chon_1 = menu_dong(menu_xuat, 3); // chọn thao tác menu xuất
 			if (chon_1 == 1)
 			{
@@ -382,7 +382,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 					if (i != -1) // tim thay sach
 					{
 						XOA_HIEN_THI();
-						XUAT_THONGTIN_DS( *l.ds_dausach[i], 1);
+						XUAT_THONGTIN_DS(*l.ds_dausach[i], 1);
 						_getch();
 						break;
 					}
@@ -440,18 +440,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 		// TRẢ SÁCH
 		case 4:
 		{
-			while (1)
-			{
-				int i = TRA_SACH(t, l);
-				if (i == -2) // ESC
-					break;
-				else if (i == 1)
-				{
-					BaoLoi("TRA THANH CONG");
-					GHI_FILE_DS_DG(t);
-					GhiFileDS(l);
-				}
-			}
+			TRA_SACH(t, l);
 			goto menu_chinh;
 		}
 		// Làm mất sách
@@ -546,7 +535,7 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 									if (xac_nhan(80, 15, "XAC NHAN MAT SACH ", arr[k - 1].masach) == true)
 										check2 = true;
 									else check2 = false;
-	
+
 									break;
 								}
 								}
@@ -631,8 +620,6 @@ menu_xuat:		char menu_xuat[3][50] = { "XUAT THEO MA DOC GIA",
 		}
 		default:
 		{
-			GHI_FILE_DS_DG(t);
-			GhiFileDS(l);
 			giaiphong_cay(t);
 			giaiphong_dausach(l);
 			return;

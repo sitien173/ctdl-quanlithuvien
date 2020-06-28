@@ -40,8 +40,7 @@ struct dausach
 	string tacgia;
 	int namxuatban;
 	string theloai;
-	int soluongsach; // số lượng sách thuộc đầu sách 
-	int soluongmuon; // biến lưu trữ số lần mượn sách của độc giả dùng để thống kê
+	int soluongmuon; // biến lưu trữ số lần mượn sách của độc giả dùng để thống kê sách mượn nhiều nhất
 	LIST_DMS dms; // con trỏ trỏ đến các sách thuộc đầu sách tương ứng
 };
 struct list_dausach
@@ -85,7 +84,6 @@ struct docgia
 	string ten;
 	string phai;
 	int trangthaithe; // =0 KHOA =1 HOATDONG
-	int tongsosach;  // tổng số cuốn sách độc giả đã và đang mượn 
 	LIST_MT mt; // con trỏ sẽ trỏ đến danh sách các cuốn đã và đang mượn
 };
 struct node_docgia

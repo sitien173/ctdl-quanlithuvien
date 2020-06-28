@@ -22,20 +22,17 @@ void Ghifile_1_DG(TREE q,ofstream& fileout)
 		fileout << q->data.ten << ',';
 		fileout << q->data.phai << ',';
 		fileout << q->data.trangthaithe << endl;
-		fileout << q->data.tongsosach << endl;
-		if (q->data.tongsosach > 0)
+		fileout << tong_so_sach_DG(q->data) << endl;
+		for (NODE_MT* p = q->data.mt.pHead; p != NULL; p = p->pNext)
 		{
-			for (NODE_MT* p = q->data.mt.pHead; p != NULL; p = p->pNext)
-			{
-				fileout << p->data.masach << ',';
-				fileout << p->data.trangthai << ',';
-				fileout << p->data.ngaymuon.ngay << '/';
-				fileout << p->data.ngaymuon.thang << '/';
-				fileout << p->data.ngaymuon.nam << ',';
-				fileout << p->data.ngaytra.ngay << '/';
-				fileout << p->data.ngaytra.thang << '/';
-				fileout << p->data.ngaytra.nam << endl;
-			}
+			fileout << p->data.masach << ',';
+			fileout << p->data.trangthai << ',';
+			fileout << p->data.ngaymuon.ngay << '/';
+			fileout << p->data.ngaymuon.thang << '/';
+			fileout << p->data.ngaymuon.nam << ',';
+			fileout << p->data.ngaytra.ngay << '/';
+			fileout << p->data.ngaytra.thang << '/';
+			fileout << p->data.ngaytra.nam << endl;
 		}
 		Ghifile_1_DG(q->pLeft,fileout);
 		Ghifile_1_DG(q->pRight, fileout);
@@ -56,6 +53,7 @@ void LoadtuFile_DSDG(TREE& t)
 	muontra x;
 	docgia s;
 	int n = 0;
+	int temp = 0;
 	f >> n;
 	for (int j = 0; j < n; j++)
 	{
@@ -66,12 +64,11 @@ void LoadtuFile_DSDG(TREE& t)
 		getline(f, s.phai, ',');
 		f >> s.trangthaithe;
 		f.ignore();
-		f >> s.tongsosach;
+		f >> temp;
 		f.ignore();
 		Add_DG_VAO_CAY(t, s);
 		TREE p = TIM_KIEM_DG_MA(t, s.mathe);
-		Init_MT(p->data.mt);
-		for (int i = 0; i < s.tongsosach; i++)
+		for (int i = 0; i < temp; i++)
 		{
 			getline(f, x.masach, ',');
 			f >> x.trangthai;      f.ignore();
@@ -100,15 +97,12 @@ void GhiFileDS(LIST_DS l)
 		f << l.ds_dausach[i]->namxuatban << ',';
 		f << l.ds_dausach[i]->theloai << ',';
 		f << l.ds_dausach[i]->soluongmuon << endl;
-		f << l.ds_dausach[i]->soluongsach << endl;
-		if (l.ds_dausach[i]->soluongsach > 0)
+		f << tong_so_sach(*l.ds_dausach[i]) << endl;
+		for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
 		{
-			for (NODE_DMS* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
-			{
-				f << p->data.masach << ',';
-				f << p->data.trangthai << ',';
-				f << p->data.vitri << endl;
-			}
+			f << p->data.masach << ',';
+			f << p->data.trangthai << ',';
+			f << p->data.vitri << endl;
 		}
 	}
 	f.close();
@@ -120,6 +114,7 @@ void LoadFileDS(LIST_DS& l)
 	danhmucsach x;
 	ifstream f("DAUSACH.txt");
 	int n;
+	int temp;
 	f >> n;
 	f.ignore();
 	for (int i = 0; i < n; i++)
@@ -134,12 +129,11 @@ void LoadFileDS(LIST_DS& l)
 		getline(f, data.theloai,',');
 		f >> data.soluongmuon;
 		f.ignore();
-		f >> data.soluongsach;
+		f >> temp;
 		f.ignore();
 		ADDTail_DS(l, data);
 		int vitri = TIM_KIEM_DS_THEO_MA(l, data.ISBN);
-		Init_DMS(l.ds_dausach[vitri]->dms);
-		for (int i = 0; i < data.soluongsach; i++)
+		for (int i = 0; i < temp; i++)
 		{
 			getline(f, x.masach, ',');
 			f >> x.trangthai;
