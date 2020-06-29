@@ -586,13 +586,13 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 	int tungdo = 1;
 	int vitri_timthay = 0;
 	int sl_sach = 0; // số lượng sách còn ở thư viện
-	dausach* arr = new dausach[40]; // mảng chứa  các đầu sách tìm thấy. dùng đê xuất sách
+	int* arr = new int[40]; // mảng chứa  các đầu sách tìm thấy. dùng đê xuất sách
 	int* soluongsach = new int[40]; // mảng soluongsach lưu số lượng các sách của đầu sách tìm thấy
 	for (int i = 0; i < l.sl; i++)
 	{
 		// nếu tìm thấy temp là chuỗi con của tên đầu sách
 		vitri_timthay = l.ds_dausach[i]->tensach.find(temp);
-		if (vitri_timthay != string::npos && tungdo <= 40)
+		if (vitri_timthay != string::npos && tungdo < 40)
 		{
 			XUAT_THONGTIN_DS(*l.ds_dausach[i], tungdo++);
 			sl_sach = Dem_Sach_CON_MUON_DUOC(l, l.ds_dausach[i]->ISBN);
@@ -600,7 +600,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 			gotoXY(180, tungdo - 1); TextColor(15); cout << sl_sach;
 			ToMau(vitri_timthay + 55, tungdo - 1, temp, 14);
 			kt++;
-			arr[j] = *l.ds_dausach[i]; // lưu đầu sách được tìm thấy
+			arr[j] = i; // lưu đầu sách được tìm thấy
 			soluongsach[j] = tong_so_sach(*l.ds_dausach[i]);
 			j++;
 		}
@@ -613,11 +613,11 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		{
 			gotoXY(37, k); cout << ">>";
 			gotoXY(55, k);
-			ToMau(55, k, arr[k - 1].tensach, 14);
+			ToMau(55, k, l.ds_dausach[arr[k-1]]->tensach, 14);
 			control_cursor(false);
 			char c = _getch();
 			gotoXY(37, k); cout << "  ";
-			ToMau(55, k, arr[k - 1].tensach, 15);
+			ToMau(55, k, l.ds_dausach[arr[k - 1]]->tensach, 15);
 			TRANGTHAI tt = key(c);
 			switch (tt)
 			{
@@ -663,21 +663,17 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 		int tso_trang = (soluongsach[k - 1] - 1) / 40 + 1;
 		int so_trang = 1;
 		int tungdo1 = 1;
-		NODE_DMS* p = arr[k - 1].dms.pHead;
-		NODE_DMS* q = NULL;
-		NODE_DMS* q1 = NULL;
-		NODE_DMS* p1 = p;
+		NODE_DMS* p = l.ds_dausach[arr[k - 1]]->dms.pHead;
+		NODE_DMS* temp[10]; // mảng con trỏ chứa tối đa 50 trang
 		for (int i = 0; i < tso_trang; i++)
 		{
-			q1 = q;
-			q = p1;
+			temp[i] = p; // lưu vị trí con trỏ p trước khi duyệt để quay lại
 			while (p != NULL)
 			{
 				XOA_HIEN_THI();
-				p1 = p;
 				for (int j1 = 0; j1 < 40 && p != NULL; j1++)
 				{
-					XUAT_THONG_TIN_SACH(arr[k - 1].tensach, p->data, j1 + 1);
+					XUAT_THONG_TIN_SACH(l.ds_dausach[arr[k - 1]]->tensach, p->data, j1 + 1);
 					p = p->pNext;
 				}
 				gotoXY(105, 42); cout << i + 1 << "/" << tso_trang;
@@ -699,8 +695,7 @@ BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách 
 						gotoXY(95, 42); cout << "                    ";
 						goto BD;
 					}
-					p = q;
-					p1 = q1;
+					p = temp[i-1];
 					i -= 2;
 					gotoXY(95, 42); cout << "                   ";
 					break;
