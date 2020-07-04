@@ -154,7 +154,7 @@ void menu_xuli()
 				int n; // khai báo biến đếm số lượng độc giả trong cây
 				n = SoluongDG(t);
 				docgia* arr = new docgia[n];
-				CAY_SANG_MANG(t, arr, tungdo);
+				CHUYEN_CAY_SANG_MANG(t, arr, tungdo);
 				tungdo = 0;
 				SX_DG_TEN(arr, n);
 				int t_sotrang = (n - 1) / 40 + 1;

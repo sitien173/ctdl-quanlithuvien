@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="ctdl.h" />
     <ClInclude Include="doc_ghi_file.h" />
+    <ClInclude Include="hienthi.h" />
     <ClInclude Include="hotro.h" />
     <ClInclude Include="lib.h" />
     <ClInclude Include="xulyde.h" />

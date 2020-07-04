@@ -11,7 +11,7 @@ void Init_MT(LIST_MT& l);
 void AddTail_MT(LIST_MT& l, NODE_MT* p);
 NODE_MT* TAO_NODE_MT(muontra x);
 int SoluongDG(TREE t);
-void CAY_SANG_MANG(TREE t, docgia* arr, int& i);
+void CHUYEN_CAY_SANG_MANG(TREE t, docgia* arr, int& i);
 
 void Ghifile_1_DG(TREE q,ofstream& fileout)
 {

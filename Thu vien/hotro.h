@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ctdl.h"
 #include "lib.h"
+#include "hienthi.h"
 
 TREE TIM_KIEM_DG_MA(TREE& t, int ma_doc_gia);
 void SX_THELOAI_DS(LIST_DS& l);
@@ -75,84 +76,6 @@ void chuan_hoa_chu(string& str)
 			}
 		}
 	}
-}
-
-void Box_BaoLoi()
-{
-	int tungdo = 45;
-	TextColor(14);
-	gotoXY(86, tungdo - 1);
-	cout << "THONG BAO";
-	TextColor(76);
-	gotoXY(boxx, tungdo); cout << char(201);
-	for (int i = 1; i < boxs + 1; i++) cout << char(205);
-	cout << char(187);
-	gotoXY(boxx, tungdo + 1); cout << char(186);
-	gotoXY(boxx + boxs + 1, tungdo + 1); cout << char(186);
-	gotoXY(boxx, tungdo + 2); cout << char(186);
-	gotoXY(boxx + boxs + 1, tungdo + 2); cout << char(186);
-	gotoXY(boxx, tungdo + 3); cout << char(186);
-	gotoXY(boxx + boxs + 1, tungdo + 3); cout << char(186);
-	gotoXY(boxx, tungdo + 4); cout << char(186);
-	gotoXY(boxx + boxs + 1, tungdo + 4); cout << char(186);
-	gotoXY(boxx + 1, tungdo + 5);
-	for (int i = 1; i <= boxs; i++) cout << char(205);
-	gotoXY(boxx, tungdo + 5); cout << char(200);
-	gotoXY(boxx + boxs + 1, tungdo + 5); cout << char(188);
-	TextColor(7);
-}
-void xoa_hienthi_box_baoloi()
-{
-	int tungdo = 45;
-	gotoXY(86, tungdo - 1);
-	cout << "               ";
-	TextColor(4);
-	gotoXY(boxx, tungdo); cout << " ";
-	for (int i = 1; i < boxs + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(boxx, tungdo + 1); cout << " ";
-	gotoXY(boxx + boxs + 1, tungdo + 1); cout << " ";
-	gotoXY(boxx, tungdo + 2);  cout << " ";
-	gotoXY(boxx + boxs + 1, tungdo + 2); cout << " ";
-	gotoXY(boxx, tungdo + 3);  cout << " ";
-	gotoXY(boxx + boxs + 1, tungdo + 3); cout << " ";
-	gotoXY(boxx, tungdo + 4); cout << " ";
-	gotoXY(boxx + boxs + 1, tungdo + 4); cout << " ";
-	gotoXY(boxx + 1, tungdo + 5);
-	for (int i = 1; i <= boxs; i++) cout << " ";
-	gotoXY(boxx, tungdo + 5); cout << " ";
-	gotoXY(boxx + boxs + 1, tungdo + 5); cout << " ";
-	TextColor(7);
-}
-void BaoLoi(string s) {
-	control_cursor(false);
-	int n = s.length();
-	int x = whereX(), y = whereY();
-	Box_BaoLoi();
-	TextColor(15);
-	gotoXY(boxx + 28, boxy + 42);
-	cout << s;
-	Sleep(1200);
-	while (_kbhit()) // không nhận phím  khi đang ngủ
-		_getch();
-
-	for (int i = 0; i < n; i++)
-	{
-		gotoXY(boxx + 28 + i, boxy + 42);
-		cout << " ";
-	}
-	xoa_hienthi_box_baoloi();
-	gotoXY(x, y);
-	TextColor(7);
-	control_cursor(true);
-}
-void ButtonPrev()
-{
-	gotoXY(100, 42); cout << "<-";
-}
-void ButtonNext()
-{
-	gotoXY(110, 42); cout << "->";
 }
 
 // tách mã sách chỉ lấy mã đầu sách
@@ -515,18 +438,19 @@ int nhap_ki_tu(string& str, int flag)
 }
 
 
-// ========================tạo mã độc giả không trùng================
+// ========================ĐỘC GIẢ================
 // tạo 100000 mã độc giả 
 void tao_ma_doc_gia()
 {
 	int* arr = new int[MAX_MATHE + 1];
 	int i;
 	int j = 0;
-	for (int i = 1; i < MAX_MATHE + 1; i++)
-	{
+	for (i = 1; i < MAX_MATHE + 1; i++)
 		arr[i] = i;
-		j = rand() % i + 1; // random tu 1 -> i
-		swap(arr[i], arr[j]); // hoan doi 2 vi tri
+	for (i = 1; i < MAX_MATHE + 1; i++)
+	{
+		j = rand() % MAX_MATHE + i;
+		swap(arr[i], arr[j]);
 	}
 	ofstream fileout("MADOCGIA.txt");
 	for (i = 1; i < MAX_MATHE + 1; i++)
@@ -535,8 +459,172 @@ void tao_ma_doc_gia()
 	delete[] arr;
 	fileout.close();
 }
-
-
+// duyệt cây copy dữ liệu vào mảng
+// duyệt cây copy dữ liệu vào mảng
+void CHUYEN_CAY_SANG_MANG(TREE t, docgia* arr, int& i)
+{
+	if (t != NULL)
+	{
+		CHUYEN_CAY_SANG_MANG(t->pLeft, arr, i);
+		arr[i++] = t->data;
+		CHUYEN_CAY_SANG_MANG(t->pRight, arr, i);
+	}// nếu cây rỗng thoát hàm
+	else
+		return;
+}
+// hoán đổi vị trí 2 độc giả
+void hoandoi(docgia& a, docgia& b)
+{
+	docgia temp = a;
+	a = b;
+	b = temp;
+}
+// sắp xếp độc giả theo tên + họ tăng dần
+void SX_DG_TEN(docgia* arr, int n)
+{
+	for (int i = 0; i < n - 1; i++)
+	{
+		for (int j = i + 1; j < n; j++)
+		{  // kiểm tra tên 2 đg
+			if (arr[i].ten > arr[j].ten)
+			{
+				// hoán đổi vị trí
+				hoandoi(arr[i], arr[j]);
+			} // ngược lại
+			else if (arr[i].ten == arr[j].ten)
+			{ // kiểm tra họ 2 đg
+				if (arr[i].ho < arr[j].ho)
+				{ // hoán đổi vị trí
+					hoandoi(arr[i], arr[j]);
+				}
+			}
+		}
+	}
+}
+//Phần tử p đang được thế mạng cho phần tử q
+void TIM_KIEM_PT_THEMANG(TREE& p, TREE& q)
+{
+	// duyệt đến phần tử trái nhất của cây
+	if (q->pLeft != NULL)
+	{
+		TIM_KIEM_PT_THEMANG(p, q->pLeft);
+	}
+	// đã tìm được phần tử thế mạng
+	else
+	{
+		p->data = q->data;
+		p = q;
+		q = q->pRight;
+	}
+}
+int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
+{
+	int i = TIM_KIEM_DS_THEO_MA(l, ISBN);
+	int n = 0;
+	if (i != -1)
+	{
+		for (node_danhmucsach* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
+			if (p->data.trangthai == 0)
+				n++;
+	}
+	return n;
+}
+// rt true nếu độc giả đang mượn cuốn sách có đầu sách tương tự <> false
+bool KT_SACH_DG_MUON(TREE p, string ma_sach)
+{
+	string s = tach_ma_sach(ma_sach);
+	string temp;
+	for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
+	{
+		if (q->data.trangthai == 0) // đang mượn sách
+		{
+			temp = tach_ma_sach(q->data.masach);
+			if (temp == s) // đang mượn cuốn sách có đầu sách tương tự
+				return true;
+		}
+	}
+	return false;
+}
+// số lượng sách độc giả đã và đang mượn
+int tong_so_sach_DG(docgia x)
+{
+	int n = 0;
+	for (NODE_MT* p = x.mt.pHead; p != NULL; p = p->pNext)
+		n++;
+	return n;
+}
+// đếm số đọc giả trong cây
+int SoluongDG(TREE t)
+{
+	int n = 1;
+	if (t)
+	{
+		n += SoluongDG(t->pLeft);
+		n += SoluongDG(t->pRight);
+		return n;
+	}
+	else return 0;
+}
+// đếm số sách độc giả đang mượn dùng để kiểm tra điều kiện mượn sách 
+int DEM_SACH_DG_MUON(TREE t)
+{
+	int so_sach_muon = 0;
+	for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
+	{
+		if (p->data.trangthai == 0 || p->data.trangthai == 2) // sách chưa trả
+			so_sach_muon++;
+	}
+	return so_sach_muon;
+}
+// kiem tra xem doc gia co muon sach qua han hay ko neu qua han rt true <> false
+bool Dem_SN_QUAHAN(TREE p)
+{
+	int n = 0;
+	for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
+	{
+		if (q->data.trangthai == 0) // dang muon sach
+		{
+			n = tinh_so_ngay(q->data.ngaymuon);
+			if (n >= 7)
+				return true;
+		}
+	}
+	return false;
+}
+//================================ ĐẦU SÁCH ============================
+// sắp xếp đầu sách theo thể loại
+void SX_THELOAI_DS(LIST_DS& l)
+{
+	dausach* temp = NULL;
+	//sap xep theo the loai
+	for (int i = 0; i < l.sl - 1; i++)
+		for (int j = i + 1; j < l.sl; j++)
+		{
+			if (l.ds_dausach[i]->theloai > l.ds_dausach[j]->theloai)
+			{
+				temp = l.ds_dausach[i];
+				l.ds_dausach[i] = l.ds_dausach[j];
+				l.ds_dausach[j] = temp;
+			}
+			else if (l.ds_dausach[i]->theloai == l.ds_dausach[j]->theloai)
+			{
+				if (l.ds_dausach[i]->tensach > l.ds_dausach[j]->tensach)
+				{
+					temp = l.ds_dausach[i];
+					l.ds_dausach[i] = l.ds_dausach[j];
+					l.ds_dausach[j] = temp;
+				}
+			}
+		}
+}
+// đếm số lượng sách có thuộc 1 đầu sách
+int tong_so_sach(dausach x)
+{
+	int n = 0;
+	for (NODE_DMS* p = x.dms.pHead; p != NULL; p = p->pNext)
+		n++;
+	return n;
+}
 // =============================== giải phóng==================
 void giaiphong_cay(TREE& t)
 {
@@ -583,13 +671,7 @@ void giaiphong_dausach(LIST_DS& l)
 	}
 }
 
-// hoán đổi vị trí 2 độc giả
-void hoandoi(docgia& a, docgia& b)
-{
-	docgia temp = a;
-	a = b;
-	b = temp;
-}
+
 
 // lấy thời gian thực hệ thống
 void thoi_gian_thuc(Date& x)
@@ -645,463 +727,5 @@ int tinh_so_ngay(Date n1)
 	return sum;
 }
 
-void xoa_hienthi_buttonNext()
-{
-	int x = whereX();
-	int y = whereY();
-	gotoXY(110, 42); cout << "       ";
-	gotoXY(x, y);
-}
-void XOA_HIEN_THI()
-{
-	int x = whereX();
-	int y = whereY();
-	for (int i = 0; i <= 40; i++) {
-		ClearLine(40, i);
-	}
-	gotoXY(x, y);
-}
 
 
-void ButtonEnter(int hoanhdo, int tungdo)
-{
-	int x = whereX();
-	int y = whereY();
-	gotoXY(hoanhdo, tungdo); TextColor(76); cout << "        ";
-	gotoXY(hoanhdo, tungdo + 1); TextColor(78); cout << "  CHON  ";
-	gotoXY(hoanhdo, tungdo + 2); TextColor(76); cout << "        ";
-	gotoXY(hoanhdo, tungdo + 3); TextColor(79); cout << "  Enter ";
-	gotoXY(x, y);
-}
-void ButtonESC(int hoanhdo, int tungdo)
-{
-	int x = whereX(), y = whereY();
-	gotoXY(hoanhdo, tungdo); TextColor(76); cout << "        ";
-	gotoXY(hoanhdo, tungdo + 1); TextColor(78); cout << "  THOAT ";
-	gotoXY(hoanhdo, tungdo + 2); TextColor(76); cout << "        ";
-	gotoXY(hoanhdo, tungdo + 3); TextColor(79); cout << "   ESC  ";
-	gotoXY(x, y);
-}
-void xoa_hien_thi_1_Button(int hoanhdo, int tungdo)
-{
-	int x = whereX(), y = whereY();
-	gotoXY(hoanhdo, tungdo); TextColor(7); cout << "        ";
-	gotoXY(hoanhdo, tungdo + 1); TextColor(7); cout << "        ";
-	gotoXY(hoanhdo, tungdo + 2); TextColor(7); cout << "        ";
-	gotoXY(hoanhdo, tungdo + 3); TextColor(7); cout << "        ";
-	gotoXY(x, y);
-}
-
-void xoa_hien_thi_button()
-{
-	int x = whereX(), y = whereY();
-	TextColor(7);
-
-	gotoXY(boxx + boxs - 5, boxy + 15);  cout << "        ";
-	gotoXY(boxx + boxs - 5, boxy + 16);  cout << "        ";
-	gotoXY(boxx + boxs - 5, boxy + 17);  cout << "        ";
-	gotoXY(boxx + boxs - 5, boxy + 18);  cout << "        ";
-
-	gotoXY(boxx + boxs - 45, boxy + 15);  cout << "        ";
-	gotoXY(boxx + boxs - 45, boxy + 16);  cout << "        ";
-	gotoXY(boxx + boxs - 45, boxy + 17);  cout << "        ";
-	gotoXY(boxx + boxs - 45, boxy + 18);  cout << "        ";
-
-	gotoXY(boxx, boxy + 15);  cout << "        ";
-	gotoXY(boxx, boxy + 16);  cout << "        ";
-	gotoXY(boxx, boxy + 17);  cout << "        ";
-	gotoXY(boxx, boxy + 18);  cout << "        ";
-	gotoXY(x, y);
-}
-void huong_dan_su_dung()
-{
-	ifstream fo("input1.txt");
-	string s;
-	int i = 0;
-	int j = 1;
-	int x = 80;
-	while (!fo.eof())
-	{
-		getline(fo, s);
-		i = rand() % 15 + 1;
-		gotoXY(x, j++);
-		TextColor(i);
-		cout << s;
-	}
-	fo.close();
-
-	gotoXY(94, 20);
-	TextColor(15);
-	cout << "HUONG DAN SU DUNG";
-	gotoXY(82, 24);
-	cout << char(24);
-	gotoXY(82, 26);
-	cout << char(25);
-	gotoXY(80, 25);
-	cout << char(27);
-	gotoXY(84, 25);
-	cout << char(26);
-	gotoXY(86, 25);
-	TextColor(14);
-	cout << "Su Dung 4 Phim Mui Ten De Di Chuyen";
-
-	gotoXY(78, 28); TextColor(76); cout << "        ";
-	gotoXY(78, 29); TextColor(78); cout << "  CHON  ";
-	gotoXY(78, 30); TextColor(76); cout << "        ";
-	gotoXY(78, 31); TextColor(79); cout << "  Enter ";
-	gotoXY(87, 30); TextColor(14); cout << "Bam Phim Enter De Chon Thao Tac";
-
-	gotoXY(78, 34); TextColor(76); cout << "        ";
-	gotoXY(78, 35); TextColor(78); cout << "  THOAT ";
-	gotoXY(78, 36); TextColor(76); cout << "        ";
-	gotoXY(78, 37); TextColor(79); cout << "   ESC  ";
-	gotoXY(87, 36); TextColor(14); cout << "Bam Phim ESC De Quay Lai Hoac Thoat";
-	gotoXY(0, 0);
-}
-void xoa_hien_thi_huong_dan()
-{
-	int x = whereX();
-	int y = whereY();
-	TextColor(7);
-	for (int i = 1; i <= 40; i++)
-	{
-		gotoXY(60, i); cout << "                                                                      ";
-	}
-	xoa_hien_thi_1_Button(78, 28);
-	xoa_hien_thi_1_Button(78, 34);
-	gotoXY(x, y);
-}
-void Box_NhapDG()
-{
-	ButtonEnter(boxx + boxs - 5, boxy + 15);
-	ButtonESC(boxx, boxy + 15);
-	TextColor(15);
-	gotoXY(boxx, boxy); cout << char(201);
-	for (int i = 1; i < boxs + 1; i++) cout << char(205);
-	cout << char(187);
-	gotoXY(boxx, boxy + 1); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 1); cout << char(186);
-	gotoXY(boxx, boxy + 2); cout << char(186) << " Ma DG: ";
-	gotoXY(boxx + boxs + 1, boxy + 2); cout << char(186);
-	gotoXY(boxx, boxy + 3); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 3); cout << char(186);
-	gotoXY(boxx, boxy + 4); cout << char(186) << " Nhap Ho: ";
-	gotoXY(boxx + boxs + 1, boxy + 4); cout << char(186);
-	gotoXY(boxx, boxy + 5); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 5); cout << char(186);
-	gotoXY(boxx, boxy + 6); cout << char(186) << " Nhap Ten: ";
-	gotoXY(boxx + boxs + 1, boxy + 6); cout << char(186);
-	gotoXY(boxx, boxy + 7); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 7); cout << char(186);
-	gotoXY(boxx, boxy + 8); cout << char(186) << " Nhap Phai: ";
-	gotoXY(boxx + boxs + 1, boxy + 8); cout << char(186);
-	gotoXY(boxx, boxy + 9); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 9); cout << char(186);
-	gotoXY(boxx, boxy + 10); cout << char(186) << " Trang thai the: ";
-	gotoXY(boxx + boxs + 1, boxy + 10); cout << char(186);
-	gotoXY(boxx, boxy + 11); cout << char(200);
-	for (int i = 1; i < boxs + 1; i++) cout << char(205);
-	cout << char(188);
-}
-void xoa_hien_thi_Box_NhapDG()
-{
-	int x = whereX(), y = whereY();
-	TextColor(15);
-	gotoXY(boxx, boxy); cout << " ";
-	for (int i = 1; i < boxs + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(boxx, boxy + 1); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 1); cout << " ";
-	gotoXY(boxx, boxy + 2); cout << "                                      ";
-	gotoXY(boxx + boxs + 1, boxy + 2); cout << " ";
-	gotoXY(boxx, boxy + 3); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 3); cout << " ";
-	gotoXY(boxx, boxy + 4); cout << "                                      ";
-	gotoXY(boxx + boxs + 1, boxy + 4); cout << " ";
-	gotoXY(boxx, boxy + 5); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 5); cout << " ";
-	gotoXY(boxx, boxy + 6); cout << "                                      ";
-	gotoXY(boxx + boxs + 1, boxy + 6); cout << " ";
-	gotoXY(boxx, boxy + 7); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 7); cout << " ";
-	gotoXY(boxx, boxy + 8); cout << "                                      ";
-	gotoXY(boxx + boxs + 1, boxy + 8); cout << " ";
-	gotoXY(boxx, boxy + 9); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 9); cout << " ";
-	gotoXY(boxx, boxy + 10); cout << "                                      ";
-	gotoXY(boxx + boxs + 1, boxy + 10); cout << " ";
-	gotoXY(boxx, boxy + 11); cout << " ";
-	for (int i = 1; i < boxs + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(x, y);
-}
-void Box_NhapDS()
-{
-	ButtonEnter(boxx + boxs - 5, boxy + 15);
-	ButtonESC(boxx, boxy + 15);
-	TextColor(15);
-	gotoXY(boxx, boxy); cout << char(201);
-	for (int i = 1; i < boxs + 1; i++) cout << char(205);
-	cout << char(187);
-	gotoXY(boxx, boxy + 1); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 1); cout << char(186);
-	gotoXY(boxx, boxy + 2); cout << char(186) << " ISBN: ";
-	gotoXY(boxx + boxs + 1, boxy + 2); cout << char(186);
-	gotoXY(boxx, boxy + 3); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 3); cout << char(186);
-	gotoXY(boxx, boxy + 4); cout << char(186) << " Ten Sach: ";
-	gotoXY(boxx + boxs + 1, boxy + 4); cout << char(186);
-	gotoXY(boxx, boxy + 5); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 5); cout << char(186);
-	gotoXY(boxx, boxy + 6); cout << char(186) << " So Trang: ";
-	gotoXY(boxx + boxs + 1, boxy + 6); cout << char(186);
-	gotoXY(boxx, boxy + 7); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 7); cout << char(186);
-	gotoXY(boxx, boxy + 8); cout << char(186) << " Tac Gia: ";
-	gotoXY(boxx + boxs + 1, boxy + 8); cout << char(186);
-	gotoXY(boxx, boxy + 9); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 9); cout << char(186);
-	gotoXY(boxx, boxy + 10); cout << char(186) << " Nam XB: ";
-	gotoXY(boxx + boxs + 1, boxy + 10); cout << char(186);
-	gotoXY(boxx, boxy + 11); cout << char(186);
-	gotoXY(boxx + boxs + 1, boxy + 11); cout << char(186);
-	gotoXY(boxx, boxy + 12); cout << char(186) << " The Loai: ";
-	gotoXY(boxx + boxs + 1, boxy + 12); cout << char(186);
-	gotoXY(boxx, boxy + 13); cout << char(200);
-	for (int i = 1; i < boxs + 1; i++) cout << char(205);
-	cout << char(188);
-}
-void xoa_hien_thi_Box_NhapDS()
-{
-	int x = whereX(), y = whereY();
-	TextColor(15);
-	gotoXY(boxx, boxy); cout << " ";
-	for (int i = 1; i < boxs + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(boxx, boxy + 1); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 1); cout << " ";
-	gotoXY(boxx, boxy + 2); cout << "                                            ";
-	gotoXY(boxx + boxs + 1, boxy + 2); cout << " ";
-	gotoXY(boxx, boxy + 3); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 3); cout << " ";
-	gotoXY(boxx, boxy + 4); cout << "                                            ";
-	gotoXY(boxx + boxs + 1, boxy + 4); cout << " ";
-	gotoXY(boxx, boxy + 5); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 5); cout << " ";
-	gotoXY(boxx, boxy + 6); cout << "                                            ";
-	gotoXY(boxx + boxs + 1, boxy + 6); cout << " ";
-	gotoXY(boxx, boxy + 7); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 7); cout << " ";
-	gotoXY(boxx, boxy + 8); cout << "                                            ";
-	gotoXY(boxx + boxs + 1, boxy + 8); cout << " ";
-	gotoXY(boxx, boxy + 9); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 9); cout << " ";
-	gotoXY(boxx, boxy + 10); cout << "                                            ";
-	gotoXY(boxx + boxs + 1, boxy + 10); cout << " ";
-	gotoXY(boxx, boxy + 11); cout << " ";
-	gotoXY(boxx + boxs + 1, boxy + 11); cout << " ";
-	gotoXY(boxx, boxy + 12); cout << "                                            ";
-	gotoXY(boxx + boxs + 1, boxy + 12); cout << " ";
-	gotoXY(boxx, boxy + 13); cout << " ";
-	for (int i = 1; i < boxs + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(x, y);
-}
-void Box_NhapSach()
-{
-	int boxtemp = boxs - 40;
-	ButtonEnter(boxx + boxtemp - 5, boxy + 15);
-	ButtonESC(boxx, boxy + 15);
-	TextColor(15);
-	gotoXY(boxx, boxy); cout << char(201);
-	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
-	cout << char(187);
-	gotoXY(boxx, boxy + 1); cout << char(186);
-	gotoXY(boxx + boxtemp + 1, boxy + 1); cout << char(186);
-	gotoXY(boxx, boxy + 2); cout << char(186) << " MA SACH: ";
-	gotoXY(boxx + boxtemp + 1, boxy + 2); cout << char(186);
-	gotoXY(boxx, boxy + 3); cout << char(186);
-	gotoXY(boxx + boxtemp + 1, boxy + 3); cout << char(186);
-	gotoXY(boxx, boxy + 4); cout << char(186) << " VI TRI: ";
-	gotoXY(boxx + boxtemp + 1, boxy + 4); cout << char(186);
-	gotoXY(boxx, boxy + 5); cout << char(186);
-	gotoXY(boxx + boxtemp + 1, boxy + 5); cout << char(186);
-	gotoXY(boxx, boxy + 6); cout << char(200);
-	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
-	cout << char(188);
-}
-void xoa_hien_thi_Box_NhapSach()
-{
-	int x = whereX(), y = whereY();
-	int boxtemp = boxs - 40;
-	xoa_hien_thi_1_Button(boxx + boxtemp - 5, boxy + 15);
-	xoa_hien_thi_1_Button(boxx, boxy + 15);
-	TextColor(15);
-	gotoXY(boxx, boxy); cout << " ";
-	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(boxx, boxy + 1); cout << " ";
-	gotoXY(boxx + boxtemp + 1, boxy + 1); cout << " ";
-	gotoXY(boxx, boxy + 2); cout << "            ";
-	gotoXY(boxx + boxtemp + 1, boxy + 2); cout << " ";
-	gotoXY(boxx, boxy + 3); cout << " ";
-	gotoXY(boxx + boxtemp + 1, boxy + 3); cout << " ";
-	gotoXY(boxx, boxy + 4); cout << "          ";
-	gotoXY(boxx + boxtemp + 1, boxy + 4); cout << " ";
-	gotoXY(boxx, boxy + 5); cout << " ";
-	gotoXY(boxx + boxtemp + 1, boxy + 5); cout << " ";
-	gotoXY(boxx, boxy + 6); cout << " ";
-	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(x, y);
-}
-
-int Dem_Sach_CON_MUON_DUOC(LIST_DS l, string ISBN)
-{
-	int i = TIM_KIEM_DS_THEO_MA(l, ISBN);
-	int n = 0;
-	if (i != -1)
-	{
-		for (node_danhmucsach* p = l.ds_dausach[i]->dms.pHead; p != NULL; p = p->pNext)
-			if (p->data.trangthai == 0)
-				n++;
-	}
-	return n;
-}
-
-// Boxx + 20 Boxy =15
-void Box_NHAP(string x)
-{
-	int tungdo = 15;
-	int boxtemp = 50;
-	TextColor(252);
-	gotoXY(boxx + 20, tungdo); cout << char(201);
-	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
-	cout << char(187);
-	TextColor(252);
-	gotoXY(boxx + 20, tungdo + 1); cout << "                                                    ";
-	gotoXY(boxx + 20, tungdo + 1); cout << char(186);
-	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 1);  cout << char(186);
-	gotoXY(boxx + 20, tungdo + 2); cout << "                                                    ";
-	gotoXY(boxx + 20, tungdo + 2); cout << char(186); TextColor(249); cout << x << ": ";
-	int x1 = whereX(), y1 = whereY();
-	TextColor(252);
-	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 2); cout << char(186);
-	gotoXY(boxx + 20, tungdo + 3); TextColor(252); cout << "          ENTER:CHON        ESC:THOAT               ";
-	gotoXY(boxx + 20, tungdo + 3); cout << char(186);
-	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 3); cout << char(186);
-	gotoXY(boxx + 20, tungdo + 4); cout << char(200);
-	for (int i = 1; i < boxtemp + 1; i++) cout << char(205);
-	cout << char(188);
-	TextColor(15);
-	gotoXY(x1, y1);
-}
-void Xoa_hien_thi_Box_NHAP()
-{
-	int x = whereX();
-	int y = whereY();
-	int tungdo = 15;
-	int boxtemp = 50;
-	TextColor(7);
-	gotoXY(boxx + 20, tungdo); cout << " ";
-	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
-	cout << " ";
-	TextColor(7);
-	gotoXY(boxx + 20, tungdo + 1); cout << "                                                    ";
-	gotoXY(boxx + 20, tungdo + 1); cout << " ";
-	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 1);  cout << " ";
-	gotoXY(boxx + 20, tungdo + 2); cout << "                                                    ";
-	gotoXY(boxx + 20, tungdo + 2); cout << "                                                    ";
-	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 2); cout << " ";
-	gotoXY(boxx + 20, tungdo + 3); cout << "                                                    ";
-	gotoXY(boxx + 20, tungdo + 3); cout << " ";
-	gotoXY(boxx + 20 + boxtemp + 1, tungdo + 3); cout << " ";
-	gotoXY(boxx + 20, tungdo + 4); cout << " ";
-	for (int i = 1; i < boxtemp + 1; i++) cout << " ";
-	cout << " ";
-	gotoXY(x, y);
-}
-// rt true nếu độc giả đang mượn cuốn sách có đầu sách tương tự <> false
-bool KT_SACH_DG_MUON(TREE p, string ma_sach)
-{
-	string s = tach_ma_sach(ma_sach);
-	string temp;
-	for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
-	{
-		if (q->data.trangthai == 0) // đang mượn sách
-		{
-			temp = tach_ma_sach(q->data.masach);
-			if (temp == s) // đang mượn cuốn sách có đầu sách tương tự
-				return true;
-		}
-	}
-	return false;
-}
-void chay_chu(int x, int y, const char* s)
-{
-	int x1 = whereX(), y1 = whereY();
-	int n = strlen(s);
-	for (int i = x; i <= x + n && !_kbhit(); i++)
-	{
-		gotoXY(i, y); cout << s;
-		Sleep(150);
-		gotoXY(i, y); cout << " ";
-		if (i == x + n) {
-			i = x;
-			ClearLine(i, y);
-		}
-	}
-	gotoXY(x1, y1);
-}
-bool xac_nhan(int x, int y, const char* s, string temp)
-{
-	char c;
-	Box_NHAP(s + temp);
-	TextColor(249);
-	gotoXY(x + 25, y + 2);
-	cout << "CO";
-	gotoXY(x + 30, y + 2);
-	cout << "HUY";
-	while (1)
-	{
-		gotoXY(x + 25, y + 2); TextColor(252); cout << "CO";
-		gotoXY(x + 30, y + 2); TextColor(247); cout << "HUY";
-		c = _getch();
-		if (c == 13) {
-			Xoa_hien_thi_Box_NHAP();
-			return true;
-		}
-		else if (c == 27)
-		{
-			Xoa_hien_thi_Box_NHAP();
-			return false;
-		}
-		if (c == -32) c = _getch();
-		if (c == 77 || c == 75)
-		{
-			gotoXY(x + 25, y + 2); TextColor(247); cout << "CO";
-			gotoXY(x + 30, y + 2); TextColor(252); cout << "HUY";
-			c = _getch(); if (c == -32) c = _getch();
-			if (c == 13 || c == 27) {
-				Xoa_hien_thi_Box_NHAP();
-				return false;
-			}
-		}
-	}
-}
-// đếm số lượng sách có thuộc 1 đầu sách
-int tong_so_sach(dausach x)
-{
-	int n = 0;
-	for (NODE_DMS* p = x.dms.pHead; p != NULL; p = p->pNext)
-		n++;
-	return n;
-}
-// số lượng sách độc giả đã và đang mượn
-int tong_so_sach_DG(docgia x)
-{
-	int n = 0;
-	for (NODE_MT* p = x.mt.pHead; p != NULL; p = p->pNext)
-		n++;
-	return n;
-}

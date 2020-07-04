@@ -26,14 +26,11 @@ int NHAP_THONGTIN_DG(docgia& x);// nhập thành công rt 1 <> esc rt -2
 void Add_DG_VAO_CAY(TREE& t, docgia x); // thêm độc giả vào cây
 void Xuat_Thong_Tin_Doc_Gia(docgia a, int tungdo);// Xuất thông tin của 1 độc giả
 void XUAT_DS_DG(TREE t, int& i);//duyet theo LNR in ra ma the tang dan
-void CAY_SANG_MANG(TREE t, docgia* arr, int& i);// duyệt cây copy dữ liệu vào mảng
-void SX_DG_TEN(docgia* arr, int n);// sắp xếp độc giả theo tên + họ tăng dần
-void TIM_KIEM_PT_THEMANG(TREE& p, TREE& q);//Phần tử p đang được thế mạng cho phần tử q
 void XOA_DG(TREE& t, int x);// hàm có chức năng xóa 1 độc giả bất kì theo mã độc giả
 TREE TIM_KIEM_DG_MA(TREE& t, int ma_doc_gia);// tìm kiếm độc giả trong danh sách với mã độc giả
 void TIM_KIEM_DG_TEN(TREE t, string ch1, int& tungdo);// tìm kiếm tên độc giả
 int HIEU_CHINH_DG(TREE& t);// hiệu chỉnh thông tin độc giả thành công rt 1 <> ESC rt -2
-int SoluongDG(TREE t);// đếm số đọc giả trong cây
+
 
 //========================================== Đau Sach ==================================================
 
@@ -41,7 +38,6 @@ int NHAP_DS(LIST_DS& l, dausach& data);// thêm đầu sách nếu thêm thành 
 void XUAT_THONGTIN_DS(dausach& a, int tungdo);// in ra 1 đầu sách
 void XUAT_DS_DAUSACH(LIST_DS& l);// in danh sach theo the loai
 void ADDTail_DS(LIST_DS& l, dausach data);// Thêm đầu sách vào danh sách đầu sách để quản lí
-void SX_THELOAI_DS(LIST_DS& l);// sắp xếp đầu sách theo thể loại
 int TIM_KIEM_DS_THEO_TEN(LIST_DS l, string temp);// tim kiếm đầu sách theo tên đầu sách nếu có xuất ra đầu sách <> -1;
 int TIM_KIEM_DS_THEO_MA(LIST_DS l, string ma);// tìm kiếm đầu sách theo mã đầu sách nêu có trả về vị trí <> -1
 int HIEU_CHINH_DS(LIST_DS& l);// sửa đầu sách theo mã đầu sách. Nếu sửa thành công return 1 <> -1 ;ESC return -2
@@ -61,7 +57,6 @@ void NHAP_THONGTIN_MT(muontra& x);// lập phiếu mượn sách
 void XUAT_THONG_TIN_MT(muontra a, string ten_sach, int tungdo);// in thong tin của 1 phiếu mượn trả
 void AddTail_MT(LIST_MT& l, NODE_MT* p);// thêm phiếu vào danh sách để quản lí
 int XUAT_SACH_MUON(TREE t, LIST_DS l);// hàm có chức năng xuất các sách đang mượn của 1 độc giả nếu có sách mượn rt 1 <> 0
-int DEM_SACH_DG_MUON(TREE t);// đếm số sách độc giả đang mượn dùng để kiểm tra điều kiện mượn sách 
 void MUON_SACH(TREE& t, LIST_DS& l);// mượn thành công tr 1 <> -1 ; esc rt -2
 void TRA_SACH(TREE& t, LIST_DS& l);// trả sách thành công tr 1 <> -1 ; ESC rt -2
 
@@ -89,19 +84,16 @@ int NHAP_THONGTIN_DG(docgia& x)
 	k = nhap_ki_tu(x.ho, 0);
 	if (k == -1) // ESC
 		return -2;
-	gotoXY(boxx + 11, boxy + 4); cout << x.ho;
 	x.ten = "";
 	gotoXY(boxx + 12, boxy + 6);
 	k = nhap_ki_tu(x.ten, 0);
 	if (k == -1) // ESC
 		return -2;
-	gotoXY(boxx + 12, boxy + 6); cout << x.ten;
 	x.phai = "";
 	gotoXY(boxx + 13, boxy + 8);
 	k = nhap_ki_tu(x.phai, 2);
 	if (k == -1) // ESC
 		return -2;
-	gotoXY(boxx + 13, boxy + 8); cout << x.phai;
 	return 1;
 }
 
@@ -166,7 +158,7 @@ void XUAT_DS_DG(TREE t, int& i)
 	int t_sotrang = (n - 1) / 40 + 1;
 	docgia* arr = new docgia[n];
 	int index = 0;
-	CAY_SANG_MANG(t, arr, index);
+	CHUYEN_CAY_SANG_MANG(t, arr, index);
 	int tungdo = 1;
 	for (int i = 0; i < t_sotrang; i++)
 	{
@@ -211,60 +203,6 @@ void XUAT_DS_DG(TREE t, int& i)
 	}
 	delete[] arr;
 }
-
-// duyệt cây copy dữ liệu vào mảng
-void CAY_SANG_MANG(TREE t, docgia* arr, int& i)
-{
-	if (t != NULL)
-	{
-		CAY_SANG_MANG(t->pLeft, arr, i);
-		arr[i++] = t->data;
-		CAY_SANG_MANG(t->pRight, arr, i);
-	}// nếu cây rỗng thoát hàm
-	else
-		return;
-}
-
-// sắp xếp độc giả theo tên + họ tăng dần
-void SX_DG_TEN(docgia* arr, int n)
-{
-	for (int i = 0; i < n - 1; i++)
-	{
-		for (int j = i + 1; j < n; j++)
-		{  // kiểm tra tên 2 đg
-			if (arr[i].ten > arr[j].ten)
-			{
-				// hoán đổi vị trí
-				hoandoi(arr[i], arr[j]);
-			} // ngược lại
-			else if (arr[i].ten == arr[j].ten)
-			{ // kiểm tra họ 2 đg
-				if (arr[i].ho < arr[j].ho)
-				{ // hoán đổi vị trí
-					hoandoi(arr[i], arr[j]);
-				}
-			}
-		}
-	}
-}
-
-//Phần tử p đang được thế mạng cho phần tử q
-void TIM_KIEM_PT_THEMANG(TREE& p, TREE& q)
-{
-	// duyệt đến phần tử trái nhất của cây
-	if (q->pLeft != NULL)
-	{
-		TIM_KIEM_PT_THEMANG(p, q->pLeft);
-	}
-	// đã tìm được phần tử thế mạng
-	else
-	{
-		p->data = q->data;
-		p = q;
-		q = q->pRight;
-	}
-}
-
 // hàm có chức năng xóa 1 độc giả bất kì theo mã độc giả
 void XOA_DG(TREE& t, int x)
 {
@@ -390,18 +328,6 @@ int HIEU_CHINH_DG(TREE& p)
 	return 1;
 }
 
-// đếm số đọc giả trong cây
-int SoluongDG(TREE t)
-{
-	int n = 1;
-	if (t)
-	{
-		n += SoluongDG(t->pLeft);
-		n += SoluongDG(t->pRight);
-		return n;
-	}
-	else return 0;
-}
 
 // =========================================Dau sach==============================================
 
@@ -429,7 +355,6 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 		k = nhap_ki_tu(data.tensach, 1);
 		if (k == -1) // ESC
 			return -2;
-		gotoXY(boxx + 12, boxy + 4); cout << data.tensach;
 		data.sotrang = 0;
 		gotoXY(boxx + 12, boxy + 6);
 		k = nhap_so_nguyen(data.sotrang);
@@ -439,7 +364,6 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 		k = nhap_ki_tu(data.tacgia, 0);
 		if (k == -1) // ESC
 			return -2;
-		gotoXY(boxx + 11, boxy + 8); cout << data.tacgia;
 		data.namxuatban = 0;
 		gotoXY(boxx + 10, boxy + 10);
 		k = nhap_so_nguyen(data.namxuatban);
@@ -449,7 +373,6 @@ int NHAP_DS(LIST_DS& l, dausach& data)
 		k = nhap_ki_tu(data.theloai, 0);
 		if (k == -1) // ESC
 			return -2;
-		gotoXY(boxx + 12, boxy + 12); cout << data.theloai;
 		data.soluongmuon = 0;
 		return 1;
 	}
@@ -502,31 +425,6 @@ void ADDTail_DS(LIST_DS& l, dausach data)
 	}
 }
 
-// sắp xếp đầu sách theo thể loại
-void SX_THELOAI_DS(LIST_DS& l)
-{
-	dausach* temp = NULL;
-	//sap xep theo the loai
-	for (int i = 0; i < l.sl - 1; i++)
-		for (int j = i + 1; j < l.sl; j++)
-		{
-			if (l.ds_dausach[i]->theloai > l.ds_dausach[j]->theloai)
-			{
-				temp = l.ds_dausach[i];
-				l.ds_dausach[i] = l.ds_dausach[j];
-				l.ds_dausach[j] = temp;
-			}
-			else if (l.ds_dausach[i]->theloai == l.ds_dausach[j]->theloai)
-			{
-				if (l.ds_dausach[i]->tensach > l.ds_dausach[j]->tensach)
-				{
-					temp = l.ds_dausach[i];
-					l.ds_dausach[i] = l.ds_dausach[j];
-					l.ds_dausach[j] = temp;
-				}
-			}
-		}
-}
 
 // in danh sach theo the loai
 void XUAT_DS_DAUSACH(LIST_DS& l)
@@ -580,144 +478,146 @@ void XUAT_DS_DAUSACH(LIST_DS& l)
 // tim kiếm đầu sách theo tên đầu sách nếu có xuất ra đầu sách <> -1 , ESC rt -2
 int TIM_KIEM_DS_THEO_TEN(LIST_DS l, string temp)
 {
-BD:	int kt = 0; // biến dùng để kiểm tra có tìm được đầu sách hay ko
-	XOA_HIEN_THI();
-	int j = 0;
-	int tungdo = 1;
-	int vitri_timthay = 0;
-	int sl_sach = 0; // số lượng sách còn ở thư viện
-	int* arr = new int[40]; // mảng chứa  các đầu sách tìm thấy. dùng đê xuất sách
-	int* soluongsach = new int[40]; // mảng soluongsach lưu số lượng các sách của đầu sách tìm thấy
-	for (int i = 0; i < l.sl; i++)
+	int kt; // biến dùng để kiểm tra có tìm được đầu sách hay ko
+	int j;
+	int tungdo;
+	int vitri_timthay;
+	int sl_sach ; // số lượng sách còn ở thư viện
+	int* arr = new int[l.sl]; // mảng chứa  các đầu sách tìm thấy. dùng đê xuất sách
+	int* soluongsach = new int[l.sl]; // mảng soluongsach lưu số lượng các sách của đầu sách tìm thấy
+	bool KT = false;
+	while (KT == false)
 	{
-		// nếu tìm thấy temp là chuỗi con của tên đầu sách
-		vitri_timthay = l.ds_dausach[i]->tensach.find(temp);
-		if (vitri_timthay != string::npos && tungdo < 40)
-		{
-			XUAT_THONGTIN_DS(*l.ds_dausach[i], tungdo++);
-			sl_sach = Dem_Sach_CON_MUON_DUOC(l, l.ds_dausach[i]->ISBN);
-			gotoXY(180, 0); TextColor(14); cout << "SL CON";
-			gotoXY(180, tungdo - 1); TextColor(15); cout << sl_sach;
-			ToMau(vitri_timthay + 55, tungdo - 1, temp, 14);
-			kt++;
-			arr[j] = i; // lưu đầu sách được tìm thấy
-			soluongsach[j] = tong_so_sach(*l.ds_dausach[i]);
-			j++;
-		}
-	}
-	if (kt != 0)
-	{
-		int k = 1;
-		bool check = false;
-		while (check == false)
-		{
-			gotoXY(37, k); cout << ">>";
-			gotoXY(55, k);
-			ToMau(55, k, l.ds_dausach[arr[k-1]]->tensach, 14);
-			control_cursor(false);
-			char c = _getch();
-			gotoXY(37, k); cout << "  ";
-			ToMau(55, k, l.ds_dausach[arr[k - 1]]->tensach, 15);
-			TRANGTHAI tt = key(c);
-			switch (tt)
-			{
-			case UP:
-			case LEFT:
-			{
-				if (k == 1)
-					k = j;
-				else
-					k--;
-				break;
-			}
-			case DOWN:
-			case RIGHT:
-			{
-				if (k == j)
-					k = 1;
-				else
-					k++;
-				break;
-			}
-			case ESC:
-			{
-				delete[] arr;
-				delete[] soluongsach;
-				return -2;
-			}
-			case ENTER:
-			{
-				check = true;
-				break;
-			}
-			}
-		}
 		XOA_HIEN_THI();
-		if (soluongsach[k - 1] <= 0)
+		tungdo = 1, j = 0, kt = 0, vitri_timthay = 0, sl_sach = 0;
+		for (int i = 0; i < l.sl; i++)
 		{
-			BaoLoi("KHONG CO SACH");
-			delete[] arr;
-			delete[] soluongsach;
-			goto BD;
-		}
-		int tso_trang = (soluongsach[k - 1] - 1) / 40 + 1;
-		int so_trang = 1;
-		int tungdo1 = 1;
-		NODE_DMS* p = l.ds_dausach[arr[k - 1]]->dms.pHead;
-		NODE_DMS* temp[10]; // mảng con trỏ chứa tối đa 50 trang
-		for (int i = 0; i < tso_trang; i++)
-		{
-			temp[i] = p; // lưu vị trí con trỏ p trước khi duyệt để quay lại
-			while (p != NULL)
+			// nếu tìm thấy temp là chuỗi con của tên đầu sách
+			vitri_timthay = l.ds_dausach[i]->tensach.find(temp);
+			if (vitri_timthay != string::npos)
 			{
-				XOA_HIEN_THI();
-				for (int j1 = 0; j1 < 40 && p != NULL; j1++)
-				{
-					XUAT_THONG_TIN_SACH(l.ds_dausach[arr[k - 1]]->tensach, p->data, j1 + 1);
-					p = p->pNext;
-				}
-				gotoXY(105, 42); cout << i + 1 << "/" << tso_trang;
-				ButtonNext();
-				ButtonPrev();
-				char c = _getch();
-				if (c == -32)
-					c = _getch();
-				if (c == 77)
-				{
-					gotoXY(95, 42); cout << "                  ";
-					break;
-				}
-				else if (c == 75)
-				{
-					if (i == 0) {
-						delete[] arr;
-						delete[] soluongsach;
-						gotoXY(95, 42); cout << "                    ";
-						goto BD;
-					}
-					p = temp[i-1];
-					i -= 2;
-					gotoXY(95, 42); cout << "                   ";
-					break;
-				}
-				else {
-					i = tso_trang - 1;
-					gotoXY(95, 42); cout << "             ";
-					break;
-				}
-
+				XUAT_THONGTIN_DS(*l.ds_dausach[i], tungdo++);
+				sl_sach = Dem_Sach_CON_MUON_DUOC(l, l.ds_dausach[i]->ISBN);
+				gotoXY(180, 0); TextColor(14); cout << "SL CON";
+				gotoXY(180, tungdo - 1); TextColor(15); cout << sl_sach;
+				ToMau(vitri_timthay + 55, tungdo - 1, temp, 14);
+				kt++;
+				arr[j] = i; // lưu đầu sách được tìm thấy
+				soluongsach[j] = tong_so_sach(*l.ds_dausach[i]);
+				j++;
 			}
 		}
-		delete[] arr;
-		delete[] soluongsach;
-		gotoXY(95, 42); cout << "             ";
-		goto BD;
-	}
-	else
-	{
-		delete[] soluongsach;
-		delete[] arr;
-		return -1;
+		if (kt != 0)
+		{
+			int k = 1;
+			bool check = false;
+			while (check == false)
+			{
+				gotoXY(37, k); cout << ">>";
+				gotoXY(55, k);
+				ToMau(55, k, l.ds_dausach[arr[k - 1]]->tensach, 14);
+				control_cursor(false);
+				char c = _getch();
+				gotoXY(37, k); cout << "  ";
+				ToMau(55, k, l.ds_dausach[arr[k - 1]]->tensach, 15);
+				TRANGTHAI tt = key(c);
+				switch (tt)
+				{
+				case UP:
+				case LEFT:
+				{
+					if (k == 1)
+						k = j;
+					else
+						k--;
+					break;
+				}
+				case DOWN:
+				case RIGHT:
+				{
+					if (k == j)
+						k = 1;
+					else
+						k++;
+					break;
+				}
+				case ESC:
+				{
+					delete[] arr;
+					delete[] soluongsach;
+					return -2;
+				}
+				case ENTER:
+				{
+					check = true;
+					break;
+				}
+				}
+			}
+			XOA_HIEN_THI();
+			if (soluongsach[k - 1] <= 0)
+			{
+				BaoLoi("KHONG CO SACH");
+				continue;
+			}
+			int tso_trang = (soluongsach[k - 1] - 1) / 40 + 1;
+			int so_trang = 1;
+			int tungdo1 = 1;
+			NODE_DMS* p = l.ds_dausach[arr[k - 1]]->dms.pHead;
+			NODE_DMS* temp[10]; // mảng con trỏ chứa tối đa 10 trang
+			for (int i = 0; i < tso_trang; i++)
+			{
+				temp[i] = p; // lưu vị trí con trỏ p trước khi duyệt để quay lại
+				while (p != NULL)
+				{
+					XOA_HIEN_THI();
+					for (int j1 = 0; j1 < 40 && p != NULL; j1++)
+					{
+						XUAT_THONG_TIN_SACH(l.ds_dausach[arr[k - 1]]->tensach, p->data, j1 + 1);
+						p = p->pNext;
+					}
+					gotoXY(105, 42); cout << i + 1 << "/" << tso_trang;
+					ButtonNext();
+					ButtonPrev();
+					char c = _getch();
+					if (c == -32)
+						c = _getch();
+					if (c == 77)
+					{
+						if (i == tso_trang - 1)
+						{
+							i = -1;
+							break;
+						}
+						gotoXY(95, 42); cout << "                  ";
+						break;
+					}
+					else if (c == 75)
+					{
+						if (i == 0) {
+							i = tso_trang - 2;
+							break;
+						}
+						p = temp[i - 1];
+						i -= 2;
+						gotoXY(95, 42); cout << "                   ";
+						break;
+					}
+					else {
+						i = tso_trang - 1;
+						gotoXY(95, 42); cout << "             ";
+						break;
+					}
+
+				}
+			}
+		}
+		else
+		{
+			delete[] soluongsach;
+			delete[] arr;
+			return -1;
+		}
 	}
 }
 
@@ -1036,17 +936,7 @@ int XUAT_SACH_MUON(TREE t, LIST_DS l)
 }
 
 
-// đếm số sách độc giả đang mượn dùng để kiểm tra điều kiện mượn sách 
-int DEM_SACH_DG_MUON(TREE t)
-{
-	int so_sach_muon = 0;
-	for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
-	{
-		if (p->data.trangthai == 0 || p->data.trangthai == 2) // sách chưa trả
-			so_sach_muon++;
-	}
-	return so_sach_muon;
-}
+
 
 void MUON_SACH(TREE& t, LIST_DS& l)
 {
@@ -1291,68 +1181,48 @@ void TRA_SACH(TREE& t, LIST_DS& l)
 }
 // ========================================= Qua Han =============================
 
-// kiem tra xem doc gia co muon sach qua han hay ko neu qua han rt true <> false
-bool Dem_SN_QUAHAN(TREE p)
-{
-	int n = 0;
-		for (NODE_MT* q = p->data.mt.pHead; q != NULL; q = q->pNext)
-		{
-			if (q->data.trangthai == 0) // dang muon sach
-			{
-				n = tinh_so_ngay(q->data.ngaymuon);
-				if (n >= 7)
-					return true;
-			}
-		}
-	return false;
-}
 // in ra danh sách các độc giả quá hạn
 void DS_QUAHAN(TREE t)
 {
-	int x = whereX();
-	int y = whereY();
-	int n = 0;
 	int n1 = SoluongDG(t);
 	quahan* arr = new quahan[n1];
-	TREE Stack[STACKSIZE];
+	int n = 0; // số lượng phần tử thực tế của mảng quá hạn
+	TREE* Stack = new NODE_DG * [n1];
+	int so_ngay = 0; // lưu số ngày chênh lệch của độc giả mượn sách
 	int top = -1;
+	TREE t1 = t; // lưu lại node gốc trước khi duyệt
 	do
 	{
 		while (t != NULL)
 		{
-			Stack[++top] = t;
+			Stack[++top] = t; // push
 			t = t->pLeft;
 		}
 		if (top != -1)
 		{
-			t = Stack[top--];
-			int temp = 0;
+			t = Stack[top--]; // pop
 			for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
 			{
-				if (p->data.trangthai == 0 || p->data.trangthai == 2)
-				{
-					temp = tinh_so_ngay(p->data.ngaymuon);
-					if (temp >= 7)
+				// DANG MUON SACH
+				if (p->data.trangthai == 0 || p->data.trangthai == 2) {
+					so_ngay = tinh_so_ngay(p->data.ngaymuon);
+					if (so_ngay >= 7)
 					{
 						n++;
 						arr[n - 1].ma_doc_gia = t->data.mathe;
-						arr[n - 1].ho = t->data.ho;
-						arr[n - 1].ten = t->data.ten;
-						arr[n - 1].phai = t->data.phai;
-						arr[n - 1].so_ngay_quahan = temp;
 						arr[n - 1].ma_sach = p->data.masach;
-						arr[n - 1].ngay_muon = p->data.ngaymuon;
+						arr[n - 1].so_ngay_quahan = so_ngay;
 					}
 				}
 			}
 			t = t->pRight;
 		}
-		else
-			break;
+		else break;
 	} while (1);
+	delete[] Stack;
 	quahan temp;
 	// sap xep giam dan ds qua han
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 0; i < n; i++)
 	{
 		for (int j = i + 1; j < n; j++)
 		{
@@ -1365,44 +1235,45 @@ void DS_QUAHAN(TREE t)
 		}
 	}
 	bool check = false;
+	TREE p = NULL;
+	NODE_MT* q = NULL;
 	// xuat ds qua han theo thu tu giam dan
 	for (int k = 0; k < n; k++)
 	{
-		if (arr[k].so_ngay_quahan >= 7)
-		{
-			check = true;
-			TextColor(15);
-			gotoXY(45, 0);
-			cout << "MA THE";
-			gotoXY(65, 0);
-			cout << "HO";
-			gotoXY(85, 0);
-			cout << "TEN";
-			gotoXY(100, 0);
-			cout << "PHAI";
-			gotoXY(120, 0);
-			cout << "MA SACH";
-			gotoXY(140, 0);
-			cout << "NGAY MUON";
-			gotoXY(165, 0);
-			cout << "SO NGAY QH";
-			gotoXY(45, k + 1);
-			cout << arr[k].ma_doc_gia;
-			gotoXY(65, k + 1);
-			cout << arr[k].ho;
-			gotoXY(85, k + 1);
-			cout << arr[k].ten;
-			gotoXY(100, k + 1);
-			cout << arr[k].phai;
-			gotoXY(120, k + 1);
-			cout << arr[k].ma_sach;
-			gotoXY(140, k + 1);
-			cout << arr[k].ngay_muon.ngay << "/" << arr[k].ngay_muon.thang << "/" << arr[k].ngay_muon.nam;
-			gotoXY(170, k + 1);
-			cout << arr[k].so_ngay_quahan;
-			TextColor(7);
-			gotoXY(x, y);
-		}
+		p = TIM_KIEM_DG_MA(t1, arr[k].ma_doc_gia);
+		for (q = p->data.mt.pHead; q != NULL; q = q->pNext)
+			if (q->data.masach == arr[k].ma_sach) break;
+		check = true;
+		TextColor(15);
+		gotoXY(45, 0);
+		cout << "MA THE";
+		gotoXY(65, 0);
+		cout << "HO";
+		gotoXY(85, 0);
+		cout << "TEN";
+		gotoXY(100, 0);
+		cout << "PHAI";
+		gotoXY(120, 0);
+		cout << "MA SACH";
+		gotoXY(140, 0);
+		cout << "NGAY MUON";
+		gotoXY(165, 0);
+		cout << "SO NGAY QH";
+		gotoXY(45, k + 1);
+		cout << arr[k].ma_doc_gia;
+		gotoXY(65, k + 1);
+		cout << p->data.ho;
+		gotoXY(85, k + 1);
+		cout << p->data.ten;
+		gotoXY(100, k + 1);
+		cout << p->data.phai;
+		gotoXY(120, k + 1);
+		cout << arr[k].ma_sach;
+		gotoXY(140, k + 1);
+		cout << q->data.ngaymuon.ngay << "/" << q->data.ngaymuon.thang << "/" << q->data.ngaymuon.nam;
+		gotoXY(170, k + 1);
+		cout << arr[k].so_ngay_quahan;
+		TextColor(7);
 	}
 	if (check == false)
 		BaoLoi("DANH SACH TRONG");
@@ -1414,6 +1285,8 @@ void DS_QUAHAN(TREE t)
 // =================== 10 sách có lượt mượn nhiều nhất ====================
 void top10sach(LIST_DS l)
 {
+	// có thể dùng heapsort lấy ra top 10 nhưng không thay đổi vị trí
+	// hoặc dùng mảng temp chứa mã sách và số lượng mượn 
 	dausach* temp = NULL;
 	// sắp xếp theo thứ tự giảm dần top 10 sách
 	for (int i = 0; i < l.sl - 1; i++)
@@ -1431,7 +1304,7 @@ void top10sach(LIST_DS l)
 	}
 	for (int k = 0; k < l.sl && k < 10; k++)
 	{
-		XUAT_THONGTIN_DS( *l.ds_dausach[k], k + 1);
+		XUAT_THONGTIN_DS(*l.ds_dausach[k], k + 1);
 		gotoXY(175, 0); cout << "                  ";
 		gotoXY(175, 0); TextColor(14); cout << "SO LAN MUON";
 		gotoXY(180, k + 1); cout << "     ";

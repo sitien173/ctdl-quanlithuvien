@@ -98,11 +98,7 @@ typedef struct node_docgia* TREE;
 struct quahan
 {
 	int ma_doc_gia;
-	string ho;
-	string ten;
-	string phai;
 	string ma_sach;
-	Date ngay_muon;
 	int so_ngay_quahan;
 };
 
