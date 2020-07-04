@@ -1,4 +1,5 @@
 ﻿#pragma once
+#pragma comment(lib, "winmm.lib")
 #include "lib.h"
 void Box_BaoLoi()
 {
@@ -155,7 +156,7 @@ void huong_dan_su_dung()
 	while (!fo.eof())
 	{
 		getline(fo, s);
-		i = rand() % 15 + 1;
+		i = 10 + rand() % 6;
 		gotoXY(x, j++);
 		TextColor(i);
 		cout << s;
@@ -493,27 +494,30 @@ bool xac_nhan(int x, int y, const char* s, string temp)
 }
 void intro()
 {
+	control_cursor(false);
 	ifstream fi("introduce.txt");
 	string s;
 	int y = 1;
+	int j = 0;
+	int x = 0;
 	while (!fi.eof())
 	{
-		TextColor(15);
+		x = 10+ rand() % 6;
+		TextColor(x);
 		getline(fi, s);
 		gotoXY(50, y++);
 		cout << s;
 	}
 	fi.close();
-	int j = 0;
-	gotoXY(70, 38); TextColor(10); cout << "HOC VIEN CONG NGHE BUU CHINH VIEN THONG";
+	gotoXY(70, 38); TextColor(10); cout << "HOC VIEN CONG NGHE BUU CHINH VIEN THONG HCM";
 	for (int i = 0; i <= 100; i++)
 	{
 		if (i >= 85)
-			j = rand() % 600 + 200;
-		else j = i+20;
+			j = 200 + rand() % 401;
+		else j = i + 20;
 		Sleep(j);
 		TextColor(252);
-		gotoXY(85, 40); cout << i << "%";
+		gotoXY(89, 40); cout << i << "%";
 		TextColor(252);
 		gotoXY(i + 43, 40);
 		cout << " ";
@@ -523,11 +527,10 @@ void intro()
 		TextColor(7);
 		gotoXY(i + 40, 40); cout << "      ";
 	}
-	cout << char(7);
+	PlaySound(TEXT("1.wav"), GetModuleHandle(NULL), SND_FILENAME);
 	while (!_kbhit())
 	{
 		Sleep(200);
-		control_cursor(false);
 		j = rand() % 15 + 1;
 		TextColor(j);
 		gotoXY(75, 42); cout << "PRESS ANY KEY TO CONTINUE";

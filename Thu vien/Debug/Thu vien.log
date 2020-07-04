@@ -1,10 +1,1 @@
-﻿  Source.cpp
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(48,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(61,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\Source.cpp(637,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(33): warning C4715: 'key': not all control paths return a value
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(227): warning C4715: 'nhap_so_nguyen1': not all control paths return a value
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(314): warning C4715: 'nhap_so_nguyen': not all control paths return a value
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\hotro.h(438): warning C4715: 'nhap_ki_tu': not all control paths return a value
-C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Thu vien\xulyde.h(622): warning C4715: 'TIM_KIEM_DS_THEO_TEN': not all control paths return a value
-  Thu vien.vcxproj -> C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe
+﻿  Thu vien.vcxproj -> C:\Users\TIEN\Desktop\TEXT\QUAN_LI_THU_VIEN_2020\Debug\Thu vien.exe
