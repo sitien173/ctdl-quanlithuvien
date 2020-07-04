@@ -491,3 +491,46 @@ bool xac_nhan(int x, int y, const char* s, string temp)
 		}
 	}
 }
+void intro()
+{
+	ifstream fi("introduce.txt");
+	string s;
+	int y = 1;
+	while (!fi.eof())
+	{
+		TextColor(15);
+		getline(fi, s);
+		gotoXY(50, y++);
+		cout << s;
+	}
+	fi.close();
+	int j = 0;
+	gotoXY(70, 38); TextColor(10); cout << "HOC VIEN CONG NGHE BUU CHINH VIEN THONG";
+	for (int i = 0; i <= 100; i++)
+	{
+		if (i >= 85)
+			j = rand() % 600 + 200;
+		else j = i+20;
+		Sleep(j);
+		TextColor(252);
+		gotoXY(85, 40); cout << i << "%";
+		TextColor(252);
+		gotoXY(i + 43, 40);
+		cout << " ";
+	}
+	for (int i = 0; i <= 100; i++)
+	{
+		TextColor(7);
+		gotoXY(i + 40, 40); cout << "      ";
+	}
+	cout << char(7);
+	while (!_kbhit())
+	{
+		Sleep(200);
+		control_cursor(false);
+		j = rand() % 15 + 1;
+		TextColor(j);
+		gotoXY(75, 42); cout << "PRESS ANY KEY TO CONTINUE";
+	}
+	while (_kbhit()) _getch();
+}

@@ -635,6 +635,7 @@ int main()
 	system("mode con COLS=700");
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); // full screen
 	srand(time(NULL));
+	intro();
 	menu_xuli();
 	return 0;
 }
