@@ -634,6 +634,7 @@ int main()
 	// tao_ma_doc_gia();
 	system("mode con COLS=700");
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); // full screen
+	remove_scrollbar();
 	srand(time(NULL));
 	intro();
 	menu_xuli();
