@@ -441,7 +441,7 @@ void menu_xuli()
 		case 4:
 		{
 			TRA_SACH(t, l);
-			goto menu_chinh;
+			break;
 		}
 		// Làm mất sách
 		case 5:
@@ -633,7 +633,8 @@ int main()
 	// tạo ngẫu nhiên 100000 mã thẻ ngẫu nhiên.chỉ chạy 1 lần khi file MADOCGIA rỗng
 	// tao_ma_doc_gia();
 	system("mode con COLS=700");
-	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE); // full screen
+	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+	SendMessage(GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
 	remove_scrollbar();
 	srand(time(NULL));
 	intro();

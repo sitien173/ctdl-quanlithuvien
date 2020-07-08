@@ -499,11 +499,12 @@ void intro()
 	string s;
 	int y = 1;
 	int j = 0;
-	int x = 0;
 	while (!fi.eof())
 	{
-		x = 10+ rand() % 6;
-		TextColor(x);
+		if (y < 18)
+		TextColor(11);
+		else 
+		TextColor(15);
 		getline(fi, s);
 		gotoXY(50, y++);
 		cout << s;
@@ -533,7 +534,7 @@ void intro()
 		Sleep(200);
 		j = rand() % 15 + 1;
 		TextColor(j);
-		gotoXY(75, 42); cout << "PRESS ANY KEY TO CONTINUE";
+		gotoXY(78, 42); cout << "PRESS ANY KEY TO CONTINUE";
 	}
 	while (_kbhit()) _getch();
 }
