@@ -101,5 +101,3 @@ struct quahan
 	string ma_sach;
 	int so_ngay_quahan;
 };
-
-

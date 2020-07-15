@@ -162,13 +162,13 @@ void XUAT_DS_DG(TREE t, int& i)
 	int tungdo = 1;
 	for (int i = 0; i < t_sotrang; i++)
 	{
-		for (int j = i * 40; j < (40 * i) + 40 && j < n; j++)
+		for (int j = i * 40; j < (40 * i) + 40 && j < n && tungdo < 40; j++)
 			Xuat_Thong_Tin_Doc_Gia(arr[j], tungdo++);
 
 		gotoXY(105, 42); cout << i + 1 << "/" << t_sotrang;
 		ButtonNext();
 		ButtonPrev();
-		chay_chu(85, 44, "PRESS ANY KEY TO CONTINUE");
+		chay_chu(85, 46, "PRESS ANY KEY TO CONTINUE");
 		char c = _getch();
 		if (c == -32)
 			c = _getch();
@@ -1180,49 +1180,39 @@ void TRA_SACH(TREE& t, LIST_DS& l)
 	} while (1);
 }
 // ========================================= Qua Han =============================
-
+void CAY_SANG_MANG_QUAHAN(TREE t, quahan* arr,int& index)
+{
+	int temp = 0;
+	if (t)
+	{
+		CAY_SANG_MANG_QUAHAN(t->pLeft, arr,index);
+		for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
+		{
+			if (p->data.trangthai == 0 || p->data.trangthai == 2)
+			{
+				temp = tinh_so_ngay(p->data.ngaymuon);
+				if (temp >= 7)
+				{
+					arr[index].ma_doc_gia = t->data.mathe;
+					arr[index].ma_sach = p->data.masach;
+					arr[index].so_ngay_quahan = temp;
+					index++;
+				}
+			}
+		}
+		CAY_SANG_MANG_QUAHAN(t->pRight, arr,index);
+	}
+}
 // in ra danh sách các độc giả quá hạn
 void DS_QUAHAN(TREE t)
 {
 	int n1 = SoluongDG(t);
 	quahan* arr = new quahan[n1];
-	int n = 0; // số lượng phần tử thực tế của mảng quá hạn
-	TREE* Stack = new NODE_DG * [n1];
-	int so_ngay = 0; // lưu số ngày chênh lệch của độc giả mượn sách
-	int top = -1;
-	TREE t1 = t; // lưu lại node gốc trước khi duyệt
-	do
-	{
-		while (t != NULL)
-		{
-			Stack[++top] = t; // push
-			t = t->pLeft;
-		}
-		if (top != -1)
-		{
-			t = Stack[top--]; // pop
-			for (NODE_MT* p = t->data.mt.pHead; p != NULL; p = p->pNext)
-			{
-				// DANG MUON SACH
-				if (p->data.trangthai == 0 || p->data.trangthai == 2) {
-					so_ngay = tinh_so_ngay(p->data.ngaymuon);
-					if (so_ngay >= 7)
-					{
-						n++;
-						arr[n - 1].ma_doc_gia = t->data.mathe;
-						arr[n - 1].ma_sach = p->data.masach;
-						arr[n - 1].so_ngay_quahan = so_ngay;
-					}
-				}
-			}
-			t = t->pRight;
-		}
-		else break;
-	} while (1);
-	delete[] Stack;
+	int n = 0;
+	CAY_SANG_MANG_QUAHAN(t, arr,n);
 	quahan temp;
 	// sap xep giam dan ds qua han
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n-1; i++)
 	{
 		for (int j = i + 1; j < n; j++)
 		{
@@ -1240,9 +1230,13 @@ void DS_QUAHAN(TREE t)
 	// xuat ds qua han theo thu tu giam dan
 	for (int k = 0; k < n; k++)
 	{
-		p = TIM_KIEM_DG_MA(t1, arr[k].ma_doc_gia);
-		for (q = p->data.mt.pHead; q != NULL; q = q->pNext)
+		p = TIM_KIEM_DG_MA(t, arr[k].ma_doc_gia);
+		q = p->data.mt.pHead;
+		while (q != NULL)
+		{
 			if (q->data.masach == arr[k].ma_sach) break;
+			q = q->pNext;
+		}
 		check = true;
 		TextColor(15);
 		gotoXY(45, 0);
