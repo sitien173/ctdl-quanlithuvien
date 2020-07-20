@@ -1,9 +1,8 @@
 ﻿Đây là đồ án môn Cấu trúc dữ liệu và Giải thuật của mình. Có thể nói đây là môn khó nhất trường mình và là nỗi ác mộng của nhìu bạn sinh viên ngành CNTT khi người dạy là thầy Lưu Nguyễn Kỳ Thư. 1 lớp học 70 thì chỉ có tầm 10 bạn qua môn.
 
-Đây là đồ án của mình được 8.0 với xử lí giao diện trên console c++ và bắt lỗi nghiệp vụ. Đồ án quản lí thư viện do mình code hi vọng có thể giúp bạn qua được trong môn học này. Code mình chạy trên visual studio 2019. devc thì đổi các hàm _getch -> getch và _kbhit -> kbhit nhé
+Đồ án mình được 7.2 với xử lí giao diện trên console c++ và bắt lỗi nghiệp vụ. Đồ án quản lí thư viện do mình code hi vọng có thể giúp bạn qua được trong môn học này. Code mình chạy trên visual studio community 2019.
 
-       --------------------- QUAN LI THU VIEN --------------------------
-       5.	Thư viện: Ta tổ chức các danh sách sau: 
+   5.	Thư viện: Ta tổ chức các danh sách sau: 
 - Đầu sách : danh sách tuyến tính là 1 mảng con trỏ (ISBN , Tên sách, Số trang, Tác giả, năm xuất bản, thể loại, con trỏ dms): con trỏ sẽ trỏ đến các sách thuộc đầu sách tương ứng
 - Danh mục sách : danh sách liên kết đơn( Mã sách,  trạng thái, vị trí (chuỗi)  ). Mỗi cuốn sách chỉ có 1 mã duy nhất; trạng thái của sách bao gồm: 0: cho mượn được, 1: đã có độc giả mượn, 2: sách đã thanh lý . 
 - Danh sách thẻ độc giả: cây nhị phân tìm kiếm (MATHE (số nguyên ngẫu nhiên tự động), Ho, Ten,  Phai, trạng thái của thẻ, con trỏ): con trỏ sẽ trỏ đến danh sách các cuốn sách đã và đang mượn.
